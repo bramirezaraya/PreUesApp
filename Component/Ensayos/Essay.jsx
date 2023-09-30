@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
   icono:{
     width:20,
     height:20,
-
   },
   datosEnsayo:{
     display:'flex',
