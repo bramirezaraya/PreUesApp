@@ -41,7 +41,7 @@ const MenuLogin = () =>{
             headerShadowVisible:false,
             headerLeft: () =>(
               <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
-                  <Image style={{marginLeft:10, width:20, height:20}} source={require('./assets/Leftarrow.png')} />
+                  <Image style={{marginLeft:10, width:30, height:30}} source={require('./assets/Leftarrow.png')} />
               </TouchableOpacity>
             ),
             drawerLabel:null

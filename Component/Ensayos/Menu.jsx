@@ -22,28 +22,28 @@ const Menu = ({navigation}) => {
       isCustom:0
     },
     {
-      name:"ensayo numeros",
+      name:"Ensayo números",
       numberOfQuestions:18,
       selectedTime:36,
       id:1,
       isCustom:0
     },
     {
-      name:"ensayo algebra",
+      name:"Ensayo álgebra",
       numberOfQuestions:18,
       selectedTime:36,
       id:2,
       isCustom:0
     },
     {
-      name:"ensayo probabilidades",
+      name:"Ensayo probabilidades",
       numberOfQuestions:17,
       selectedTime:34,
       id:3,
       isCustom:0
     },
     {
-      name:"ensayo geometria",
+      name:"ensayo geometría",
       numberOfQuestions:15,
       selectedTime:30,
       id:4,
@@ -56,13 +56,15 @@ const Menu = ({navigation}) => {
   const [predefinidos, setPredefinidos] = useState(true)
   const [personalizados, setPersonalizados] = useState(false)
   const [cantidadCustom, setCantidadCustom] = useState(0)
-
+  const [monedas, setMonedas] = useState(0)
   /// se usa para renderizar cada vez que se focusea el componente.
 useFocusEffect( 
     React.useCallback(() =>{
     const llamadaDatosUser = async() =>{
       const token = await AsyncStorage.getItem('token')
       const user = await AsyncStorage.getItem('usuario');
+      const monedas = await AsyncStorage.getItem('monedas')
+      setMonedas(monedas)
          setUsuario(JSON.parse(user))
 
       axios.get('http://192.168.1.96:3000/showCustomEssays',{ headers:{
@@ -82,7 +84,7 @@ useFocusEffect(
                   <View style={[styles.datosUser, {backgroundColor:theme.bground.bgInicioDatos,}]}> 
                       <Text style={styles.texto}>Bienvenido {usuario}</Text>
                       <View style={styles.datosMonedas}>
-                        <Text style={styles.texto}>Sus monedas acumuladas son: 0</Text>
+                        <Text style={styles.texto}>Sus monedas acumuladas son: {monedas}</Text>
                         <Image source={require("../../assets/dollar.png")} />
                       </View>
                   </View>

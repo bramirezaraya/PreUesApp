@@ -55,17 +55,19 @@ const EnsayoPrueba = ({navigation}) => {
         const llamadaEnsayos = async() =>{
             try{
                 const respuesta = await axios.get(`http://192.168.1.96:3000/essayQuestions/?name=${nombre}`)
-                setEnsayos(respuesta.data.questions)
-                setTiempo(respuesta.data.questions.length * 60 * 2)
-                postEnsayo(respuesta.data.questions.length, respuesta.data.questions.length * 60 * 2)
-                if(respuesta.data.questions.length % 4 === 0){
-                    setCantidadPaginas(Math.trunc(respuesta.data.questions.length / 4))
-                }else{
-                    setCantidadPaginas(Math.trunc(respuesta.data.questions.length / 4) + 1)
-                }
-                setModulo(respuesta.data.questions.length % 4)
+                setEnsayos(respuesta.data.questions.slice(0,5))
+                setTiempo(respuesta.data.questions.slice(0,5).length * 60 * 2)
+                postEnsayo(respuesta.data.questions.slice(0,5).length, respuesta.data.questions.slice(0,5).length * 60 * 2)
                 
-                setArrayModulo(new Array(respuesta.data.questions.length % 4).fill(''))
+                /// seteamos la cantidad de paginas que tendra, dependiendo el largo del ensayo.
+                if(respuesta.data.questions.length % 4 === 0){
+                    setCantidadPaginas(Math.trunc(respuesta.data.questions.slice(0,5).length / 4))
+                }else{
+                    setCantidadPaginas(Math.trunc(respuesta.data.questions.slice(0,5).length / 4) + 1)
+                }
+                setModulo(respuesta.data.questions.slice(0,5).length % 4)
+                
+                setArrayModulo(new Array(respuesta.data.questions.slice(0,5).length % 4).fill(''))
             }
             catch(error){
                 console.log(error)
@@ -133,20 +135,21 @@ const EnsayoPrueba = ({navigation}) => {
 
         const customEssay = async() =>{
                 const token = await AsyncStorage.getItem('token')
+                
                 axios.get(`http://192.168.1.96:3000/customEssay/?essayId=${id_ensayo}`, {headers:{
                     Authorization:`Bearer ${token}`
                 }})
                 .then((response) => {
                     setEnsayos(response.data.customEssay.questions), 
                     setTiempo(response.data.customEssay.selectedTime * 60), 
-                    setIdEnsayo(id_ensayo) 
+                    setIdEnsayo(response.data.customEssay.id) 
                     setModulo(response.data.customEssay.questions.length % 4)
                     if(response.data.customEssay.questions.length % 4 === 0){
                         setCantidadPaginas(Math.trunc(response.data.customEssay.questions.length / 4))
                     }else{
                         setCantidadPaginas(Math.trunc(response.data.customEssay.questions.length / 4) + 1)
                     }
-
+                    
                    
                     setArrayModulo(new Array(response.data.customEssay.questions.length % 4).fill(''))
 

@@ -18,6 +18,7 @@ const Account = () => {
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('')
   const [validadorPassword, setValidadorPassword] = useState(false)
+  const [monedas, setMonedas] = useState(0)
 
   const validarPassword = () =>{
     if(newPassword !== '' && newPasswordConfirm !== ''){
@@ -75,7 +76,8 @@ const Account = () => {
     llamarDatos = async() =>{
       const mail = await AsyncStorage.getItem('email')
       const user = await AsyncStorage.getItem('usuario')
-
+      const monedas = await AsyncStorage.getItem('monedas')
+      setMonedas(monedas)
       setEmail(JSON.parse(mail))
       setUsuario(JSON.parse(user))
     }
@@ -93,7 +95,7 @@ const Account = () => {
                   <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>{usuario}</Text>
                   <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>{email}</Text>
                   <View style={styles.puntos}>
-                      <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>Tus puntos son : 5000</Text>
+                      <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>Tus puntos son : {monedas}</Text>
                       <Image source={require('../../assets/dollar.png')} />
                   </View>
             </View>
@@ -129,6 +131,8 @@ const Account = () => {
                             style={[styles.input, {backgroundColor:theme.bground.bgInputChangePassword,}]}
                             placeholder='Ingresa tu contraseña actual'
                             value={password}
+                            secureTextEntry={true}
+                            maxLength={16}
                           />        
                         </View>
                         <View style={styles.botonesInput}>
@@ -138,6 +142,8 @@ const Account = () => {
                             style={[styles.input, {backgroundColor:theme.bground.bgInputChangePassword,}]}
                             placeholder='Ingresa tu nueva contraseña'
                             value={newPassword}
+                            secureTextEntry={true}
+                            maxLength={16}
                           />        
                         </View>
                         <View style={styles.botonesInput}>
@@ -147,6 +153,8 @@ const Account = () => {
                             style={[styles.input, {backgroundColor:theme.bground.bgInputChangePassword,}]}
                             placeholder='Confirma tu nueva contraseña'
                             value={newPasswordConfirm}
+                            secureTextEntry={true}
+                            maxLength={16}
                           />        
                         </View>
                     </View>

@@ -91,7 +91,7 @@ const Navegacion = () => {
                             headerShadowVisible: false,
                             headerLeft: () =>(
                               <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                                  <Image style={{marginLeft:10}} source={require('./assets/Leftarrow.png')} />
+                                  <Image style={{marginLeft:10, width:30, height:30}} source={require('./assets/Leftarrow.png')} />
                               </TouchableOpacity>
                             )
                           })}
@@ -105,7 +105,7 @@ const Navegacion = () => {
                           headerShadowVisible: false,
                           headerLeft: () =>(
                             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                                <Image style={{marginLeft:10}} source={require('./assets/Leftarrow.png')} />
+                                <Image style={{marginLeft:10 , width:30, height:30}} source={require('./assets/Leftarrow.png')} />
                             </TouchableOpacity>
                           )
                           })}
@@ -119,7 +119,7 @@ const Navegacion = () => {
                           headerShadowVisible: false,
                           headerLeft: () =>(
                             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                                <Image style={{marginLeft:10}} source={require('./assets/Leftarrow.png')} />
+                                <Image style={{marginLeft:10 , width:30, height:30}} source={require('./assets/Leftarrow.png')} />
                             </TouchableOpacity>
                           )
                         })}

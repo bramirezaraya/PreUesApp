@@ -91,7 +91,7 @@ import modoDark from './ModoDark'
                 estado = {state.index === 2}
             />
             <BotonesDrawer 
-                Text = 'Estadisticas'
+                Text = 'Estadísticas'
                 onPress = {() => navigation.navigate('Estadistica')}
                 Imagen={require('./assets/Estadisticas.png')}
                 estado = {state.index === 3}

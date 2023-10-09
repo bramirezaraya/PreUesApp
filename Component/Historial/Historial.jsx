@@ -23,25 +23,24 @@ const Historial = ({navigation}) => {
   /// se usa para renderizar cada vez que se focusea el componente.
   useFocusEffect(
     React.useCallback(() =>{
-    const apiHistorial = async() =>{
-      try{
-        const id_usuario = await AsyncStorage.getItem('id_usuario')
-        const token = await AsyncStorage.getItem('token')
+      const apiHistorial = async() =>{
+        try{
+          const id_usuario = await AsyncStorage.getItem('id_usuario')
+          const token = await AsyncStorage.getItem('token')
 
-        const respuesta = await fetch(`http://192.168.1.96:3000/history`, {
-          method:'GET',
-          headers:{
-            authorization: `Bearer ${token}`
-          }
-        })
-        const data = await respuesta.json()
-
-        const historialFiltrado = data.historial.filter((datos) => datos != null) // filtramos para tener solo los que se completaron.
-        setHistorial(historialFiltrado.reverse())
-        setArrayFiltrado(historialFiltrado)
-      }catch(error){
-        console.log(error)
-      }
+          const respuesta = await fetch(`http://192.168.1.96:3000/history`, {
+            method:'GET',
+            headers:{
+              authorization: `Bearer ${token}`
+            }
+          })
+          const data = await respuesta.json()
+          const historialFiltrado = data.historial.filter((datos) => datos != null) // filtramos para tener solo los que se completaron.
+          setHistorial(historialFiltrado.reverse())
+          setArrayFiltrado(historialFiltrado)
+        }catch(error){
+          console.log(error)
+        }
     }
 
     apiHistorial()
@@ -218,12 +217,13 @@ const styles = StyleSheet.create({
     display:'flex',
     flexDirection:'row',
     padding:10,
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    width:'100%',
   },
   contenedorInformacionHistorial:{
     borderRadius:15,
     padding:10,
-    margin:10,
+    // margin:10,
     height:'80%'
   },
   datosHistorial:{

@@ -32,7 +32,7 @@ const EnsayoFeedback = ({navigation}) => {
 
                 // const ensayos = await axios.get(urlEnsayos)
                 // const dataEnsayo = await ensayos.json()
-                    console.log(response.data)
+                    
                     setEnsayo(response.data.questions) /// preguntas.
                     setDatoEnsayo(response.data) // score, preguntas y respuestas, fecha.
                     setRespuestas(response.data.chosenAnswers) /// respuestas marcadas por el usuario.
@@ -52,6 +52,9 @@ const EnsayoFeedback = ({navigation}) => {
                     <Text style={[styles.titulo, {color: theme.colors.textSecondary}]} >Obtuviste: {datosEnsayo.score} puntos</Text>
                     <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>Realizado el {Fecha}</Text>
                     <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>{datosEnsayo.numberOfQuestions} Ejercicios en total</Text>
+                    <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>{datosEnsayo.numCorrectAnswers} Preguntas correctas</Text>
+                    <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>{datosEnsayo.coins} Monedas obtenidas</Text>
+                    <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>Tiempo de demora: {datosEnsayo.totalTime}  </Text>
                     <TouchableOpacity onPress={() => {navigation.navigate('Menu')}} style={styles.boton}>
                         <Text>Finalizar Revisión</Text>
                     </TouchableOpacity>
@@ -61,7 +64,7 @@ const EnsayoFeedback = ({navigation}) => {
                         contentContainerStyle={{paddingBottom:30}} // para que el ultimo item se visualice mejor.
                         data={ensayo}
                         renderItem={({ item, index }) => (EnsayoRenderizado({item, index,respuestas, theme}))}
-                        keyExtractor={(item) => item.selectedQuestion.id}
+                        keyExtractor={(item) => item.id}
                         ItemSeparatorComponent={() => <View style={styles.separator}></View>} // para separar cada item.
                     /> 
             </View>

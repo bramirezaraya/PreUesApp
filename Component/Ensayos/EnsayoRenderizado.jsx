@@ -16,14 +16,14 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
                 </Text> 
 
                 {/*si la respuesta que marco es correcta, colocaremos un icono de correcto. */}
-                {item.selectedQuestion.answers.map((respuesta, index2)=>(
-                    respuesta.id === respuestas[index].answer.id && respuesta.isCorrect === 1 && (
+                {item.answers.map((respuesta, index2)=>(
+                    respuesta.id === respuestas[index].id && respuesta.isCorrect === 1 && (
                         <Image style={{width:20, height:20}}  source={require('../../assets/correcto.png')}  />
                     )                                        
                 ))}
                 {/* en caso contrario pondra el icono incorrecto*/}
-                {item.selectedQuestion.answers.map((respuesta, index2)=>(
-                    respuesta.id === respuestas[index].answer.id && respuesta.isCorrect === 0 && (
+                {item.answers.map((respuesta, index2)=>(
+                    respuesta.id === respuestas[index].id && respuesta.isCorrect === 0 && (
                         <Image style={{width:20, height:20}}  source={require('../../assets/incorrecto.png')}  />
                     )                                        
                 ))}
@@ -31,15 +31,15 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
                                 
             {/* mostramos la pregunta del ensayo*/}
             <Text style={[styles.textoPregunta, {color: theme.colors.textSecondary}]}>
-                ¿{item.selectedQuestion.question}?
+                ¿{item.question}?
             </Text>
                                 
             {/*Video de la respuesta del ensayo*/}
-            <WebView source={{ uri: item.selectedQuestion.videoLink }} style={styles.videoPlayer} />
+            <WebView source={{ uri: item.videoLink }} style={styles.videoPlayer} />
                                 
             {/*renderizamo las respuestas del ensayo, con una constante que llamaremos.*/}
             <FlatList
-                data={item.selectedQuestion.answers}
+                data={item.answers}
                 renderItem={({item: respuestaItem, index:indexRespuesta}) => RespuestasRenderizadas({respuestaItem, index, respuestas, theme,indexRespuesta})}
                 keyExtractor={(item) => item.id}
             />

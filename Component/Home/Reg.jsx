@@ -33,8 +33,12 @@ const Reg = ({ navigation }) => {
 
 
   const validarUser = (usuario) =>{
-    const validador = /^[A-Za-z]+$/; // solo letras minusculasy mayusculas.
-    if(!validador.test(usuario) || usuario.length < 3){
+    const user = usuario
+    const validador = /^[A-Za-z-0-9 ]+$/; // solo letras minusculas y mayusculas.
+    const spaceCount = (usuario.match(/ /g) || []).length; // para contar los espacios.
+    const numbersInText = user.replace(/[^0-9]/g, '').length;
+
+    if(!validador.test(usuario) || usuario.length < 3 || spaceCount > 2 || numbersInText > 3){
       return false
     }
     return true
@@ -57,17 +61,17 @@ const Reg = ({ navigation }) => {
   const register = () =>{
 
     if(!userValidator || !passwordValidator || !emailValidator){
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Debe rellenar todos los campos',
-        showConfirmButton: false,
-        timer: 1500,
-        width: 200,
-      })
+      // Swal.fire({
+      //   position: 'center',
+      //   icon: 'error',
+      //   title: 'Debe rellenar todos los campos',
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      //   width: 200,
+      // })
+      alert('Por favor, complete los campos correctamente')
     }
     else{
-
       // creamos una constante para enviar los datos al backend.
       const usuario ={ 
         name: user,
@@ -92,7 +96,7 @@ const Reg = ({ navigation }) => {
       <View style={{ flexDirection: "column", alignItems: "center" }}>
         <Image source={require("../../assets/Logo.png")} style={styles.logo} />
         <Text style={[styles.text, { fontSize: 18 }]}>
-          Bienvenido a Pre-UesApp!
+          Bienvenido a PreUesApp!
         </Text>
         <Text style={[styles.text, { fontSize: 18 }]}>
           Ingrese sus datos para crear su cuenta
@@ -119,6 +123,7 @@ const Reg = ({ navigation }) => {
               onFocus={() =>{
                 setEmailFocus(true)
               }}
+              maxLength={30}
             />
               {emailValidator || !emailFocus ? null: <Text style={{color:'red', fontWeight:600, fontSize:9}}>Escriba un mail Valido!</Text>}
             </View>
@@ -140,9 +145,10 @@ const Reg = ({ navigation }) => {
                         setUserValidator(validarUser(e))}
                       }
                       onFocus={() => setUserFocus(true)}
+                maxLength={12}
                     />
 
-                    {userValidator || !userFocus ? null : <Text style={{color:'red', fontWeight:600, fontSize:9}}>Debe contener solo letras y minimo 3 caracteres</Text>}
+                    {userValidator || !userFocus ? null : <Text style={{color:'red', fontWeight:600, fontSize:9}}>Debe contener solo letras, minimo 3 caracteres, maximo 2 espacios y 3 numeros</Text>}
             </View>
         </View>
         
@@ -161,6 +167,7 @@ const Reg = ({ navigation }) => {
                       onChangeText={(e) => {setPassword(e)
                         setPasswordValidator(validarPassword(e,password2))}}
                       onFocus={() => setPasswordFocus(true)}
+                      maxLength={16}
                     />
         </View>
         
@@ -182,6 +189,7 @@ const Reg = ({ navigation }) => {
             setPassword2(e)
             setPasswordValidator(validarPassword(e,password))}}
           onFocus={() => setPasswordFocus2(true)}
+          maxLength={16}
         />
 
         {passwordValidator || !passwordFocus2 ? null : <Text style={{color:'red', fontWeight:600, fontSize:9}}>Las contraseñas deben coincidir y tener mas de 4 caracteres</Text>}
@@ -242,7 +250,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: "column",
-    width: "80%",
+    width: "90%",
   },
   button: {
     width: 309,

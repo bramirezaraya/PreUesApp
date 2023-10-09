@@ -9,7 +9,7 @@ const RespuestasRenderizadas = ({respuestaItem, index, respuestas, theme, indexR
   return (
       <View style={styles.contenedorRespuestas}>
                 {/* primero recorremos las respuestas para encontrar la que el usuario marco */}
-                {respuestas[index].answer.id === respuestaItem.id ? (
+                {respuestas[index].id === respuestaItem.id ? (
                     //si la respuesta marcada por el usuario es correcta, marcamos verde, sino marcamos color rojo.
                     <View>
                         {respuestaItem.isCorrect === 1 ? (<Text style={{color:theme.colors.correcta}} >

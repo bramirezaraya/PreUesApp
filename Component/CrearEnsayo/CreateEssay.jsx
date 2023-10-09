@@ -15,6 +15,7 @@ const CreateEssay = ({navigation}) => {
   const [preguntas, setPreguntas] = useState();
   const [minutos, setMinutos] = useState();
 
+
   const dropdownRefPreguntas = useRef({}) // para resetear el dropdown cuando se envie. usamos la referencia.
   const dropdownRefMinutos = useRef({})
 
@@ -30,7 +31,24 @@ const CreateEssay = ({navigation}) => {
       setTema([...tema, Idensayo])
     }
  }
-  
+
+ const ValidarNombre = (nombre) =>{
+    if(nombre.length > 22){
+        return true
+    }
+
+    return false
+    
+ }
+
+ const ValidarEspacios = (nombre) =>{
+  const spaceCount = (nombre.match(/ /g) || []).length; // para contar los espacios.
+  if(spaceCount > 2){
+    return true
+  }
+
+  return false
+ }
 
   const enviarDatos =  async() =>{
     if(!tema || !nombre || !preguntas || !minutos){
@@ -38,6 +56,9 @@ const CreateEssay = ({navigation}) => {
     }else{
       if(tema.length < 2){
         return alert('Debe elegir dos temas como minimo')
+      }
+      if(ValidarEspacios(nombre) || ValidarNombre(nombre)){
+        return alert('Por favor, verifique el formato del campo nombre')
       }
       
       try{
@@ -56,16 +77,12 @@ const CreateEssay = ({navigation}) => {
 
         axios.post('http://192.168.1.96:3000/newEssay/', ensayoPersonalizado, {headers:{
           Authorization:`Bearer ${token}`
-        }}).then((response) => { setMinutos(), setNombre(''),setPreguntas(),setTema([]), dropdownRefPreguntas.current.reset(), dropdownRefMinutos.current.reset(), navigation.navigate('MenuLogin')})
+        }}).then((response) => { console.log(response.data),setMinutos(), setNombre(''),setPreguntas(),setTema([]), dropdownRefPreguntas.current.reset(), dropdownRefMinutos.current.reset(), navigation.navigate('MenuLogin')})
 
       }catch(error){
         console.log(error)
       }
-      //post para guardar el ensayo creado.
-
-
-
-      
+      //post para guardar el ensayo creado. 
     }
 
   }
@@ -85,8 +102,11 @@ const CreateEssay = ({navigation}) => {
                     placeholder='Ingrese un nombre'
                     style={[styles.input, {backgroundColor:theme.bground.bgBlanco,}]}
                     value={nombre}
-                    onChangeText={(value) => setNombre(value)}
+                    onChangeText={(value) => [setNombre(value), ValidarNombre(value)]}
+                    // maxLength={22}
                   />
+                  {ValidarNombre(nombre) && <Text style={{color:theme.colors.incorrecta, marginTop:10}}>Debe contener maximo 22 caracteres</Text>}
+                  {ValidarEspacios(nombre) && <Text style={{color:theme.colors.incorrecta, marginTop:10}}>Debe contener maximo 2 espacios</Text>}
                 </View>
               </View>
 
@@ -96,19 +116,19 @@ const CreateEssay = ({navigation}) => {
                       <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(4) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
                         onPress={() => seleccionarTema(4)}
                       >
-                          <Text style={[styles.texto]}>Geometria</Text>
+                          <Text style={[styles.texto]}>Geometría</Text>
                       </TouchableOpacity>
 
                       <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(1) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
                         onPress={() => seleccionarTema(1)}
                       >
-                          <Text style={[styles.texto]}>Algebra</Text>
+                          <Text style={[styles.texto]}>Álgebra</Text>
                       </TouchableOpacity>
 
                       <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(2) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
                         onPress={() => seleccionarTema(2)}
                       >
-                          <Text style={[styles.texto]}>Numeros</Text>
+                          <Text style={[styles.texto]}>Números</Text>
                       </TouchableOpacity>
 
                       <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(3) ? theme.bground.bgBotonCrearEnsayo: theme.bground.bgBlanco}]}

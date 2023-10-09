@@ -13,10 +13,10 @@ const RenderizadoHistorial = ({item, index, navigation, theme}) => {
     //{item.name.slice(7,8).toUpperCase()+item.name.slice(8)}
   return (
     <View style={[styles.contenedorDatos, {borderBottomColor:theme.bground.bgBorderColor,}]}>
-      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary}}>{item.name.slice(0,1).toUpperCase()+item.name.slice(1)}</Text>
-      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary}}>{item.score}</Text>
-      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary}}>{item.createdAt.slice(0,10)}</Text>
-      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary}}>{item.numberOfQuestions}</Text>
+      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary, width:'20%'}}>{item.name.slice(0,1).toUpperCase()+item.name.slice(1)}</Text>
+      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary, width:'20%'}}>{item.score}</Text>
+      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary, width:'20%'}}>{item.createdAt.slice(0,10)}</Text>
+      <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary, width:'20%'}}>{item.numberOfQuestions}</Text>
       <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgheaderBottom, }]} onPress={()=> verMas()}>
             <Text style={{fontSize:13, textAlign:'center'}}>Ver mas</Text>
       </TouchableOpacity>
@@ -31,13 +31,14 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         width:'100%',
-        paddingTop:10,
+        paddingTop:20,
         paddingBottom:10,
         justifyContent:'space-between',
         borderBottomWidth:2,
     },
     boton:{
-      width:60, 
+      width:60,
+      height:20,
       borderRadius:10
     }
 })

@@ -59,12 +59,11 @@ export default FeedbackInvitado
 
 const styles = StyleSheet.create({
   contenedor:{
-    flex:1, 
+    flex:1,
   },
   contenedorDatos:{ 
     padding:20,
     margin:20,
-    width:'100%',
     borderRadius:10,
     shadowOffset:{width: 2, height:3}, // en que lado afecta
     shadowOpacity:0.2, // la opacidad

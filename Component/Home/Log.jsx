@@ -32,7 +32,7 @@ const Log = ({ navigation }) => {
 
     if(email && password){
       const usuario = {
-        name: email,
+        email: email,
         password: password,
       }
       
@@ -44,6 +44,7 @@ const Log = ({ navigation }) => {
         await AsyncStorage.setItem('id_usuario', JSON.stringify(response.data.id));
         await AsyncStorage.setItem('email', JSON.stringify(response.data.email))
         await AsyncStorage.setItem('usuario', JSON.stringify(response.data.name))
+        await AsyncStorage.setItem('monedas', JSON.stringify(response.data.coins) )
         //guardamos el token en el header a si poder actualizar sin problema.
         //cada ves que hagamos una solicitud utilizara el header que estamos configurando.
         // asi poder identificar al usuario.
@@ -175,6 +176,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: "column",
     width: "80%",
+    alignItems:'center',
   },
   button: {
     width: 309,
