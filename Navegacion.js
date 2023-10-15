@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native"; // contenedor de navegaciones
+import { DrawerActions, NavigationContainer, useNavigation } from "@react-navigation/native"; // contenedor de navegaciones
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; // para crear navegaciones en la parte del bottom.
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; /// para crear las navegaciones
@@ -39,6 +39,11 @@ const Navegacion = () => {
  
   },[darkMode])
 
+// const navegacionDrawer2 = useNavigation()
+// const abrirDrawer = () =>{
+//   navegacionDrawer2.dispatch(DrawerActions.openDrawer()) // para abrir el drawer desde otra screen.
+// }
+
 
   return (
 
@@ -60,7 +65,16 @@ const Navegacion = () => {
                   <Stack.Screen 
                     name="menuPrincipal"
                     component={NavegacionDrawer}
-                    options={{headerTitle:'' , headerShown:false,}}
+                    options={{headerTitle:'' , headerShown:false,
+                    // headerLeft:(() => { 
+                    //   return (
+                    //     <TouchableOpacity onPress={abrirDrawer}>
+                    //           <Text>Boton</Text>
+                    //     </TouchableOpacity>
+                    //   )
+                      
+                    // })
+                  }}
                     
                   />
                 </Stack.Navigator>

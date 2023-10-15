@@ -3,7 +3,7 @@ import React from "react";
 // import theme from "../../theme/theme";
 import { TextInput } from "react-native-gesture-handler";
 import { useState, useEffect } from "react";
-import validator from "validator";
+import validator from "validator"; // biblio para validar directamente.
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useContext } from "react";
@@ -31,7 +31,7 @@ const Reg = ({ navigation }) => {
   const [passwordFocus2, setPasswordFocus2] = React.useState(false);
 
 
-
+  // validamos el nombre del usuario.
   const validarUser = (usuario) =>{
     const user = usuario
     const validador = /^[A-Za-z-0-9 ]+$/; // solo letras minusculas y mayusculas.
@@ -43,19 +43,16 @@ const Reg = ({ navigation }) => {
     }
     return true
   }
-
+  
+  //Validamos las password.
   const validarPassword = (passW, passW2) =>{
-
     // que contengan al menos 4 caracteres.
-    if(passW.length >= 4 && passW2.length >= 4){
-      
+    if(passW.length >= 4 && passW2.length >= 4){  
       /// que las dos contraseñas coincidan.
       return validator.equals(passW, passW2);
       
-    }
-    
+    }  
     return false
-
   }
 
   const register = () =>{

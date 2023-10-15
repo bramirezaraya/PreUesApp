@@ -27,8 +27,11 @@
             bgHistorial: '#FFFFFF',
             bgPerfil:'#25283D',
             bgInputChangePassword: '#E8F9FA',
-            drawerMarcado:'#16D5E1'
-
+            drawerMarcado:'#16D5E1',
+            bgNumeros:'#1344EC',
+            bgAlgebra:'#13EC31',
+            bgProb:'#EC1327',
+            bgGeometria:'#E2EC13',
           },
           colors:{
             textBlanco:'#ffffff',
@@ -69,7 +72,11 @@
             bgHistorial: '#05437D',
             bgPerfil:'#05437D',
             bgInputChangePassword: '#E8F9FA',
-            drawerMarcado:'#05437D'
+            drawerMarcado:'#05437D',
+            bgNumeros:'#1344EC',
+            bgAlgebra:'#13EC31',
+            bgProb:'#EC1327',
+            bgGeometria:'#E2EC13',
           },
         colors:{
           textBlanco:'#ffffff',

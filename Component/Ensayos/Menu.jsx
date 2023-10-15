@@ -60,12 +60,28 @@ const Menu = ({navigation}) => {
   /// se usa para renderizar cada vez que se focusea el componente.
 useFocusEffect( 
     React.useCallback(() =>{
+
+      const getScore = async() =>{
+
+        try{
+          const token = await AsyncStorage.getItem('token')
+        
+        axios.get('http://192.168.1.96:3000/coins/', {headers:{
+          Authorization: `Bearer ${token}`
+        }})
+        .then(response => {setMonedas(response.data.coins)})
+        }catch(error) {
+          console.log(error)
+        }
+      }
+
+    
     const llamadaDatosUser = async() =>{
       const token = await AsyncStorage.getItem('token')
       const user = await AsyncStorage.getItem('usuario');
-      const monedas = await AsyncStorage.getItem('monedas')
-      setMonedas(monedas)
-         setUsuario(JSON.parse(user))
+      // const monedas = await AsyncStorage.getItem('monedas')
+      // setMonedas(monedas)
+      setUsuario(JSON.parse(user))
 
       axios.get('http://192.168.1.96:3000/showCustomEssays',{ headers:{
         Authorization: `Bearer ${token}`
@@ -74,6 +90,8 @@ useFocusEffect(
       .catch((error) => console.log(error))
     }
     llamadaDatosUser();
+    getScore()
+
   },[cantidadCustom])
 )
 

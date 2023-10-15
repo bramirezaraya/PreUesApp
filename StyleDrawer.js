@@ -109,7 +109,7 @@ import modoDark from './ModoDark'
                             <Text  style={[styles.text, {color:theme.colors.textSecondary}]}>Modo Dia</Text>
                         </View>
                         
-                    ) : (   <View style={{display:'flex', flexDirection:'row', gap:10}}>
+                    ) : (   <View style={{display:'flex', flexDirection:'row', gap:20}}>
                                 <Image style={styles.iconos}  source={require('./assets/moon.png')} />
                                 <Text  style={[styles.text, {color:theme.colors.textSecondary}]}>Modo oscuro</Text>
                             </View>
@@ -121,7 +121,7 @@ import modoDark from './ModoDark'
             <View>
                 <TouchableOpacity style={styles.menuInterno} onPress={logOut} >
                     <Image  style={styles.iconos}  source={require('./assets/log-out.png')}/>
-                    <Text style={[styles.text, {color:theme.colors.textSecondary}]}>Cerrar Sesión</Text>                
+                    <Text style={[styles.text, {color:theme.colors.textSecondary}]}>Cerrar Sesión</Text>                 
                 </TouchableOpacity>
             </View>
         </View>
