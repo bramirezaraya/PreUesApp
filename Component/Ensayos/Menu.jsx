@@ -15,28 +15,28 @@ const Menu = ({navigation}) => {
 
   const datosEnsayos = [
     {
-      name:"Ensayo general",
+      name:"Ensayo General",
       numberOfQuestions:68,
       selectedTime:120,
       id:5,
       isCustom:0
     },
     {
-      name:"Ensayo números",
+      name:"Ensayo Números",
       numberOfQuestions:18,
       selectedTime:36,
       id:1,
       isCustom:0
     },
     {
-      name:"Ensayo álgebra",
+      name:"Ensayo Álgebra",
       numberOfQuestions:18,
       selectedTime:36,
       id:2,
       isCustom:0
     },
     {
-      name:"Ensayo probabilidades",
+      name:"Ensayo Probabilidades",
       numberOfQuestions:17,
       selectedTime:34,
       id:3,

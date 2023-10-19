@@ -61,8 +61,8 @@ const Historial = ({navigation}) => {
     else if(filtro === 'Fecha ascendente'){
       const arrayNuevo = [...datosEnsayos].sort((a,b) =>
           {
-            const fecha1 = new Date(a.date);
-            const fecha2 = new Date(b.date);
+            const fecha1 = new Date(a.createdAt);
+            const fecha2 = new Date(b.createdAt);
             return fecha1 - fecha2
           })
       return arrayNuevo
@@ -70,21 +70,21 @@ const Historial = ({navigation}) => {
     else if(filtro === 'Fecha descendente'){
       const arrayNuevo = [...datosEnsayos].sort((a,b) =>
           {
-            const fecha1 = new Date(a.date);
-            const fecha2 = new Date(b.date);
+            const fecha1 = new Date(a.createdAt);
+            const fecha2 = new Date(b.createdAt);
             return fecha2 - fecha1
           })
       return arrayNuevo
     }
     else if(filtro === 'Puntaje ascendente'){
-      const arrayNuevo = [...datosEnsayos].sort((a,b) => a.puntaje - b.puntaje)
+      const arrayNuevo = [...datosEnsayos].sort((a,b) => a.score - b.score)
       return arrayNuevo
     }
     else if(filtro === 'Puntaje descendente'){
-      const arrayNuevo = [...datosEnsayos].sort((a,b) => b.puntaje - a.puntaje)
+      const arrayNuevo = [...datosEnsayos].sort((a,b) => b.score - a.score)
       return arrayNuevo
     }
-    else if(filtro === 'Geometria' || filtro === 'Numeros' || filtro === 'Algebra' || filtro === 'Probabilidad') {
+    else if(filtro === 'Geometría' || filtro === 'Números' || filtro === 'Álgebra' || filtro === 'Probabilidad') {
       const filtroMinuscula = filtro.toLocaleLowerCase()
       const arrayNuevo = [...datosEnsayos].filter((elemento) => elemento.name.toLocaleLowerCase().includes(filtroMinuscula))
       return arrayNuevo
@@ -114,7 +114,6 @@ const Historial = ({navigation}) => {
     filtrarName()
   }, [busqueda, filtro])
 
-    if(historial){
        return (
         <View style={[styles.contenedorHistorial, {backgroundColor: theme.bground.bgPrimary,}]}>
           <View style={[styles.contenedorDatoHistorial, {backgroundColor:theme.bground.bgSecondary,}]}>
@@ -131,7 +130,7 @@ const Historial = ({navigation}) => {
                 
                 <View>
                   <SelectDropdown 
-                    data={['Nombre ascendente','Nombre descendente','Fecha ascendente','Fecha descendente','Puntaje ascendente','Puntaje descendente', 'Geometria', 'Numeros', 'Probabilidad', 'Algebra']}
+                    data={['Nombre ascendente','Nombre descendente','Fecha ascendente','Fecha descendente','Puntaje ascendente','Puntaje descendente', 'Geometría', 'Números', 'Probabilidad', 'Álgebra']}
                     buttonStyle={[styles.dropdown, {backgroundColor:theme.bground.bgBlanco,}]}
                     buttonTextStyle={[styles.colorDropdown, {color:theme.colors.textNegro,}]}
                     defaultButtonText='Filtros'
@@ -150,21 +149,20 @@ const Historial = ({navigation}) => {
                       <Text style={[styles.datosHistorial, {color:theme.colors.textSecondary}]}>Preguntas</Text>
                       <Image source={require('../../assets/plus.png')} />
                   </View>
-
-                  <FlatList
-                    // contentContainerStyle={{paddingBottom:150}}
-                      data={arrayFiltrado}
-                      renderItem={({item, index}) => RenderizadoHistorial({item,index, navigation, theme})}
-                      keyExtractor={(item) => item.id}
-                  />
+                  {historial ? 
+                      <FlatList
+                        // contentContainerStyle={{paddingBottom:150}}
+                          data={arrayFiltrado}
+                          renderItem={({item, index}) => RenderizadoHistorial({item,index, navigation, theme})}
+                          keyExtractor={(item) => item.id}
+                      /> : 
+                      <Text>Cargando...</Text>
+                  }
+                  
               </View>
           </View>
         </View>
-      )
-    }else{
-      <View><Text>No tienes ningun ensayo realizado.</Text></View>
-    }
-       
+      )    
 }
 
 export default Historial

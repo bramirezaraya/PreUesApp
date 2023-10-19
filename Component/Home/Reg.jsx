@@ -58,14 +58,6 @@ const Reg = ({ navigation }) => {
   const register = () =>{
 
     if(!userValidator || !passwordValidator || !emailValidator){
-      // Swal.fire({
-      //   position: 'center',
-      //   icon: 'error',
-      //   title: 'Debe rellenar todos los campos',
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      //   width: 200,
-      // })
       alert('Por favor, complete los campos correctamente')
     }
     else{

@@ -29,23 +29,21 @@ const EnsayoPrueba = ({navigation}) => {
     const[indexPagination, setIndexPagination] = useState(0)
     const array= new Array(4).fill('')
     const [arrayModulo, setArrayModulo] = useState([])
+
+    // avanzar pregunta
     const AvanzarPregunta = () =>{
         if(indexPregunta < ensayos.length - 1){
             setIndexPregunta(indexPregunta + 1)
         }
     }
+    //retroceder pregunta
     const RetrocederPregunta = () =>{
         if(indexPregunta > 0){
             setIndexPregunta(indexPregunta - 1)
         }
     }
+
     const route = useRoute();
-
-    // tomamos el nombre del ensayo que llamaremos a pedir.
-    // const nombre = route.params.nombreEnsayo
-    // const id_ensayo= route.params.id;
-    // const isCustom = route.params.isCustom
-
     const {nombre, id_ensayo, isCustom} = route.params
 
     // pedimos los datos del ensayo al backend.
@@ -73,7 +71,8 @@ const EnsayoPrueba = ({navigation}) => {
                 console.log(error)
             }   
         }
-
+        
+        // llamada al ensayo general.
         const ensayoGeneral = async() =>{
             try{
                 axios.get('http://192.168.1.96:3000/allQuestions/')
@@ -107,6 +106,8 @@ const EnsayoPrueba = ({navigation}) => {
 
     //hago post del ensayo que se rendira y lo guardo en el backend.
         const postEnsayo = async (numeroPreguntas, tiempo) =>{
+            const nombreEnsayo = nombre.slice(7)
+            
             try{            
                 /// revisar el tiempo......
                 const cantidadPreguntas = numeroPreguntas
@@ -117,7 +118,7 @@ const EnsayoPrueba = ({navigation}) => {
                     essayIDS: id_ensayo,
                     numberOfQuestions: cantidadPreguntas,
                     isCustom:0,
-                    name: nombre,
+                    name: nombreEnsayo,
                     durationTime:tiempo,
                 }
 
@@ -131,8 +132,7 @@ const EnsayoPrueba = ({navigation}) => {
             }
         }
 
-        //response.data.customEssay.questions[0].selectedQuestion
-
+        // llamada al ensayo custom.
         const customEssay = async() =>{
                 const token = await AsyncStorage.getItem('token')
                 
@@ -157,14 +157,16 @@ const EnsayoPrueba = ({navigation}) => {
                 )
                 .catch((error) => console.log(error))
         }
+
+
         if(isCustom === 0){
             if(nombre === 'Ensayo general'){
-                ensayoGeneral()
+                ensayoGeneral() // llamamos ensayo general
             }else{
-                llamadaEnsayos();
+                llamadaEnsayos(); // ensayo predefinido
             }  
         }else{
-            customEssay()
+            customEssay() // ensayo custom.
         }
     },[nombre])
 
@@ -212,6 +214,7 @@ const EnsayoPrueba = ({navigation}) => {
        
     }
 
+    /// para actualizar el tiempo del ensayo.
     useEffect(() => {
 
         let timer
@@ -235,12 +238,14 @@ const EnsayoPrueba = ({navigation}) => {
 
     }, [tiempo])
 
+    // avanzar pagination.
     const avanzarPagination = () =>{     
         if(indexPagination < cantidadPaginas-1){
             setIndexPagination(indexPagination+1)
         }
     }
 
+    // retroceder pagination
     const retrocederPagination = () =>{     
         if(indexPagination > 0){
             setIndexPagination(indexPagination-1)
@@ -257,9 +262,7 @@ const EnsayoPrueba = ({navigation}) => {
         }else{
              essay = ensayos[indexPregunta].selectedQuestion
         }
-       
-        // .replace(ecuacionRegex, (match, content) => content);
-        // console.log(essayPregunta)
+
         return (
            <View style={[styles.contenedorPrincipal, {backgroundColor:theme.bground.bgPrimary,}]}>
                 <ScrollView contentContainerStyle={[styles.contenedorEnsayo, {backgroundColor: theme.bground.bgSecondary,}]}>
@@ -295,22 +298,6 @@ const EnsayoPrueba = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                     ))}
-
-                    {/* <View style={styles.contenedorBoton}>
-                        <TouchableOpacity style={styles.boton}  onPress={() => RetrocederPregunta()} >
-                            <Image source={left} />
-                        </TouchableOpacity>
-                        {indexPregunta +1 === ensayos.length ? (
-                                <TouchableOpacity style={styles.botonfinalizar} onPress={() => mostrarDatos()}>
-                                    <Text style={{color:'#000', fontWeight:600,}}>Finalizar</Text>
-                                </TouchableOpacity> )
-                                 : 
-                                 (
-                                <TouchableOpacity  style={styles.boton} onPress={() => AvanzarPregunta()} >
-                                    <Image source={right} />
-                                </TouchableOpacity> )
-                        }          
-                    </View> */}
 
                     <View style={styles.contenedorBoton}>
                         {indexPregunta +1 === ensayos.length && (

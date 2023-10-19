@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { TextInput } from 'react-native-gesture-handler'
 import validator from 'validator'
 import modoDark from '../../ModoDark'
+import { useFocusEffect } from '@react-navigation/native'
 const Account = () => {
 
   const {theme} = useContext(modoDark)
@@ -70,21 +71,34 @@ const Account = () => {
       
   }
 
-  useEffect(() =>{
+  useFocusEffect(
+    React.useCallback(() =>{
 
 
     llamarDatos = async() =>{
       const mail = await AsyncStorage.getItem('email')
       const user = await AsyncStorage.getItem('usuario')
-      const monedas = await AsyncStorage.getItem('monedas')
-      setMonedas(monedas)
       setEmail(JSON.parse(mail))
       setUsuario(JSON.parse(user))
     }
+    const getScore = async() =>{
+
+      try{
+        const token = await AsyncStorage.getItem('token')
+      
+      axios.get('http://192.168.1.96:3000/coins/', {headers:{
+        Authorization: `Bearer ${token}`
+      }})
+      .then(response => {setMonedas(response.data.coins)})
+      }catch(error) {
+        console.log(error)
+      }
+    }
 
     llamarDatos()
+    getScore()
 
-  },[])
+  },[]))
 
 
   return (
