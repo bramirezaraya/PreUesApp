@@ -5,9 +5,14 @@ import modoDark from '../../ModoDark';
 import { useFocusEffect } from '@react-navigation/native';
 import ProgressCircle from 'react-native-progress-circle'
 import axios from 'axios';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import RenderizadoEstadistica from './RenderizadoEstadistica';
-import PieChartData from './PieChartData';
+import PieChartData from './PieChartData'; // componenente
+import PureChart from 'react-native-pure-chart';
+import { BarChart, LineChart, PieChart } from 'react-native-gifted-charts';
+import { color } from 'react-native-reanimated';
+
+
 const Estadisticas = () => {
 
   const [historial, setHistorial] = useState([])
@@ -18,7 +23,7 @@ const Estadisticas = () => {
   const widthAndHeight = 200
   var series = 1
   const sliceColor = [ 'bgAlgebra', 'bgGeometria', 'bgNumeros','bgProb'] /// colores de la aplicacion para cada tema.
-  const labels = ['Álgebra','GeometrÍa', 'Números',  'Probabilidades', ]; // Etiquetas correspondientes a los valores de la serie
+  const labels = ['Álgebra','Geometría', 'Números',  'Probabilidades', ]; // Etiquetas correspondientes a los valores de la serie
 
   useFocusEffect(
     React.useCallback(() =>{
@@ -48,19 +53,55 @@ const Estadisticas = () => {
       }
     }
 
+    const getScore = async() =>{
+      const token = await AsyncStorage.getItem('token')
+      axios.get('http://192.168.1.96:3000/scores/', {headers:{
+        Authorization:`Bearer ${token}`
+      }}).then((response) => setHistorial(response.data))
+
+    }
+
     getAverage()
     getEssayData()
+    getScore()
   },[]))
 
   if(avegare){
     series = avegare.map(item => item.promedio)
   }
+  /// para setear el color en un nuevo array.
+  let datosScore
+  if(historial.length > 0){
+      datosScore = historial.map( historial => ({
+        ...historial,
+        frontColor: theme.bground[historial.color]
+      }))
+  }
 
   return (
-    <View style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary,}]}>
-
+    <ScrollView style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary}]}>
 
       {/*Datos de la grafica.  */}
+      <View style={styles.datosPieChart}>
+          <BarChart 
+          data = {datosScore ? datosScore : []} 
+          maxValue={1000} 
+          stepValue={100} 
+          height={400} width={400} 
+          yAxisOffset={0} 
+          showScrollIndicator={true}
+          xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x
+          spacing={60} // espaciado entre cada bar
+          yAxisColor={'black'} // color de la linea y
+          xAxisColor={'black'} // color linea x
+          rulesColor={'#000'} // lineas pequeñas
+          xAxisLabelTextStyle={{color:'black'}} /// color del texto X
+          yAxisTextStyle={{color:'black'}} // color del texto Y
+        /> 
+      </View>
+      
+
+      {/* <PieChart data = {data} maxValue={1000} stepValue={100} height={400} width={400} focusOnPress={true} toggleFocusOnPress={true} strokeWidth={0.5} strokeColor={'black'} showText={true} showValuesAsLabels={true} /> */}
 
       {/* El pie chart que muestra el promedio de cada tema. */}
       <View style={styles.datos}>
@@ -76,7 +117,7 @@ const Estadisticas = () => {
             />
                
             : <Text>Cargando...</Text>      
-
+            
             } 
       </View>
             
@@ -98,7 +139,7 @@ const Estadisticas = () => {
             
      
 
-    </View>
+    </ScrollView>
   )
 }
 
@@ -111,7 +152,7 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     gap:20,
     height:'100%',
-    padding:10
+    padding:10,
   },
 
   datos:{
@@ -139,4 +180,14 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     padding:10,
   },
+  datosPieChart:{
+    margin:10,
+    shadowOffset:{width: 2, height:3}, // en que lado afecta
+    shadowOpacity:0.2, // la opacidad
+    shadowRadius:3, // el radio de la sombra
+    elevation:3,
+    shadowColor:'#000000', // color del shadow
+    borderRadius:15,
+    padding:10
+  }
 })
