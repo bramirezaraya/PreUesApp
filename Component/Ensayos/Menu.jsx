@@ -43,7 +43,7 @@ const Menu = ({navigation}) => {
       isCustom:0
     },
     {
-      name:"ensayo geometría",
+      name:"ensayo Geometría",
       numberOfQuestions:15,
       selectedTime:30,
       id:4,

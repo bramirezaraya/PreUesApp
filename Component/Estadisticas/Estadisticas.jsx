@@ -19,12 +19,17 @@ const Estadisticas = () => {
   const {theme} = useContext(modoDark)
   const [datosEnsayos,setDatosEnsayos] = useState()
   const [avegare, setAverage] = useState([])
+  const [infoEnsayo, setInfoEnsayo] = useState(false)
+  const [tipoEnsayo, setTipoEnsayo] = useState()
+  const [fechaEnsayo, setFechaEnsayo] = useState()
+  const [puntajeEnsayo, setPuntajeEnsayo] = useState()
+
 
   const widthAndHeight = 200
   var series = 1
-  const sliceColor = [ 'bgAlgebra', 'bgGeometria', 'bgNumeros','bgProb'] /// colores de la aplicacion para cada tema.
-  const labels = ['Álgebra','Geometría', 'Números',  'Probabilidades', ]; // Etiquetas correspondientes a los valores de la serie
-
+  const sliceColor = [ 'bgNumeros', 'bgAlgebra','bgProb', 'bgGeometria'] /// colores de la aplicacion para cada tema.
+  const labels = ['Números', 'Álgebra','Probabilidades', 'Geometría']; // Etiquetas correspondientes a los valores de la serie
+  // numeros, algebra, probabilidades, geometria
   useFocusEffect(
     React.useCallback(() =>{
 
@@ -66,8 +71,15 @@ const Estadisticas = () => {
     getScore()
   },[]))
 
+  // promedio de los puntajes para el pieChart.
   if(avegare){
-    series = avegare.map(item => item.promedio)
+    series = avegare.map(item => ({
+      value: item.promedio,
+      id: item.id,
+      color: theme.bground[sliceColor[item.id-1]],
+      textColor:'#fff',
+      fontWeight:700
+    }))
   }
   /// para setear el color en un nuevo array.
   let datosScore
@@ -82,25 +94,47 @@ const Estadisticas = () => {
     <ScrollView style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary}]}>
 
       {/*Datos de la grafica.  */}
-      <View style={styles.datosPieChart}>
+      <View style={[styles.datosPieChart , {backgroundColor:'#fff'}]}>
           <BarChart 
-          data = {datosScore ? datosScore : []} 
-          maxValue={1000} 
-          stepValue={100} 
-          height={400} width={400} 
-          yAxisOffset={0} 
-          showScrollIndicator={true}
-          xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x
-          spacing={60} // espaciado entre cada bar
-          yAxisColor={'black'} // color de la linea y
-          xAxisColor={'black'} // color linea x
-          rulesColor={'#000'} // lineas pequeñas
-          xAxisLabelTextStyle={{color:'black'}} /// color del texto X
-          yAxisTextStyle={{color:'black'}} // color del texto Y
-        /> 
+            data = {datosScore ? datosScore : []} 
+            maxValue={1000} 
+            stepValue={100} 
+            height={350} width={350} 
+            yAxisOffset={0} 
+            showScrollIndicator={true}
+            xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x
+            spacing={60} // espaciado entre cada bar
+            initialSpacing={30}
+            yAxisColor={'black'} // color de la linea y
+            xAxisColor={'black'} // color linea x
+            rulesColor={'#000'} // lineas pequeñas
+            xAxisLabelTextStyle={{color:'black'}} /// color del texto X
+            yAxisTextStyle={{color:'black'}} // color del texto Y
+            // onPress={(item) => {
+            //   setInfoEnsayo(!infoEnsayo)
+            //   setTipoEnsayo(item.name)
+            //   setPuntajeEnsayo(item.value)
+            //   setFechaEnsayo(item.createdAt)
+            // }}
+            renderTooltip={(item, index) => {
+              return(
+                <View style={[styles.infoEnsayo, {backgroundColor:theme.bground[item.color], right: datosScore.length - 1 === index ? '0%'  : null}]}>
+                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Tema : {item.name}</Text>
+                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Puntaje obtenido : {item.value}</Text>
+                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Fecha : {item.createdAt}</Text>
+                </View>
+              )
+            }}
+          /> 
+          {/* {infoEnsayo && 
+            <View style={[styles.infoEnsayo, {backgroundColor:theme.bground.bgSecondary}]}>
+                <Text style={{color:theme.colors.textSecondary}}>Tema : {tipoEnsayo}</Text>
+                <Text style={{color:theme.colors.textSecondary}}>Puntaje obtenido : {puntajeEnsayo}</Text>
+                <Text style={{color:theme.colors.textSecondary}}>Fecha : {fechaEnsayo}</Text>
+            </View>
+          } */}         
       </View>
       
-
       {/* <PieChart data = {data} maxValue={1000} stepValue={100} height={400} width={400} focusOnPress={true} toggleFocusOnPress={true} strokeWidth={0.5} strokeColor={'black'} showText={true} showValuesAsLabels={true} /> */}
 
       {/* El pie chart que muestra el promedio de cada tema. */}
@@ -120,8 +154,7 @@ const Estadisticas = () => {
             
             } 
       </View>
-            
-      
+               
       {/* datos del ensayo por cada tema (pregunta totales y correctas) */} 
       <View style={styles.contenedorDatosEnsayos}>
         <Text style={[styles.texto, {textAlign:'center', color:theme.colors.textSecondary}]}>Datos Ensayos</Text>
@@ -135,10 +168,7 @@ const Estadisticas = () => {
                 : <Text>Cargando...</Text>
                 }
       </View> 
-            
-            
-     
-
+  
     </ScrollView>
   )
 }
@@ -188,6 +218,13 @@ const styles = StyleSheet.create({
     elevation:3,
     shadowColor:'#000000', // color del shadow
     borderRadius:15,
-    padding:10
+    padding:10,
+    position:'relative'
+  },
+  infoEnsayo:{
+    position:'absolute',
+    top:'20%',
+    padding:10,
+    borderRadius:15,
   }
 })

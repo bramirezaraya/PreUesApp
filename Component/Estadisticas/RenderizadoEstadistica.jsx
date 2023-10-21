@@ -4,7 +4,7 @@ import ProgressCircle from 'react-native-progress-circle'
 const RenderizadoEstadistica = ({item, index, theme}) => {
   return (
     <View style={[styles.contenedorDatosEnsayos, {backgroundColor:'#fff'}]}>
-               <Text style={{fontSize:17, fontWeight:600}}>{item.name}</Text>
+               <Text style={{fontSize:17, fontWeight:700}}>{item.name}</Text>
                 <View style={[styles.datosEnsayos, {borderBottomWidth:1,borderBottomColor:'black',}]}>
                       <ProgressCircle
                           percent={100}
