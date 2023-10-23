@@ -89,94 +89,95 @@ const CreateEssay = ({navigation}) => {
 
   return (
     <View style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary,}]}>
-          <View style={[styles.contenedorDatos, {backgroundColor:theme.bground.bgSecondary,}]}>
-            <View>
-              <Text style={{ textAlign:'center', fontSize:20, color:theme.colors.textSecondary}}>Crear Ensayo</Text>
-              <Text style={[styles.titulo, {borderBottomColor:theme.bground.bgBorderColor, textAlign:'justify', padding:10, paddingBottom:10, borderBottomWidth:2, color:theme.colors.textSecondary}]}>Para crear su ensayo debe ingresar los siguientes datos.</Text>
+          <View style={styles.infoTitulos}>
+            <Text style={{fontSize:22, fontWeight:700, color:theme.colors.textSecondary}}>Crear Ensayo</Text>
+            <Text style={[styles.titulo, {textAlign:'justify', color:theme.colors.textSecondary}]}>Para crear su ensayo, complete los siguientes campos</Text>
+          </View>
+          
+          <View style={[styles.contenedorEssay, {backgroundColor:theme.bground.bgCreateEssay}]}>
+            <View style={{gap:10}}>
+              <Text style={[styles.tituloDatos, { color:theme.colors.textSecondary}]}>Nombre</Text>
+              <View style={styles.nombre}>
+                <TextInput 
+                  placeholder='Ingrese un nombre'
+                  style={[styles.input, {backgroundColor:theme.bground.bgBlanco,}]}
+                  value={nombre}
+                  onChangeText={(value) => [setNombre(value), ValidarNombre(value)]}
+                  // maxLength={22}
+                />
+                {ValidarNombre(nombre) && <Text style={{color:theme.colors.incorrecta, marginTop:10}}>Debe contener maximo 22 caracteres</Text>}
+                {ValidarEspacios(nombre) && <Text style={{color:theme.colors.incorrecta, marginTop:10}}>Debe contener maximo 2 espacios</Text>}
+              </View>
             </View>
-              
-              <View>
-                <Text style={[styles.tituloDatos, { color:theme.colors.textSecondary, fontSize:16}]}>Escriba un nombre para su ensayo</Text>
-                <View style={styles.nombre}>
-                  <TextInput 
-                    placeholder='Ingrese un nombre'
-                    style={[styles.input, {backgroundColor:theme.bground.bgBlanco,}]}
-                    value={nombre}
-                    onChangeText={(value) => [setNombre(value), ValidarNombre(value)]}
-                    // maxLength={22}
-                  />
-                  {ValidarNombre(nombre) && <Text style={{color:theme.colors.incorrecta, marginTop:10}}>Debe contener maximo 22 caracteres</Text>}
-                  {ValidarEspacios(nombre) && <Text style={{color:theme.colors.incorrecta, marginTop:10}}>Debe contener maximo 2 espacios</Text>}
+
+                <View>
+                    <Text style={[styles.tituloDatos, {color:theme.colors.textSecondary}]}>Tema</Text>
+                    <Text style={{fontSize:17,color:theme.colors.textSecondary}}>Debe seleccionar dos temas</Text>
+                    <View style={styles.temas}>
+                        <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(4) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
+                          onPress={() => seleccionarTema(4)}
+                        >
+                            <Text style={[styles.texto]}>Geometría</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(1) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
+                          onPress={() => seleccionarTema(1)}
+                        >
+                            <Text style={[styles.texto]}>Álgebra</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(2) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
+                          onPress={() => seleccionarTema(2)}
+                        >
+                            <Text style={[styles.texto]}>Números</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(3) ? theme.bground.bgBotonCrearEnsayo: theme.bground.bgBlanco}]}
+                          onPress={() => seleccionarTema(3)}
+                        >
+                            <Text style={[styles.texto]}>Probabilidad</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
+                <View style={{gap:10}}>
+                      <Text style={[styles.tituloDatos, {color:theme.colors.textSecondary}]}>Preguntas</Text>
+                      <View style={styles.preguntas}>
+                          <SelectDropdown 
+                            data={[12,20,32,40]}
+                            buttonStyle={[styles.dropdown, {backgroundColor:theme.bground.bgBlanco}]} // estilo del boton
+                            buttonTextStyle={styles.colorDropdown} // estilo del texto
+                            dropdownStyle={[styles.drop, {backgroundColor:theme.bground.bgPrimary}]} // estilo del dropdown al desplegarze
+                            defaultButtonText='Seleccione el numero de preguntas'/// nombre por defecto
+                            ref={dropdownRefPreguntas}
+                            // rowTextStyle={styles.colorDropdown} /// el estilo de cada fila.
+                            onSelect={(item)=> setPreguntas(item)}
+                          />
+                      </View>
+                </View>
+                
+                <View style={{gap:10}}>
+                      <Text style={[styles.tituloDatos, {color:theme.colors.textSecondary}]}>Tiempo</Text>
+                      <View style={styles.minutos}>
+                          <SelectDropdown 
+                            data={[15,30,45,60]}
+                            buttonStyle={[styles.dropdown, {backgroundColor:theme.bground.bgBlanco}]} // estilo del boton
+                            buttonTextStyle={styles.colorDropdown} // estilo del texto
+                            dropdownStyle={[styles.drop, {backgroundColor:theme.bground.bgPrimary}]} // estilo del dropdown al desplegarze
+                            defaultButtonText='Seleccione los minutos deseado'
+                            ref={dropdownRefMinutos}
+                            // rowTextStyle={styles.colorDropdown} /// el estilo de cada fila.
+                            onSelect={(item) => setMinutos(item)}
+                          />
+                      </View>
+                </View>
+
+              <View style={styles.contenedorBoton}>
+                <TouchableOpacity style={[styles.botonRealizar, {backgroundColor:theme.bground.bgBotonCrearEnsayo,}]} onPress={() => enviarDatos()}>
+                  <Text style={styles.texto}>Crear Ensayo</Text>
+                </TouchableOpacity>
               </View>
-
-              <View>
-                  <Text style={[styles.tituloDatos, {color:theme.colors.textSecondary, fontSize:16}]}>Debe seleccionar dos temas como minimo.</Text>
-                  <View style={styles.temas}>
-                      <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(4) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
-                        onPress={() => seleccionarTema(4)}
-                      >
-                          <Text style={[styles.texto]}>Geometría</Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(1) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
-                        onPress={() => seleccionarTema(1)}
-                      >
-                          <Text style={[styles.texto]}>Álgebra</Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(2) ? theme.bground.bgBotonCrearEnsayo : theme.bground.bgBlanco}]}
-                        onPress={() => seleccionarTema(2)}
-                      >
-                          <Text style={[styles.texto]}>Números</Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={[styles.boton, {backgroundColor: tema.includes(3) ? theme.bground.bgBotonCrearEnsayo: theme.bground.bgBlanco}]}
-                        onPress={() => seleccionarTema(3)}
-                      >
-                          <Text style={[styles.texto]}>Probabilidad</Text>
-                      </TouchableOpacity>
-                  </View>
-              </View>
-              <View>
-                    <Text style={[styles.tituloDatos, {color:theme.colors.textSecondary, fontSize:16}]}>Seleccione la cantidad de preguntas.</Text>
-                    <View style={styles.preguntas}>
-                        <SelectDropdown 
-                          data={[12,20,32,40]}
-                          buttonStyle={[styles.dropdown, {backgroundColor:theme.bground.bgBlanco}]} // estilo del boton
-                          buttonTextStyle={styles.colorDropdown} // estilo del texto
-                          dropdownStyle={[styles.drop, {backgroundColor:theme.bground.bgPrimary}]} // estilo del dropdown al desplegarze
-                          defaultButtonText='Cantidad de preguntas'/// nombre por defecto
-                          ref={dropdownRefPreguntas}
-                          // rowTextStyle={styles.colorDropdown} /// el estilo de cada fila.
-                          onSelect={(item)=> setPreguntas(item)}
-                        />
-                    </View>
-              </View>
-              
-              <View>
-                    <Text style={[styles.tituloDatos, {color:theme.colors.textSecondary, fontSize:16}]}>Seleccione la cantidad de minutos.</Text>
-                    <View style={styles.minutos}>
-                        <SelectDropdown 
-                          data={[15,30,45,60]}
-                          buttonStyle={[styles.dropdown, {backgroundColor:theme.bground.bgBlanco}]} // estilo del boton
-                          buttonTextStyle={styles.colorDropdown} // estilo del texto
-                          dropdownStyle={[styles.drop, {backgroundColor:theme.bground.bgPrimary}]} // estilo del dropdown al desplegarze
-                          defaultButtonText='Cantidad de minutos'
-                          ref={dropdownRefMinutos}
-                          // rowTextStyle={styles.colorDropdown} /// el estilo de cada fila.
-                          onSelect={(item) => setMinutos(item)}
-                        />
-                    </View>
-              </View>
-
-            <View style={styles.contenedorBoton}>
-              <TouchableOpacity style={[styles.botonRealizar, {backgroundColor:theme.bground.bgBotonCrearEnsayo,}]} onPress={() => enviarDatos()}>
-                <Text style={styles.texto}>Crear Ensayo</Text>
-              </TouchableOpacity>
             </View>
           </View>
-    </View>
   )   
 }
 
@@ -185,7 +186,6 @@ export default CreateEssay
 const styles = StyleSheet.create({
   contenedor:{
     // flex:1,
-    padding:10,
     height:'100%',
     display:'flex',
     flexDirection:'column',
@@ -198,6 +198,20 @@ const styles = StyleSheet.create({
     borderRadius:15,
     padding:5,
     gap:30,
+  },
+  contenedorEssay:{
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'space-between',
+    height:'75%',
+    padding:30,
+  },
+  infoTitulos:{
+    padding:30,
+    display:'flex',
+    flexDirection:'column',
+    gap:10,
+    width:'90%'
   },
   contenedorBoton:{
     display:'flex',
@@ -219,16 +233,14 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
   },
   titulo:{
-    fontSize:16,
+    fontSize:20,
     fontWeight:600,
-    borderBottomWidth:1,
     marginTop:10,
-    marginBottom:10,
   },
 
  tituloDatos:{
-  textAlign:'center', 
-  fontWeight:600
+  fontSize:18,
+  fontWeight:700
   },
   botonPregunta:{
     width:50,
@@ -244,16 +256,13 @@ const styles = StyleSheet.create({
     fontSize:16
   },
   preguntas:{
-    margin:10,
     display:'flex',
     flexDirection:'row',
-    justifyContent:'center'
   },
   minutos:{
-    margin:10,
     display:'flex',
     flexDirection:'row',
-    justifyContent:'center'
+    
   },
   input:{
     display:'flex',
@@ -263,9 +272,9 @@ const styles = StyleSheet.create({
     padding:10,
   },
   nombre:{
-    margin:10,
     display:'flex',
-    alignItems:'center'
+    alignItems:'center',
+    width:'80%'
   },
   botonRealizar:{
     height:30,

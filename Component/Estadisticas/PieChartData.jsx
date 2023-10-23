@@ -18,7 +18,7 @@ const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, label
   return (
     <View style={styles.pieChart}>
 
-                  {/* PieChart que muestra la distribucion de los temas.*/}
+                  {/* PieChart anterior otra biblioteca*/}
                   {/* <PieChart
                     widthAndHeight={widthAndHeight}
                     series={series}
@@ -40,7 +40,7 @@ const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, label
                     onPress={(item) => ScaleEssay(item.id)}
                    />
 
-                {/* datos de los temas {backgroundColor:'#E8F9FA'}  */}
+                {/* datos de los temas*/}
                 <View style={styles.infoPromedio}>
                     {avegare.map((label, index) => (
                       <View key={index} style={[styles.colorTemas, indexEnsayo!=null && index+1 === indexEnsayo ? {transform: [{ scale: 1.15 }], backgroundColor:'#FDBD14'} : null]}>

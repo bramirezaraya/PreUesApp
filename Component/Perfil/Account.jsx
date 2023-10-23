@@ -109,7 +109,7 @@ const Account = () => {
                   <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>{usuario}</Text>
                   <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>{email}</Text>
                   <View style={styles.puntos}>
-                      <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>Tus puntos son : {monedas}</Text>
+                      <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>Sus puntos son : {monedas}</Text>
                       <Image source={require('../../assets/dollar.png')} />
                   </View>
             </View>

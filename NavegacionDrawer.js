@@ -75,15 +75,18 @@ const NavegacionDrawer = () => {
                       name="MenuLogin"
                       component={MenuLogin}    
                       options={ ({ navigation}) => ({
-                         headerTitle:'PreUesApp',
+                        headerTitle:'PreUesApp',
                         headerTintColor:theme.colors.textSecondary, /// color del menu hamburguesa y titulo.
                         headerTitleAlign:'center',
                         headerShadowVisible:false,
+                        headerTitleStyle:{
+                          fontSize:23
+                        },       
                         // headerShown:false,
-                        headerStyle: { backgroundColor: theme.bground.bgPrimary },
+                        headerStyle: { backgroundColor: theme.bground.bgPrimary},
                         headerLeft: () =>(
                           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                              <Image style={{marginLeft:10, width:30, height:30}} 
+                              <Image style={{marginLeft:15, width:30, height:30}} 
                               source={darkMode ? require('./assets/menuDark.png') : require('./assets/menu.png')} 
                               />
                           </TouchableOpacity>
@@ -97,13 +100,16 @@ const NavegacionDrawer = () => {
                       component={CreateEssay}
                       options={({navigation}) => ({
                         headerTitle:'PreUesApp',
+                        headerTitleStyle:{
+                          fontSize:23
+                        }, 
                         headerTintColor:theme.colors.textSecondary, /// color del menu hamburguesa y titulo.
                         headerTitleAlign:'center',
                         headerShadowVisible:false,
                         headerStyle: { backgroundColor: theme.bground.bgPrimary },
                         headerLeft: () =>(
                           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                              <Image style={{marginLeft:10, width:30, height:30}} 
+                              <Image style={{marginLeft:15, width:30, height:30}} 
                              source={darkMode ? require('./assets/menuDark.png') : require('./assets/menu.png')}  />
                           </TouchableOpacity>
                         )
@@ -114,13 +120,16 @@ const NavegacionDrawer = () => {
                       component={Historial}
                       options={({ navigation}) => ({
                         headerTitle:'PreUesApp',
+                        headerTitleStyle:{
+                          fontSize:23
+                        }, 
                         headerTintColor:theme.colors.textSecondary, /// color del menu hamburguesa y titulo.
                         headerTitleAlign:'center',
                         headerShadowVisible:false,
                         headerStyle: { backgroundColor: theme.bground.bgPrimary },
                         headerLeft: () =>(
                           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                              <Image style={{marginLeft:10, width:30, height:30}} 
+                              <Image style={{marginLeft:15, width:30, height:30}} 
                               source={darkMode ? require('./assets/menuDark.png') : require('./assets/menu.png')}  />
                           </TouchableOpacity>
                         )
@@ -131,13 +140,16 @@ const NavegacionDrawer = () => {
                       component={Estadisticas}
                       options={({ navigation }) => ({
                         headerTitle:'PreUesApp',
+                        headerTitleStyle:{
+                          fontSize:23
+                        }, 
                         headerTintColor:theme.colors.textSecondary, /// color del menu hamburguesa y titulo.
                         headerTitleAlign:'center',
                         headerShadowVisible:false,
                         headerStyle: { backgroundColor: theme.bground.bgPrimary }, // estilos
                         headerLeft: () =>(
                           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                              <Image style={{marginLeft:10, width:30, height:30}}
+                              <Image style={{marginLeft:15, width:30, height:30}}
                               source={darkMode ? require('./assets/menuDark.png') : require('./assets/menu.png')}  />
                           </TouchableOpacity>
                         )
@@ -148,13 +160,16 @@ const NavegacionDrawer = () => {
                       component={Account}
                       options={({ navigation }) => ({
                         headerTitle:'PreUesApp',
+                        headerTitleStyle:{
+                          fontSize:23
+                        }, 
                         headerTintColor:theme.colors.textSecondary, /// color del menu hamburguesa y titulo.
                         headerTitleAlign:'center',
                         headerShadowVisible:false,
                         headerStyle: { backgroundColor: theme.bground.bgPrimary }, // estilos
                         headerLeft: () =>(
                           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                              <Image style={{marginLeft:10, width:30, height:30}}  source={darkMode ? require('./assets/menuDark.png') : require('./assets/menu.png')} />
+                              <Image style={{marginLeft:15, width:30, height:30}}  source={darkMode ? require('./assets/menuDark.png') : require('./assets/menu.png')} />
                           </TouchableOpacity>
                         )
                       })}

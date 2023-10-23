@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import modoDark from '../../ModoDark';
 import { useFocusEffect } from '@react-navigation/native';
@@ -11,7 +11,7 @@ import PieChartData from './PieChartData'; // componenente
 import PureChart from 'react-native-pure-chart';
 import { BarChart, LineChart, PieChart } from 'react-native-gifted-charts';
 import { color } from 'react-native-reanimated';
-
+import SelectDropdown from 'react-native-select-dropdown';
 
 const Estadisticas = () => {
 
@@ -23,12 +23,15 @@ const Estadisticas = () => {
   const [tipoEnsayo, setTipoEnsayo] = useState()
   const [fechaEnsayo, setFechaEnsayo] = useState()
   const [puntajeEnsayo, setPuntajeEnsayo] = useState()
-
+  const [tema, setTema] = useState('Todos')
 
   const widthAndHeight = 200
   var series = 1
   const sliceColor = [ 'bgNumeros', 'bgAlgebra','bgProb', 'bgGeometria'] /// colores de la aplicacion para cada tema.
   const labels = ['Números', 'Álgebra','Probabilidades', 'Geometría']; // Etiquetas correspondientes a los valores de la serie
+
+  const dropdownRefTema = useRef({}) // para resetear el dropdown cuando se envie. usamos la referencia.
+
   // numeros, algebra, probabilidades, geometria
   useFocusEffect(
     React.useCallback(() =>{
@@ -71,6 +74,26 @@ const Estadisticas = () => {
     getScore()
   },[]))
 
+
+  useFocusEffect(
+    React.useCallback(() =>{
+
+      const getScore = async() =>{
+        const token = await AsyncStorage.getItem('token')
+        if(tema === 'Todos'){
+          axios.get('http://192.168.1.96:3000/scores/', {headers:{
+            Authorization:`Bearer ${token}`
+          }}).then((response) => setHistorial(response.data))
+        }else{
+          axios.get(`http://192.168.1.96:3000/scores?name=${tema}`, {headers:{
+            Authorization:`Bearer ${token}`
+          }}).then((response) => setHistorial(response.data))
+        }
+      }
+      getScore()
+    },[tema])
+  )
+
   // promedio de los puntajes para el pieChart.
   if(avegare){
     series = avegare.map(item => ({
@@ -95,48 +118,55 @@ const Estadisticas = () => {
 
       {/*Datos de la grafica.  */}
       <View style={[styles.datosPieChart , {backgroundColor:'#fff'}]}>
+          <View style={styles.drop}>
+            <SelectDropdown 
+              data={['Todos', 'Números', 'Álgebra', 'Probabilidades', 'Geometría']}
+              buttonStyle={[styles.dropdown, {backgroundColor:theme.bground.bgBlanco}]} // estilo del boton
+              // buttonTextStyle={styles.colorDropdown} // estilo del texto
+              // dropdownStyle={[styles.drop, {backgroundColor:theme.bground.bgPrimary}]} // estilo del dropdown al desplegarze
+              defaultButtonText='Filtrar'/// nombre por defecto
+              ref={dropdownRefTema}
+              renderDropdownIcon={() => {return( <Image style={{width:40, height:40}} source={require('../../assets/filtrar.png')} />)}}
+              dropdownIconPosition='right'
+              // rowTextStyle={styles.colorDropdown} /// el estilo de cada fila.
+              onSelect={(item)=> setTema(item)}
+            />
+          </View>
           <BarChart 
+           style={{ flex: 1 }}
             data = {datosScore ? datosScore : []} 
             maxValue={1000} 
             stepValue={100} 
-            height={350} width={350} 
-            yAxisOffset={0} 
+            height={350}
+            width={350}
+            rulesType='solid'
+            barWidth={25}
+            barBorderTopLeftRadius={20}
+            barBorderTopRightRadius={20}
+            isAnimated={true}
+            yAxisOffset={0}
             showScrollIndicator={true}
+            shiftX={200}
             xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x
-            spacing={60} // espaciado entre cada bar
+            spacing={100} // espaciado entre cada bar
             initialSpacing={30}
             yAxisColor={'black'} // color de la linea y
             xAxisColor={'black'} // color linea x
             rulesColor={'#000'} // lineas pequeñas
             xAxisLabelTextStyle={{color:'black'}} /// color del texto X
             yAxisTextStyle={{color:'black'}} // color del texto Y
-            // onPress={(item) => {
-            //   setInfoEnsayo(!infoEnsayo)
-            //   setTipoEnsayo(item.name)
-            //   setPuntajeEnsayo(item.value)
-            //   setFechaEnsayo(item.createdAt)
-            // }}
             renderTooltip={(item, index) => {
               return(
                 <View style={[styles.infoEnsayo, {backgroundColor:theme.bground[item.color], right: datosScore.length - 1 === index ? '0%'  : null}]}>
                   <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Tema : {item.name}</Text>
-                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Puntaje obtenido : {item.value}</Text>
+                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Puntaje : {item.value}</Text>
                   <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Fecha : {item.createdAt}</Text>
                 </View>
               )
             }}
-          /> 
-          {/* {infoEnsayo && 
-            <View style={[styles.infoEnsayo, {backgroundColor:theme.bground.bgSecondary}]}>
-                <Text style={{color:theme.colors.textSecondary}}>Tema : {tipoEnsayo}</Text>
-                <Text style={{color:theme.colors.textSecondary}}>Puntaje obtenido : {puntajeEnsayo}</Text>
-                <Text style={{color:theme.colors.textSecondary}}>Fecha : {fechaEnsayo}</Text>
-            </View>
-          } */}         
+          />           
       </View>
       
-      {/* <PieChart data = {data} maxValue={1000} stepValue={100} height={400} width={400} focusOnPress={true} toggleFocusOnPress={true} strokeWidth={0.5} strokeColor={'black'} showText={true} showValuesAsLabels={true} /> */}
-
       {/* El pie chart que muestra el promedio de cada tema. */}
       <View style={styles.datos}>
         <Text style={[styles.texto, {marginTop:10,}]}>Promedio general por cada tema</Text>
@@ -178,9 +208,10 @@ export default Estadisticas
 const styles = StyleSheet.create({
 
   contenedor:{
+    position:'relative',
     display:'flex',
     flexDirection:'column',
-    gap:20,
+    gap:30,
     height:'100%',
     padding:10,
   },
@@ -219,12 +250,24 @@ const styles = StyleSheet.create({
     shadowColor:'#000000', // color del shadow
     borderRadius:15,
     padding:10,
-    position:'relative'
+    position:'relative',
+    marginBottom:30
   },
   infoEnsayo:{
     position:'absolute',
     top:'20%',
     padding:10,
     borderRadius:15,
+    width:150
+  },
+  drop:{
+    width:'100%',
+    display:'flex',
+    justifyContent:'flex-end',
+    alignItems:'flex-end',
+    height:50
+  },
+  dropdown:{
+    width:'40%'
   }
 })

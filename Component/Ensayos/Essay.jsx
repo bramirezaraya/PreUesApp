@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
   contenedor:{
     width: 250,
-    height: 220,
+    height: 250,
     flexDirection:'column',
     borderRadius:10,
     alignItems:'center',
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
 
   texto:{
     fontWeight:600,  
-    fontSize:14,
+    fontSize:16,
   },
   textoName:{
     fontWeight:600,

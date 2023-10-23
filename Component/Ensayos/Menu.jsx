@@ -99,12 +99,21 @@ useFocusEffect(
     <SafeAreaView style={[styles.contenedor2, {backgroundColor:theme.bground.bgPrimary,}]}> 
             <View style={styles.contenedor}> 
 
-                  <View style={[styles.datosUser, {backgroundColor:theme.bground.bgInicioDatos,}]}> 
+                  {/* <View style={[styles.datosUser, {backgroundColor:theme.bground.bgInicioDatos,}]}> 
                       <Text style={styles.texto}>Bienvenido {usuario}</Text>
                       <View style={styles.datosMonedas}>
                         <Text style={styles.texto}>Sus monedas acumuladas son: {monedas}</Text>
                         <Image source={require("../../assets/dollar.png")} />
                       </View>
+                  </View> */}
+
+                  <View style={styles.userData}>
+                       <Text style={[styles.textoUser, {fontWeight:100, color:theme.colors.textSecondary}]}>Hola! {usuario}</Text>
+                       <Text style={[styles.textoUser, {fontWeight:'bold', color:theme.colors.textInicio}]}>Acumula monedas al realizar Ensayos!</Text>
+                       <View style={[styles.UserMoney, {backgroundColor:theme.colors.textInicio}]}>
+                            <Image style={{width:25,height:25}} source={require("../../assets/dollar.png")} />
+                            <Text style={[styles.textoUser, {fontWeight:'bold', color:theme.colors.textMoney}]}>{monedas}</Text>
+                       </View>
                   </View>
                   
 
@@ -134,7 +143,7 @@ useFocusEffect(
                               keyExtractor={(item) => item.id}
                           />
                         : <View style={[styles.contenedorTexto , {backgroundColor:theme.bground.bgInicio,}]}>
-                              <Text style={styles.texto}> 
+                              <Text style={[styles.texto, {color:theme.colors.textSecondary}]}> 
                                 Primero debes crear un ensayo personalizado.
                               </Text>                                 
                          </View>
@@ -142,18 +151,20 @@ useFocusEffect(
                       }
                     
                   </View>
-
-                  <View style={[styles.crearEnsayo, {backgroundColor:theme.bground.bgInicio,}]}>
-                      <Text style={[styles.texto, {width:180, color:theme.colors.textSecondary}]}>Cree sus ensayos personalizados.</Text>
-                      <View style={{width:'100%', alignItems:'center'}}>
-                        <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgInicioBottom,}]}
-                          onPress={() => navigation.navigate('Crear Ensayo')}
-                        >
-                          <Text style={[styles.texto, {color:theme.colors.textPrimary}]}>Crear su ensayo</Text>
-                      </TouchableOpacity>
-                      </View>
-                      
+                  <View style={{alignItems:'center', width:'100%'}}>
+                      <View style={[styles.crearEnsayo, {backgroundColor:theme.bground.bgInicio,}]}>
+                        <Text style={[styles.texto, {width:180, color:theme.colors.textSecondary}]}>Cree sus ensayos personalizados.</Text>
+                        <View style={{width:'100%', alignItems:'center'}}>
+                          <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgInicioBottom,}]}
+                            onPress={() => navigation.navigate('Crear Ensayo')}
+                          >
+                            <Text style={[styles.texto, {color:theme.colors.textPrimary}]}>Crear su ensayo</Text>
+                        </TouchableOpacity>
+                        </View>
+                        
+                    </View>
                   </View>
+                  
             </View>   
     </SafeAreaView>
   )
@@ -171,9 +182,8 @@ const styles = StyleSheet.create({
   contenedor: {
     display:'flex',
     flexDirection:'column',
-    alignItems:'center',
+    // alignItems:'center',
     justifyContent:'space-between',
-    borderRadius:15,
     height:'100%',
   },
   datosMonedas:{
@@ -195,13 +205,13 @@ const styles = StyleSheet.create({
     margin:20
   },
   texto:{
-    fontSize:15,
+    fontSize:17,
     fontWeight:600,
   },
   crearEnsayo:{
     display:'flex',
     flexDirection:'column',
-    width:300,
+    width:'70%',
     height:120,
     justifyContent:'space-between',
     padding:15,
@@ -246,7 +256,7 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   textoBotones:{
-    fontSize:14,
+    fontSize:16,
     fontWeight:600
   },
   contenedorTexto:{
@@ -256,6 +266,25 @@ const styles = StyleSheet.create({
     borderRadius:10,
     justifyContent:'center',
     alignItems:'center'
+  },
+  userData:{
+    display:'flex',
+    flexDirection:'column',
+    gap:3,
+    padding:20
+  },
+  textoUser:{
+    fontSize:20,
+  },
+  UserMoney:{
+    display:'flex',
+    flexDirection:'row',
+    gap:10,
+    borderRadius:25,
+    padding:5,
+    alignItems:'center',
+    width:'20%',
+    paddingLeft:10,
   }
 
 })

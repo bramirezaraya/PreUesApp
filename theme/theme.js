@@ -24,7 +24,7 @@
             bgBorderColor: '#13B2E4',
             bgBlanco:'#ffffff',
             bgBotonCrearEnsayo:'#ECAF1A',
-            bgHistorial: '#FFFFFF',
+            bgHistorial: '#DAE9EF',
             bgPerfil:'#25283D',
             bgInputChangePassword: '#E8F9FA',
             drawerMarcado:'#16D5E1',
@@ -32,6 +32,7 @@
             bgAlgebra:'#13EC31',
             bgProb:'#EC1327',
             bgGeometria:'#E2EC13',
+            bgCreateEssay:'#DAE9EF',
           },
           colors:{
             textBlanco:'#ffffff',
@@ -40,7 +41,9 @@
             textSecondary: '#000000', // negro /// menu principal
             textbottom: '#40BFDB', // celeste oscuro
             correcta:'#24E711', // verde
-            incorrecta:'#EB1512' // rojo
+            incorrecta:'#EB1512', // rojo
+            textInicio:'#131E30', // azul oscuro
+            textMoney:'#ffffff'
           },
           texto:{
             fontFamily:'sans-serif'
@@ -77,6 +80,7 @@
             bgAlgebra:'#13EC31',
             bgProb:'#EC1327',
             bgGeometria:'#E2EC13',
+            bgCreateEssay:'#05437D'
           },
         colors:{
           textBlanco:'#ffffff',
@@ -85,7 +89,9 @@
           textSecondary: '#ffffff',
           textbottom: '#40BFDB',
           correcta:'#24E711',
-          incorrecta:'#EB1512'
+          incorrecta:'#EB1512',
+          textInicio:'#ffffff',
+          textMoney:'#131E30',
         },
         texto:{
           fontFamily:'sans-serif'

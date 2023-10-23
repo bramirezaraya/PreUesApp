@@ -116,12 +116,13 @@ const Historial = ({navigation}) => {
 
        return (
         <View style={[styles.contenedorHistorial, {backgroundColor: theme.bground.bgPrimary,}]}>
-          <View style={[styles.contenedorDatoHistorial, {backgroundColor:theme.bground.bgSecondary,}]}>
-              <View style={{marginBottom:10, borderBottomColor:theme.bground.bgBorderColor, borderBottomWidth:2, paddingBottom:30}}>
-                <Text style={{ marginTop:20,textAlign:'center', fontSize:20, fontWeight:600, color:theme.colors.textSecondary}}>Historial</Text>
-              </View>
-              
-              
+
+          <View style={{padding:20, gap:10}}>
+            <Text style={{fontSize:22, fontWeight:700, color:theme.colors.textSecondary}}>Historial</Text>
+            <Text style={{fontSize:20, color:theme.colors.textSecondary}}>Datos de tus ensayos realizados</Text>
+          </View>
+
+          <View style={[styles.contenedorDatoHistorial, {backgroundColor:theme.bground.bgHistorial,}]}>    
               <View style={styles.filtrados}>
                 <View style={styles.contenedorBuscador}>
                   <TextInput onChangeText={(value) => setBusqueda(value)} style={[styles.buscador, {backgroundColor:theme.bground.bgBlanco,}]} />
@@ -141,7 +142,7 @@ const Historial = ({navigation}) => {
                 </View>
               </View>
 
-              <View style={[styles.contenedorInformacionHistorial, {backgroundColor:theme.bground.bgHistorial,}]}>
+              <View style={[styles.contenedorInformacionHistorial]}>
                   <View style={styles.datos}>
                       <Text style={[styles.datosHistorial, {color:theme.colors.textSecondary}]}>Nombre</Text>
                       <Text style={[styles.datosHistorial, {paddingLeft:10, color:theme.colors.textSecondary}]}>Puntaje</Text>
@@ -170,14 +171,13 @@ export default Historial
 const styles = StyleSheet.create({
   contenedorHistorial:{
     flex:1,
-    padding:10,
   },
   header: {
     backgroundColor: 'transparent', // Fondo transparente para el encabezado
   },
   contenedorDatoHistorial:{
-    borderRadius:15,
     padding:10,
+    height:'80%'
   },
   filtrados:{
     display:'flex',
@@ -222,11 +222,11 @@ const styles = StyleSheet.create({
     borderRadius:15,
     padding:10,
     // margin:10,
-    height:'80%'
+    height:'95%'
   },
   datosHistorial:{
     fontSize:13, 
-    fontWeight:600,
+    fontWeight:700,
   },
   dropdown:{
     width:150,

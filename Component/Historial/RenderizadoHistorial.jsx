@@ -17,7 +17,7 @@ const RenderizadoHistorial = ({item, index, navigation, theme}) => {
       <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary, width:'20%'}}>{item.score}</Text>
       <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary, width:'20%'}}>{item.createdAt.slice(0,10)}</Text>
       <Text style={{fontSize:13,textAlign:'center', color:theme.colors.textSecondary, width:'20%'}}>{item.numberOfQuestions}</Text>
-      <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgheaderBottom, }]} onPress={()=> verMas()}>
+      <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgBlanco, }]} onPress={()=> verMas()}>
             <Text style={{fontSize:13, textAlign:'center'}}>Ver mas</Text>
       </TouchableOpacity>
     </View>
