@@ -160,7 +160,7 @@ const EnsayoPrueba = ({navigation}) => {
 
 
         if(isCustom === 0){
-            if(nombre === 'Ensayo general'){
+            if(nombre === 'Ensayo General'){
                 ensayoGeneral() // llamamos ensayo general
             }else{
                 llamadaEnsayos(); // ensayo predefinido
@@ -257,9 +257,9 @@ const EnsayoPrueba = ({navigation}) => {
     if(ensayos && ensayos.length > 0){
         //constante para mostrar los datos depenediendo el index.
         let essay
-        if(isCustom === 0){
+        if(isCustom === 0 ){
               essay = ensayos[indexPregunta];
-        }else{
+        }else {
              essay = ensayos[indexPregunta].selectedQuestion
         }
 

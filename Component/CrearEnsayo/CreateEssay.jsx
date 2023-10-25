@@ -36,9 +36,7 @@ const CreateEssay = ({navigation}) => {
     if(nombre.length > 22){
         return true
     }
-
     return false
-    
  }
 
  const ValidarEspacios = (nombre) =>{
@@ -77,7 +75,7 @@ const CreateEssay = ({navigation}) => {
 
         axios.post('http://192.168.1.96:3000/newEssay/', ensayoPersonalizado, {headers:{
           Authorization:`Bearer ${token}`
-        }}).then((response) => { console.log(response.data),setMinutos(), setNombre(''),setPreguntas(),setTema([]), dropdownRefPreguntas.current.reset(), dropdownRefMinutos.current.reset(), navigation.navigate('MenuLogin')})
+        }}).then((response) => { setMinutos(), setNombre(''),setPreguntas(),setTema([]), dropdownRefPreguntas.current.reset(), dropdownRefMinutos.current.reset(), navigation.navigate('MenuLogin')})
 
       }catch(error){
         console.log(error)

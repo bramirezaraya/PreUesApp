@@ -45,8 +45,11 @@
             textInicio:'#131E30', // azul oscuro
             textMoney:'#ffffff'
           },
+          Titulo:{
+            fontFamily:'Poppins-SemiBold'
+          },
           texto:{
-            fontFamily:'sans-serif'
+            fontFamily:'Roboto-Regular'
           }
       },
       dark:{
@@ -93,8 +96,11 @@
           textInicio:'#ffffff',
           textMoney:'#131E30',
         },
+        Titulo:{
+          fontFamily:'Poppins-SemiBold'
+        },
         texto:{
-          fontFamily:'sans-serif'
+          fontFamily:'Roboto-Regular'
         }
       }
        

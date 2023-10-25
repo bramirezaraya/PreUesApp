@@ -19,10 +19,6 @@ const Estadisticas = () => {
   const {theme} = useContext(modoDark)
   const [datosEnsayos,setDatosEnsayos] = useState()
   const [avegare, setAverage] = useState([])
-  const [infoEnsayo, setInfoEnsayo] = useState(false)
-  const [tipoEnsayo, setTipoEnsayo] = useState()
-  const [fechaEnsayo, setFechaEnsayo] = useState()
-  const [puntajeEnsayo, setPuntajeEnsayo] = useState()
   const [tema, setTema] = useState('Todos')
 
   const widthAndHeight = 200
@@ -114,7 +110,12 @@ const Estadisticas = () => {
   }
 
   return (
-    <ScrollView style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary}]}>
+    <ScrollView style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary}]} contentContainerStyle={{gap:30}}>
+
+      <View style={{gap:5, marginLeft:10}}>
+          <Text style={{fontSize:22, fontWeight:700, color:theme.colors.textSecondary}}>Estadisticas</Text>
+          <Text style={{fontSize:20, color:theme.colors.textSecondary}}>Progreso de tus ensayos</Text>
+      </View>
 
       {/*Datos de la grafica.  */}
       <View style={[styles.datosPieChart , {backgroundColor:'#fff'}]}>
@@ -126,7 +127,7 @@ const Estadisticas = () => {
               // dropdownStyle={[styles.drop, {backgroundColor:theme.bground.bgPrimary}]} // estilo del dropdown al desplegarze
               defaultButtonText='Filtrar'/// nombre por defecto
               ref={dropdownRefTema}
-              renderDropdownIcon={() => {return( <Image style={{width:40, height:40}} source={require('../../assets/filtrar.png')} />)}}
+              renderDropdownIcon={() => {return( <Image style={{width:35, height:35}} source={require('../../assets/filtrar.png')} />)}}
               dropdownIconPosition='right'
               // rowTextStyle={styles.colorDropdown} /// el estilo de cada fila.
               onSelect={(item)=> setTema(item)}
@@ -211,7 +212,6 @@ const styles = StyleSheet.create({
     position:'relative',
     display:'flex',
     flexDirection:'column',
-    gap:30,
     height:'100%',
     padding:10,
   },
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     top:'20%',
     padding:10,
     borderRadius:15,
-    width:150
+    width:170
   },
   drop:{
     width:'100%',

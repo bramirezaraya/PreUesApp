@@ -6,6 +6,8 @@ import { PieChart } from 'react-native-gifted-charts'
 const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, labels }) => {
   const data = [{value:100, color:'red'},{value:200,},{value:300},{value:400}]
   const [indexEnsayo, setIndexEnsayo] = useState(null)
+  // los ordenamos para que queden con sus id en orden ascendente.
+  avegare.sort((a,b) => a.id - b.id)
 
   const ScaleEssay = (id) =>{
     if(indexEnsayo != id){
@@ -32,8 +34,8 @@ const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, label
                     data = {series}  
                     focusOnPress={true} 
                     toggleFocusOnPress={true} 
-                    strokeWidth={0.07} 
-                    strokeColor={'black'}
+                    strokeWidth={0.1} 
+                    strokeColor={'#000'}
                     showText={true} 
                     showValuesAsLabels={true} 
                     radius={100}
