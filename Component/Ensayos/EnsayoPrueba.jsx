@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
 import axios from 'axios'
 import { ScrollView, TouchableOpacity } from 'react-native'
+import MenuContext from '../../MenuContext'
 // import theme from '../../theme/theme'
 
 const submit_answers = "http://192.168.1.96:3000/submitAnswers/"; 
@@ -30,6 +31,7 @@ const EnsayoPrueba = ({navigation}) => {
     const array= new Array(4).fill('')
     const [arrayModulo, setArrayModulo] = useState([])
 
+    const {setMenuEnsayo, setIdEssay} = useContext(MenuContext)
     // avanzar pregunta
     const AvanzarPregunta = () =>{
         if(indexPregunta < ensayos.length - 1){
@@ -52,6 +54,7 @@ const EnsayoPrueba = ({navigation}) => {
         // llamo el ensayo que rendire.
         const llamadaEnsayos = async() =>{
             try{
+                setMenuEnsayo(false)
                 const respuesta = await axios.get(`http://192.168.1.96:3000/essayQuestions/?name=${nombre}`)
                 setEnsayos(respuesta.data.questions.slice(0,5))
                 setTiempo(respuesta.data.questions.slice(0,5).length * 60 * 2)
@@ -75,6 +78,7 @@ const EnsayoPrueba = ({navigation}) => {
         // llamada al ensayo general.
         const ensayoGeneral = async() =>{
             try{
+                setMenuEnsayo(false)
                 axios.get('http://192.168.1.96:3000/allQuestions/')
                 .then((response) => {
                     const array1 = response.data[0].questions;
@@ -107,7 +111,6 @@ const EnsayoPrueba = ({navigation}) => {
     //hago post del ensayo que se rendira y lo guardo en el backend.
         const postEnsayo = async (numeroPreguntas, tiempo) =>{
             const nombreEnsayo = nombre.slice(7)
-            
             try{            
                 /// revisar el tiempo......
                 const cantidadPreguntas = numeroPreguntas
@@ -125,7 +128,7 @@ const EnsayoPrueba = ({navigation}) => {
                 axios.post('http://192.168.1.96:3000/newEssay/', ensayo, {headers:{
                     Authorization:`Bearer ${token}`
                 }})
-                .then((response) => {setIdEnsayo(response.data.newEssay.id)}) /// response.data.id
+                .then((response) => {setIdEnsayo(response.data.newEssay.id), setIdEssay(response.data.newEssay.id)}) /// response.data.id
                 .catch((error) => console.log(error))
             }catch(error){
                 console.log(error)
@@ -135,14 +138,15 @@ const EnsayoPrueba = ({navigation}) => {
         // llamada al ensayo custom.
         const customEssay = async() =>{
                 const token = await AsyncStorage.getItem('token')
-                
+                setMenuEnsayo(false)
                 axios.get(`http://192.168.1.96:3000/customEssay/?essayId=${id_ensayo}`, {headers:{
                     Authorization:`Bearer ${token}`
                 }})
                 .then((response) => {
                     setEnsayos(response.data.customEssay.questions), 
                     setTiempo(response.data.customEssay.selectedTime * 60), 
-                    setIdEnsayo(response.data.customEssay.id) 
+                    setIdEnsayo(response.data.customEssay.id)
+                    setIdEssay(response.data.customEssay.id)
                     setModulo(response.data.customEssay.questions.length % 4)
                     if(response.data.customEssay.questions.length % 4 === 0){
                         setCantidadPaginas(Math.trunc(response.data.customEssay.questions.length / 4))
@@ -199,6 +203,7 @@ const EnsayoPrueba = ({navigation}) => {
                 console.log(respuesta.status)
                 if (respuesta.status === 200) {
                     // Navegar al otro componente
+                    setMenuEnsayo(true)
                     navigation.navigate('EnsayoFeedback', { id: idEnsayo });
                 } else {
                     console.log('La respuesta no fue exitosa');

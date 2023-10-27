@@ -61,7 +61,10 @@ const Estadisticas = () => {
       const token = await AsyncStorage.getItem('token')
       axios.get('http://192.168.1.96:3000/scores/', {headers:{
         Authorization:`Bearer ${token}`
-      }}).then((response) => setHistorial(response.data))
+      }}).then((response) => {
+        
+        const historialFiltrado = response.data.filter(item => item.value > 0)
+        setHistorial(historialFiltrado)})
 
     }
 
@@ -79,11 +82,15 @@ const Estadisticas = () => {
         if(tema === 'Todos'){
           axios.get('http://192.168.1.96:3000/scores/', {headers:{
             Authorization:`Bearer ${token}`
-          }}).then((response) => setHistorial(response.data))
+          }}).then((response) => {
+            const historialFiltrado = response.data.filter(item => item.value > 0)
+            setHistorial(historialFiltrado)})
         }else{
           axios.get(`http://192.168.1.96:3000/scores?name=${tema}`, {headers:{
             Authorization:`Bearer ${token}`
-          }}).then((response) => setHistorial(response.data))
+          }}).then((response) => {
+            const historialFiltrado = response.data.filter(item => item.value > 0)
+            setHistorial(historialFiltrado)})
         }
       }
       getScore()

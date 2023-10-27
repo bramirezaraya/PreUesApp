@@ -1,5 +1,5 @@
 import { DrawerActions, NavigationContainer, useNavigation } from "@react-navigation/native"; // contenedor de navegaciones
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; // para crear navegaciones en la parte del bottom.
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; /// para crear las navegaciones
 import { View, Text, Image, TouchableOpacity } from "react-native";
@@ -16,6 +16,7 @@ import RecoverPassword from "./Component/Home/RecoverPassword";
 import SesionInvitado from "./Component/Invitado/SesionInvitado";
 import NavegacionInvitado from "./NavegacionInvitado";
 import ModoDark from "./ModoDark";
+import MenuContext from './MenuContext'
 // inicializamos el nativagor
 const Stack = createNativeStackNavigator();
 // Navigator = para saber cuales seran las navegaciones.
@@ -25,7 +26,8 @@ const Navegacion = () => {
 
   const [tokenAuthentication, setTokenAuthentication] = React.useState(false);
   const [darkMode, setDarkMode] = React.useState(false)
-
+  const [menuEnsayo, setMenuEnsayo] = useState(true)
+  const [idEssay, setIdEssay] = useState(null)
   React.useEffect(() =>{
 
     const checkToken = async () =>{
@@ -50,6 +52,7 @@ const Navegacion = () => {
     // si tenemos el token entonces mostramos el menu principal.
     <TokenContext.Provider value={{tokenAuthentication, setTokenAuthentication}}>
       <ModoDark.Provider value={{darkMode, setDarkMode, theme: darkMode ? theme.dark : theme.ligth}}>
+        <MenuContext.Provider value={{menuEnsayo, setMenuEnsayo, idEssay, setIdEssay}}>
 
           {tokenAuthentication ? (  
               <>
@@ -152,6 +155,7 @@ const Navegacion = () => {
                 </>
               )   
           }
+           </MenuContext.Provider>
       </ModoDark.Provider>       
     </TokenContext.Provider>
    
