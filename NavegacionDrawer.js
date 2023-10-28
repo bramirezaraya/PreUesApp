@@ -29,7 +29,7 @@ const MenuLogin = () =>{
   const {theme, darkMode} = useContext(modoDark)
 
   const EliminarEnsayo = (navigation, token) =>{
-    axios.delete(`http://192.168.1.96:3000/logicalDelEssay?essayId=${idEssay}&started=${1}`, {headers:{
+    axios.delete(`http://192.168.1.96:3000/physicalDelEssay?essayId=${idEssay}&started=${1}`, {headers:{
       Authorization: `Bearer ${token}`
     }})
     setMenuEnsayo(true)
