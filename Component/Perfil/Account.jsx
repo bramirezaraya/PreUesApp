@@ -12,6 +12,7 @@ const Account = () => {
 
   const {theme} = useContext(modoDark)
 
+  // Hooks que se utilizaran en este componente.
   const [usuario, setUsuario] = useState()
   const [email, setEmail] = useState()
   const [cambiarContraseña, setCambiarContraseña] = useState(false)
@@ -21,9 +22,10 @@ const Account = () => {
   const [validadorPassword, setValidadorPassword] = useState(false)
   const [monedas, setMonedas] = useState(0)
 
+  // función para validar que las dos contraseñas sean iguales.
   const validarPassword = () =>{
     if(newPassword !== '' && newPasswordConfirm !== ''){
-
+      // se hace la comprobacion de que sean identicas y cumplan la validacion.
       if(validator.equals(newPassword, newPasswordConfirm) && newPassword.length >= 4){
         return true
       }
@@ -31,10 +33,11 @@ const Account = () => {
     return false
   }
 
+  // función para cambiar la contraseña del usuario.
   const cambiarPassword = async() =>{
 
       if(password!== ''){
-          if(validarPassword() ){
+          if(validarPassword()){
               try{
                 const token = await AsyncStorage.getItem('token')
                 axios.patch('http://192.168.1.96:3000/changePassword',{
@@ -44,9 +47,10 @@ const Account = () => {
                   Authorization:`Bearer ${token}`
                 }}
                 ).then((response) => {
-                  if(response.data.success === 1){
-                    // seteamos todo por defecto.
+                  if(response.data.success === 1){ 
                     alert('Su contraseña ha sido cambiada con exito!')
+
+                    // seteamos todo por defecto.
                     setPassword(''),
                     setNewPassword(''),
                     setNewPasswordConfirm(''),
@@ -73,7 +77,6 @@ const Account = () => {
 
   useFocusEffect(
     React.useCallback(() =>{
-
 
     llamarDatos = async() =>{
       const mail = await AsyncStorage.getItem('email')

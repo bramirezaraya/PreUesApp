@@ -28,18 +28,23 @@ const Log = ({ navigation }) => {
 
   const {theme} = React.useContext(modoDark)
 
+  // funcion para logear al usuario.
   const login = () =>{
 
+    // si todo esta digitado correctamente, se hara la peticion al Backend.
     if(email && password){
+
+      // creamos un objecto para enviarlos al Backend.
       const usuario = {
         email: email,
         password: password,
       }
       
+      // se hace la peticion al backend
       axios.post(url, usuario)
       .then( async(response) =>{
         console.log(response.data)
-        // seteamos el token y el id usuario en el localstorage
+        // seteamos el token, id, email, nombre usuario y las moendas del usuario en el localstorage.
         await AsyncStorage.setItem('token', response.data.token);
         await AsyncStorage.setItem('id_usuario', JSON.stringify(response.data.id));
         await AsyncStorage.setItem('email', JSON.stringify(response.data.email))
@@ -50,17 +55,16 @@ const Log = ({ navigation }) => {
         // asi poder identificar al usuario.
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token.access}`
         setTokenAuthentication(true);
-        navigation.navigate('menuPrincipal')
+        navigation.navigate('menuPrincipal') // si no hubo ningun problema, enviamos al usuario al menu principal.
       }
       )
       .catch((error) =>{
         console.log(error)
         alert('Datos incorrectos')
-    
       })
     }
     else{
-  
+      alert('Complete todos los campos')
     }
   }
 
@@ -86,7 +90,8 @@ const Log = ({ navigation }) => {
           Preparate para practicar!
         </Text>
       </View>
-
+      
+      {/* text Input para ingresar el email del usuario */}
       <View style={styles.buttons}>
         <View style={styles.textInputContenedor}>
           <Image source={require('../../assets/email.png')} style={styles.icono} />
@@ -104,6 +109,7 @@ const Log = ({ navigation }) => {
           ></TextInput>
         </View>
         
+        {/* text Input para ingresar la contraseña del usuario */}
         <View style={styles.textInputContenedor}>
           <Image source={require('../../assets/password.png')} style={styles.icono} />
             <TextInput
@@ -120,10 +126,12 @@ const Log = ({ navigation }) => {
           ></TextInput>
         </View>
         
+        {/*Boton en caso que el usuario no recuerde su contraseña */}
         <TouchableOpacity onPress={() => navigation.navigate("RecoverPassword")}>
           <Text style={{ textAlign: "right", color:'#13A7EC' }}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
         
+        {/*Boton para logear al usuario, y usar la funcion de login.*/}
         <TouchableOpacity
           style={[
             styles.button,
@@ -136,6 +144,7 @@ const Log = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
+      {/* Boton en caso que el usuario no tenga un cuenta, y asi dirigirlo al menu de registro. */}
       <View>
         <TouchableOpacity
           style={{ padding: 20, flexDirection: "row" }}

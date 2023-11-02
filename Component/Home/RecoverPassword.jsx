@@ -8,13 +8,15 @@ const RecoverPassword = ({navigation}) => {
     const [email, setEmail] = useState('')
 
     const {theme} = useContext(modoDark)
-
+    
+    // Funcion para recuperar contraseña.
     const EnviarPassword = () =>{
+        // se consulta al end-point con el email ingresado por el usuario.
         axios.post("http://192.168.1.96:3000/recoverPassword", {
             email:email
         })
         .then((response)=> {
-            console.log(response.data)
+            // EN CASO QUE TODO ESTE BIEN, LE LLEGARA UN EMAIL AL USUARIO CON SU NUEVA CONTRASEÑA.
             alert('Se ha enviado la nueva contraseña a su correo, por favor, verifique.')
             setEmail("")
         })
@@ -34,6 +36,7 @@ const RecoverPassword = ({navigation}) => {
             <Text style={styles.texto}>Ingrese su email para recibir una nueva contraseña.</Text>
         </View>
 
+        {/* TextInput donde se ingresara el email */}
         <View style={styles.buttons}>
             <View style={styles.textInputContenedor}>
                 <Image source={require('../../assets/email.png')} style={styles.icono} />
@@ -51,7 +54,7 @@ const RecoverPassword = ({navigation}) => {
                 ></TextInput>
             </View>
         </View>
-
+            {/* boton para recuperar contraseña. */}
             <TouchableOpacity
                 style={[
                     styles.button,
@@ -64,6 +67,8 @@ const RecoverPassword = ({navigation}) => {
                     Enviar Correo
                 </Text>
             </TouchableOpacity>
+
+        {/* Botones para devolverse al apartado de logeo o registro de sesión */}
         <View style={{gap:10, margin:20}}>
             <TouchableOpacity style={styles.opciones} onPress={() => navigation.navigate("Log")}>
                 <Text style={styles.texto}>¿Ya tienes una cuenta? </Text>

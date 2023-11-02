@@ -56,8 +56,11 @@ const NavegacionInvitado = () =>{
                 </TouchableOpacity>
               )
             })}
-        />  
+        />
+
+        {/* eliminar despues */}
       </Stack.Navigator>
+      
     )
   }
 

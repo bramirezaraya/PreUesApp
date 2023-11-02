@@ -29,7 +29,8 @@ const Home = ({ navigation }) => {
       <View>
         <Image source={require("../../assets/Logo.png")} style={styles.logo} />
       </View>
-
+      
+      {/* boton para dirigirse al login */}
       <View style={styles.buttons}>
         <TouchableOpacity
           style={[
@@ -46,7 +47,8 @@ const Home = ({ navigation }) => {
             Iniciar Sesión
           </Text>
         </TouchableOpacity>
-
+        
+        {/* boton para dirigirse al registro */}
         <TouchableOpacity
           style={[
             styles.button,
@@ -67,7 +69,8 @@ const Home = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-
+      
+      {/* boton para seguir como invitado */}
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('SesionInvitado')}>
           <Text style={[styles.text, { 

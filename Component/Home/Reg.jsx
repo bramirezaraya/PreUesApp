@@ -55,8 +55,10 @@ const Reg = ({ navigation }) => {
     return false
   }
 
+  // Funcion para registrar al usurio
   const register = () =>{
 
+    // Si no se han completado los campos o no estan cumpliendo las indicaciones, se le indicara al usuario.
     if(!userValidator || !passwordValidator || !emailValidator){
       alert('Por favor, complete los campos correctamente')
     }
@@ -71,7 +73,7 @@ const Reg = ({ navigation }) => {
       axios.post(url, usuario)
       .then((response) => {
         setTimeout(() => {
-          navigation.navigate('Log')
+          navigation.navigate('Log') // lo dirigimos al apartado de login, para que pueda inciar.
         }, 1000);         
       })
       .catch((error) =>{
@@ -96,6 +98,7 @@ const Reg = ({ navigation }) => {
         <View style={styles.textInputContenedor}>
             <Image source={require('../../assets/email.png')} style={styles.icono} />
             <View>
+              {/* textInput para digirar el email del usuario.*/}
               <TextInput
               paddingLeft={30}
               placeholder={"Ingresa un email"}
@@ -106,17 +109,21 @@ const Reg = ({ navigation }) => {
                 borderColor: !emailValidator && emailFocus ? 'red' : '#FFFFFF'}
               ]}
               onChangeText={(e) => {
-                setEmail(e),
+                setEmail(e), // iremos seteando todo lo que el usuario digite en el text.
                 setEmailValidator(validator.isEmail(email)); // seteamos el Emailvalidator para verificar si el email es valido.
               }}
               onFocus={() =>{
-                setEmailFocus(true)
+                setEmailFocus(true) // se pondra en true al momento que el usuario interactue con el textInput.
               }}
-              maxLength={30}
+              maxLength={30} // el maximo de caracteres.
             />
-              {emailValidator || !emailFocus ? null: <Text style={{color:'red', fontWeight:600, fontSize:9}}>Escriba un mail Valido!</Text>}
+              {/* En caso que no este cumpliendo la validación, se mostrara el siguiente mensaje.  */}
+              {emailValidator || !emailFocus ? null: 
+              <Text style={{color:'red', fontWeight:600, fontSize:9}}>Escriba un mail Valido!</Text>
+              }
             </View>
         </View>
+        {/* textInput para digirar el nombre de usuario. */}
         <View style={styles.textInputContenedor}>
           <Image source={require('../../assets/user.png')} style={styles.icono} />
           <View>
@@ -133,11 +140,13 @@ const Reg = ({ navigation }) => {
                         setUser(e)
                         setUserValidator(validarUser(e))}
                       }
-                      onFocus={() => setUserFocus(true)}
+                      onFocus={() => setUserFocus(true)} // se pondra en true al momento que el usuario interactue con el textInput.
                 maxLength={12}
                     />
-
-                    {userValidator || !userFocus ? null : <Text style={{color:'red', fontWeight:600, fontSize:9}}>Debe contener solo letras, minimo 3 caracteres, maximo 2 espacios y 3 numeros</Text>}
+                  {/* En caso que no este cumpliendo la validación, se mostrara el siguiente mensaje.  */}
+                  {userValidator || !userFocus ? null : 
+                    <Text style={{color:'red', fontWeight:600, fontSize:9}}>Debe contener solo letras, minimo 3 caracteres, maximo 2 espacios y 3 numeros</Text>
+                  }
             </View>
         </View>
         
@@ -155,7 +164,7 @@ const Reg = ({ navigation }) => {
                       ]}
                       onChangeText={(e) => {setPassword(e)
                         setPasswordValidator(validarPassword(e,password2))}}
-                      onFocus={() => setPasswordFocus(true)}
+                      onFocus={() => setPasswordFocus(true)} // se pondra en true al momento que el usuario interactue con el textInput.
                       maxLength={16}
                     />
         </View>
@@ -177,11 +186,13 @@ const Reg = ({ navigation }) => {
           onChangeText={(e)=>{
             setPassword2(e)
             setPasswordValidator(validarPassword(e,password))}}
-          onFocus={() => setPasswordFocus2(true)}
+          onFocus={() => setPasswordFocus2(true)} // se pondra en true al momento que el usuario interactue con el textInput.
           maxLength={16}
         />
-
-        {passwordValidator || !passwordFocus2 ? null : <Text style={{color:'red', fontWeight:600, fontSize:9}}>Las contraseñas deben coincidir y tener mas de 4 caracteres</Text>}
+        {/* En caso que no este cumpliendo la validación, se mostrara el siguiente mensaje.  */}
+        {passwordValidator || !passwordFocus2 ? null : 
+        <Text style={{color:'red', fontWeight:600, fontSize:9}}>Las contraseñas deben coincidir y tener mas de 4 caracteres</Text>
+        }
           </View>
 
         </View>               

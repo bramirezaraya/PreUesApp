@@ -5,7 +5,6 @@ import { useRoute } from '@react-navigation/native'
 import RenderEssayInvitado from './RenderEssayInvitado'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Katex from 'react-native-katex';
-import PruebaKatex from './PruebaKatex'
 import modoDark from '../../ModoDark'
 const EnsayoInvitado = ({navigation}) => {
 
@@ -69,7 +68,6 @@ const EnsayoInvitado = ({navigation}) => {
             <FlatList 
                 data={ensayo}
                 renderItem={({item, index}) => (RenderEssayInvitado({item, index, selected, setSelected, largo, theme}))}
-                // renderItem={({item, index}) => (PruebaKatex({item, index}))}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={{padding:20}}
                 ItemSeparatorComponent={() => <View style={styles.separator}></View>}
