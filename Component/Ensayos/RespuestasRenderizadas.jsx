@@ -1,9 +1,38 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
 import modoDark from '../../ModoDark'
+import Katex from 'react-native-katex'
 // import theme from '../../theme/theme'
 
 const RespuestasRenderizadas = ({respuestaItem, index, respuestas, theme, indexRespuesta}) => {
+
+    // para marcar el katex con la respuesta correcta o para marcarla por defecto en un color normal.
+    const inlineStyle =`
+    html, body {
+        padding: 10;
+        color:${respuestaItem.isCorrect === 1 ? theme.colors.correcta : theme.colors.textSecondary};
+        background-color:${theme.bground.bgSecondary};
+    }
+    .katex {
+        font-size: 2.8em;
+        margin: 0;
+        display: flex;
+    }
+    `;
+
+    // para marcar si es correcta de color verde o incorrecta de color rojo.
+    const inlineStyleCorrect =`
+    html, body {
+        padding: 10;
+        color:${respuestaItem.isCorrect === 1 ? theme.colors.correcta : theme.colors.incorrecta};
+        background-color:${theme.bground.bgSecondary};
+    }
+    .katex {
+        font-size: 2.8em;
+        margin: 0;
+        display: flex;
+    }
+    `;
 
     // const {theme} = useContext(modoDark)
   return (
@@ -11,30 +40,22 @@ const RespuestasRenderizadas = ({respuestaItem, index, respuestas, theme, indexR
                 {/* primero recorremos las respuestas para encontrar la que el usuario marco */}
                 {respuestas[index].id === respuestaItem.id ? (
                     //si la respuesta marcada por el usuario es correcta, marcamos verde, sino marcamos color rojo.
-                    <View>
-                        {respuestaItem.isCorrect === 1 ? (<Text style={{color:theme.colors.correcta}} >
-                            {/* {respuestaItem.label} */}
-                            <Text>
-                                <Text style={{fontWeight:600}}>{String.fromCharCode(65 + indexRespuesta)}.</Text> 
-                                <Text> {respuestaItem.label}</Text>
-                            </Text>
-                        </Text>) : (<Text style={{color:theme.colors.incorrecta}}>
-                            {/* {respuestaItem.label} */}
-                            <Text>
-                                <Text style={{fontWeight:600}}>{String.fromCharCode(65 + indexRespuesta)}.</Text> 
-                                <Text> {respuestaItem.label}</Text>
-                            </Text>
-                        </Text>)}
+                    <View style={{height:50, display:'flex', flexDirection:'row', gap:5}}>
+                        <Text style={{fontWeight:600, color: respuestaItem.isCorrect === 1 ? theme.colors.correcta : theme.colors.incorrecta }}>{String.fromCharCode(65 + indexRespuesta)}.</Text>
+                        <Katex 
+                            expression={respuestaItem.label}
+                            inlineStyle={inlineStyleCorrect}
+                        />
                     </View>
                 ) : (
                     // en caso que el usuario no haya elegido la respuesta correcta, marcamos la respuesta correcta con color verde.
-                    <Text style={{color: respuestaItem.isCorrect === 1 ? theme.colors.correcta : theme.colors.textSecondary}}>
-                        {/* {respuestaItem.label} */}
-                        <Text>
-                                <Text style={{fontWeight:600}}>{String.fromCharCode(65 + indexRespuesta)}.</Text> 
-                                <Text> {respuestaItem.label}</Text>
-                            </Text>
-                    </Text>
+                    <View style={{height:50, display:'flex', flexDirection:'row', gap:5}}>
+                         <Text  style={{fontWeight:600, color: respuestaItem.isCorrect === 1 ? theme.colors.correcta : theme.colors.textSecondary}}>{String.fromCharCode(65 + indexRespuesta)}. </Text> 
+                        <Katex 
+                            expression={respuestaItem.label}
+                            inlineStyle={inlineStyle}
+                        />
+                    </View>
                 )}
                 {/* <Text style={[styles.textoPregunta, {color: respuestas[index] === respuestaItem.answer_id && 'red'}, {color: respuestaItem.right === 1 && 'green'}]}>{respuestaItem.label}</Text> */}
         </View>
@@ -49,7 +70,7 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         padding:5,
         margin:10,
-        width:'90%',
+        width:400,
         textAlign:'left',
         borderRadius:15,
     },

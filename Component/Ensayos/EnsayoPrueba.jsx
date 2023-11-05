@@ -1,18 +1,18 @@
-import { View, Text, StyleSheet, Image} from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
 import axios from 'axios'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import MenuContext from '../../MenuContext'
+import Katex from 'react-native-katex'
 // import theme from '../../theme/theme'
-
+import RenderAnswers from './RenderAnswers'
 const submit_answers = "http://192.168.1.96:3000/submitAnswers/"; 
 
 import left from '../../assets/ArrowLeft.png'
 import right from '../../assets/ArrowRight.png'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import modoDark from '../../ModoDark'
-
 
 const EnsayoPrueba = ({navigation}) => {
 
@@ -47,6 +47,18 @@ const EnsayoPrueba = ({navigation}) => {
 
     const route = useRoute();
     const {nombre, id_ensayo, isCustom} = route.params
+    
+    const inlineStyle =`
+    html, body {
+        background-color: ${theme.bground.bgSecondary};     
+        margin: 0;
+    }
+    .katex {
+        font-size: 2.5em;
+        margin: 0;
+        display: flex;
+      }
+    `;
 
     // pedimos los datos del ensayo al backend.
     useEffect(() =>{
@@ -56,19 +68,19 @@ const EnsayoPrueba = ({navigation}) => {
             try{
                 setMenuEnsayo(false)
                 const respuesta = await axios.get(`http://192.168.1.96:3000/essayQuestions/?name=${nombre}`)
-                setEnsayos(respuesta.data.questions.slice(0,5))
-                setTiempo(respuesta.data.questions.slice(0,5).length * 60 * 2)
-                postEnsayo(respuesta.data.questions.slice(0,5).length, respuesta.data.questions.slice(0,5).length * 60 * 2)
+                setEnsayos(respuesta.data.questions)
+                setTiempo(respuesta.data.questions.length * 60 * 2)
+                postEnsayo(respuesta.data.questions.length, respuesta.data.questions.length * 60 * 2)
                 
                 /// seteamos la cantidad de paginas que tendra, dependiendo el largo del ensayo.
                 if(respuesta.data.questions.length % 4 === 0){
-                    setCantidadPaginas(Math.trunc(respuesta.data.questions.slice(0,5).length / 4))
+                    setCantidadPaginas(Math.trunc(respuesta.data.questions.length / 4))
                 }else{
-                    setCantidadPaginas(Math.trunc(respuesta.data.questions.slice(0,5).length / 4) + 1)
+                    setCantidadPaginas(Math.trunc(respuesta.data.questions.length / 4) + 1)
                 }
-                setModulo(respuesta.data.questions.slice(0,5).length % 4)
+                setModulo(respuesta.data.questions.length % 4)
                 
-                setArrayModulo(new Array(respuesta.data.questions.slice(0,5).length % 4).fill(''))
+                setArrayModulo(new Array(respuesta.data.questions.length % 4).fill(''))
             }
             catch(error){
                 console.log(error)
@@ -267,42 +279,38 @@ const EnsayoPrueba = ({navigation}) => {
         }else {
              essay = ensayos[indexPregunta].selectedQuestion
         }
-
         return (
            <View style={[styles.contenedorPrincipal, {backgroundColor:theme.bground.bgPrimary,}]}>
-                <ScrollView contentContainerStyle={[styles.contenedorEnsayo, {backgroundColor: theme.bground.bgSecondary,}]}>
-                
-                    <View style={styles.contenedorTitulo} >
+                <View style={[styles.contenedorEnsayo, {backgroundColor: theme.bground.bgSecondary}]}>
+
+                    <View style={[styles.contenedorTitulo]} >
                         <Text style={[styles.cantidadPregunta, {color:theme.colors.textSecondary}]}>Pregunta {indexPregunta + 1} de {ensayos.length}</Text>
                         <View style={styles.contenedorTime}>
                             <Image style={{width:25,height:25}} source={require('../../assets/time.png')} />
                             <Text style={[styles.timer, {color:theme.colors.textSecondary}]}>{minutos < 10 ? '0'+minutos : minutos}:{segundos < 10 ? '0'+segundos : segundos}</Text>
-                        </View>
-                        
+                        </View>                      
                     </View>
+                    <View style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly', height:'70%'}}>
+                        <View style={styles.preguntas}>
+                            {/* <Text style={[styles.pregunta, {color:theme.colors.textSecondary} ]}>{essay.question.replace(/Â/g, '')}</Text> */}
+                            <Katex 
+                                expression={essay.question}
+                                inlineStyle={inlineStyle} 
+                            />
+                        </View>           
 
-                    <View style={styles.preguntas}>
-                        <Text style={[styles.pregunta, {color:theme.colors.textSecondary} ]}>{essay.question.replace(/Â/g, '')}</Text>
-
-                    </View>           
-                    {essay.answers.map((respuesta, index) =>(
-                        //seteamos las respuestas marcadas un en array.//si es que la respuesta es igual a la marcada, la marcamos con un bg orange.
-                        <View key={index} style={[styles.contenedorRespuestas, {backgroundColor:theme.bground.bgensayoFondoRespuestaBlanco,}, selected[indexPregunta] == respuesta.id ? {backgroundColor:'orange',borderRadius:10,} : styles.respuesta]}  >                              
-                            <TouchableOpacity onPress={() => setSelected(preview =>{
-                                const newRespuesta = [...preview] /// copiamos todas las respuestas previas del array completo.
-                                newRespuesta[indexPregunta] = respuesta.id // marcamos la respuesta que ha elegido en la pregunta.
-                                return newRespuesta
-                            })} 
-                            
-                            >   
-                            <Text>
-                                <Text style={{fontWeight:600}}>{String.fromCharCode(65 + index)}.</Text> 
-                                <Text> {respuesta.label}</Text>
-                            </Text>
-                                
-                            </TouchableOpacity>
+                        <View>
+                            <FlatList  
+                                data={essay.answers}
+                                renderItem={({item, index}) => (RenderAnswers({item, index, selected, setSelected, theme, indexPregunta}))}
+                                key={essay.answers.id}
+                            />
                         </View>
-                    ))}
+                    </View>
+                        
+                    
+
+
 
                     <View style={styles.contenedorBoton}>
                         {indexPregunta +1 === ensayos.length && (
@@ -372,7 +380,7 @@ const EnsayoPrueba = ({navigation}) => {
                     }                      
                 </View>
 
-                </ScrollView>
+                </View>
             </View>
         );}
 }
@@ -384,16 +392,17 @@ const styles = StyleSheet.create({
 
     contenedorPrincipal:{
         flex:1,
-        padding:20,
+        padding:10,
     },
     contenedorEnsayo:{
-        minHeight:'100%',
         width:'100%',
         display:'flex',
-        alignItems:'center',
+        height:'100%',
+        // alignItems:'center',
         justifyContent:'space-evenly',
         flex:1,
         borderRadius:10, 
+        paddingLeft:20
     },
     contenedorBoton:{
         display:'flex',
@@ -423,12 +432,14 @@ const styles = StyleSheet.create({
         fontWeight:600,
     },
     preguntas:{
-        maxWidth:'80%',
+        display:'flex',
+        height:'10%',
+        maxWidth:'95%',
     },
     contenedorRespuestas:{
         borderRadius:10,
-        width:'80%',
-        height:'auto',
+        width:'90%',
+        height:'6%',
         minHeight:30,    
         display:'flex',
         flexDirection:'column',

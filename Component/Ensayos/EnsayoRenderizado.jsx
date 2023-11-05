@@ -3,9 +3,22 @@ import WebView from 'react-native-webview'
 import React, { useContext } from 'react'
 import RespuestasRenderizadas from './RespuestasRenderizadas'
 import modoDark from '../../ModoDark'
+import Katex from 'react-native-katex'
 // import theme from '../../theme/theme'
 
 const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
+
+    const inlineStyle =`
+    html, body {
+        background-color: ${theme.bground.bgSecondary};     
+        margin: 0;
+    }
+    .katex {
+        font-size: 2.5em;
+        margin: 0;
+        display: flex;
+      }
+    `;
 
     // const {theme} = useContext(modoDark)
   return (
@@ -30,9 +43,13 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
             </View>
                                 
             {/* mostramos la pregunta del ensayo*/}
-            <Text style={[styles.textoPregunta, {color: theme.colors.textSecondary}]}>
+            {/* <Text style={[styles.textoPregunta, {color: theme.colors.textSecondary}]}>
                 ¿{item.question}?
-            </Text>
+            </Text> */}
+            <Katex 
+                expression={item.question}
+                inlineStyle={inlineStyle} 
+            />
                                 
             {/*Video de la respuesta del ensayo*/}
             <WebView source={{ uri: item.videoLink }} style={styles.videoPlayer} />
@@ -51,12 +68,13 @@ export default EnsayoRenderizado
 
 const styles = StyleSheet.create({
     contenedorPreguntas:{
-        width:350, 
+        width:'100%', 
         display:'flex',
         flexDirection:'column',
         marginBottom:10,
         padding:10,
         borderRadius:15,
+        height:600
     },
     textoPregunta:{
         color: 'black', 
@@ -65,8 +83,10 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        width: 280,
-        height: 150,
-        margin:20,
+        // width: 280,
+        // height: 150,
+        width:'90%',
+        height:'70%',
+        margin:10,
       },
 })
