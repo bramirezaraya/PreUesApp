@@ -52,14 +52,20 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
             />
                                 
             {/*Video de la respuesta del ensayo*/}
-            <WebView source={{ uri: item.videoLink }} style={styles.videoPlayer} />
+            <View style={{height:'35%', width:'100%'}}>
+                 <WebView source={{ uri: item.videoLink }} style={styles.videoPlayer} />
+            </View>
+           
                                 
             {/*renderizamo las respuestas del ensayo, con una constante que llamaremos.*/}
-            <FlatList
-                data={item.answers}
-                renderItem={({item: respuestaItem, index:indexRespuesta}) => RespuestasRenderizadas({respuestaItem, index, respuestas, theme,indexRespuesta})}
-                keyExtractor={(item) => item.id}
-            />
+            <View style={{width:'100%', height:250}}>
+                 <FlatList
+                    data={item.answers}
+                    renderItem={({item: respuestaItem, index:indexRespuesta}) => RespuestasRenderizadas({respuestaItem, index, respuestas, theme,indexRespuesta})}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
+           
         </View>
   )
 }
@@ -74,7 +80,7 @@ const styles = StyleSheet.create({
         marginBottom:10,
         padding:10,
         borderRadius:15,
-        height:600
+        height:700
     },
     textoPregunta:{
         color: 'black', 

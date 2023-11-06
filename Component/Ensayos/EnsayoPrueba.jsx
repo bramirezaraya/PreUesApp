@@ -48,6 +48,7 @@ const EnsayoPrueba = ({navigation}) => {
     const route = useRoute();
     const {nombre, id_ensayo, isCustom} = route.params
     
+    // estilos del katex
     const inlineStyle =`
     html, body {
         background-color: ${theme.bground.bgSecondary};     

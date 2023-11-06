@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     shadowOpacity:0.2, // la opacidad
     shadowRadius:4, // el radio de la sombra
     elevation:4,
-    gap:10
+    gap:10,
+
   },
   textoPuntaje:{
     fontSize:18,

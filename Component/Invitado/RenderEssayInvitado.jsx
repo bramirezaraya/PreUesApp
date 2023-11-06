@@ -1,39 +1,45 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, FlatList} from 'react-native'
 import React, { useContext } from 'react'
 // import theme from '../../theme/theme'
 import { TouchableOpacity } from 'react-native'
-
+import Katex from 'react-native-katex'
+import RenderAnswersInvitado from './RenderAnswersInvitado'
 const RenderEssayInvitado = ({item, index, selected, setSelected, largo, theme}) => {
 
     const indexPregunta = index
-
+     // estilos del katex
+     const inlineStyle =`
+     html, body {
+         background-color: ${theme.bground.bgSecondary};     
+         margin: 0;
+     }
+     .katex {
+         font-size: 2.8em;
+         margin: 0;
+         display: flex;
+       }
+     `;
     
   return (
     <View style={[styles.contenedor, {backgroundColor:theme.bground.bgSecondary,}]}>
 
+        {/* Pregunta Ensayo */}
         <View style={styles.datosEnsayo}>
             <Text style={styles.textoTitulo}>Pregunta {index + 1} de {largo}</Text>
-            <Text>{item.question.replace(/Â/g, '')}</Text>
+            <Katex 
+                expression={item.question}
+                inlineStyle={inlineStyle}
+            />
         </View>
+        
+        {/* Respuestas Ensayo */}
+        <FlatList 
+            data={item.answers}
+            renderItem={({item, index}) => (RenderAnswersInvitado({item, index, selected, setSelected, theme, indexPregunta}))}
+            keyExtractor={(item) => item.id}
+            // key={item.answers.id}
+        />
       
-      {item.answers.map((respuesta, index) => (
-        <View key={respuesta.id}>
-            <TouchableOpacity 
-                style={[styles.boton, {backgroundColor:theme.bground.bgPrimary,}, selected[indexPregunta] === respuesta.id && {backgroundColor:theme.bground.bgBoton}]}
-                onPress={() => {
-                    setSelected( preview =>{
-                            const respuestasMarcadas = [...preview]
-                            respuestasMarcadas[indexPregunta] = respuesta.id
-                            return respuestasMarcadas
-                        }
-                    )
-                }}            
-            >
-                <Text style={{fontWeight:600}}>{String.fromCharCode(65 + index)}.</Text> 
-                <Text>{respuesta.label}</Text>
-            </TouchableOpacity>
-        </View>  
-      ))}
     </View>
   )
 }
@@ -49,15 +55,11 @@ const styles = StyleSheet.create({
         gap:20,
         borderRadius:10
     },
-    boton:{
-        display:'flex',
-        flexDirection:'row',
-        gap:10,
-        borderRadius:10,
-        padding:10,
-    },
     datosEnsayo:{
-        gap:10
+        height:80,
+        display:'flex',
+        flexDirection:'column',
+        gap:10,
     },
     textoTitulo:{
         fontSize:16,

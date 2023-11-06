@@ -16,7 +16,7 @@ const SesionInvitado = ({navigation}) => {
         axios.get('http://192.168.1.96:3000/allQuestions/')
         .then((response) => {
           
-          const arrayNumeros = response.data[0].questions.slice(0,1) // llamo solamente 5 preguntas de cada tema.
+          const arrayNumeros = response.data[0].questions.slice(0,1) // llamo solamente 1 pregunta de cada tema.
           const arrayAlgebra = response.data[1].questions.slice(0,1)
           const arrayProbabilidad = response.data[2].questions.slice(0,1)
           const arrayGeometria = response.data[3].questions.slice(0,1)
@@ -38,10 +38,11 @@ const SesionInvitado = ({navigation}) => {
         <View style={styles.contenedorDatos}>
           <View style={[styles.contenedorTexto, {backgroundColor: theme.bground.bgInicio,}]}>
               <Text style={styles.texto}>Estas como usuario <Text style={{fontWeight:700}}>Invitado</Text></Text>
-              <Text style={styles.texto}>Solo tendras acceso a realizar un ensayo general de 20 preguntas</Text>
+              <Text style={styles.texto}>Solo tendras acceso a realizar un ensayo general de 10 preguntas</Text>
           </View>
         </View>
 
+        {/* contenedor Ensayo. */}
         <View style={[styles.contenedorEnsayo, {backgroundColor:theme.bground.bgEnsayosInicio,}]}>
 
               <TouchableOpacity style={[styles.boton, {height:40, width:'40%', backgroundColor:theme.bground.bgInicioBotones,}]}>
@@ -125,8 +126,8 @@ const styles = StyleSheet.create({
   },
 
   containerEnsayo:{
-    width:220,
-    height:230,
+    width:'60%',
+    height:'60%',
     borderRadius:10,
   },
 

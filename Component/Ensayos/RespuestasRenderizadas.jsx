@@ -40,7 +40,7 @@ const RespuestasRenderizadas = ({respuestaItem, index, respuestas, theme, indexR
                 {/* primero recorremos las respuestas para encontrar la que el usuario marco */}
                 {respuestas[index].id === respuestaItem.id ? (
                     //si la respuesta marcada por el usuario es correcta, marcamos verde, sino marcamos color rojo.
-                    <View style={{height:50, display:'flex', flexDirection:'row', gap:5}}>
+                    <View style={{height:30, display:'flex', flexDirection:'row', gap:5}}>
                         <Text style={{fontWeight:600, color: respuestaItem.isCorrect === 1 ? theme.colors.correcta : theme.colors.incorrecta }}>{String.fromCharCode(65 + indexRespuesta)}.</Text>
                         <Katex 
                             expression={respuestaItem.label}
@@ -49,7 +49,7 @@ const RespuestasRenderizadas = ({respuestaItem, index, respuestas, theme, indexR
                     </View>
                 ) : (
                     // en caso que el usuario no haya elegido la respuesta correcta, marcamos la respuesta correcta con color verde.
-                    <View style={{height:50, display:'flex', flexDirection:'row', gap:5}}>
+                    <View style={{height:30, display:'flex', flexDirection:'row', gap:5}}>
                          <Text  style={{fontWeight:600, color: respuestaItem.isCorrect === 1 ? theme.colors.correcta : theme.colors.textSecondary}}>{String.fromCharCode(65 + indexRespuesta)}. </Text> 
                         <Katex 
                             expression={respuestaItem.label}

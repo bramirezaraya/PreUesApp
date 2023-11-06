@@ -3,9 +3,24 @@ import React, { useContext } from 'react'
 // import theme from '../../theme/theme'
 import WebView from 'react-native-webview'
 import modoDark from '../../ModoDark'
+import Katex from 'react-native-katex'
+import { FlatList } from 'react-native-gesture-handler'
+import RenderFeedbackAnswers from './RenderFeedbackAnswers'
 const RenderFeedbackEssay = ({item, index, selected, theme}) => {
 
-  
+    const inlineStyle =`
+    html, body {
+        background-color: ${theme.bground.bgSecondary};     
+        margin: 0;
+    }
+    .katex {
+        font-size: 2.8em;
+        margin: 0;
+        display: flex;
+      }
+    `;
+
+      const indexPregunta = index;
 
   return (
     <View style={[styles.contenedor, {backgroundColor:theme.bground.bgSecondary,}]}>
@@ -25,29 +40,27 @@ const RenderFeedbackEssay = ({item, index, selected, theme}) => {
             ))}
         </View>
         
-        <View style={styles.contenedorPreguntas}>
-
-            <Text style={{fontWeight:700, fontSize:16}}>{item.question.replace(/Â/g, '')}</Text> 
-
-             <WebView source={{ uri: item.videoLink }} style={styles.videoPlayer} />                   
-            
-            {item.answers.map((item, i) => (
-                <View key={i}>
-                    {selected[index] === item.id  ? (
-                        <View>
-                            {item.isCorrect === 1 ? (
-                                <Text style={{color:theme.colors.correcta}}>{item.label}</Text>
-                            ) : (
-                                <Text style={{color:theme.colors.incorrecta}}>{item.label}</Text>
-                            )}
-                        </View>
-                    ):
-                    ( <Text style={{color: item.isCorrect === 1 ? theme.colors.correcta : '#000'}}>{item.label}</Text>)
-                    }    
-                </View>
-            ))}
-
+        <View style={styles.contenedorPreguntas}>      
+            <Katex 
+                expression={item.question}
+                inlineStyle={inlineStyle}
+            />
         </View>
+        
+        <View style={{height:'40%', width:'100%'}}>
+            <WebView source={{ uri: item.videoLink }} style={[styles.videoPlayer]} />
+        </View>
+        
+        
+        <View style={{width:'100%', height:200}}>
+            <FlatList 
+                data={item.answers}
+                renderItem={({item, index}) => (RenderFeedbackAnswers({item, index,indexPregunta, selected, theme}))}
+                keyExtractor={(item) => item.id}               
+            />
+        </View>
+        
+
     </View>
   )
 }
@@ -59,11 +72,15 @@ const styles = StyleSheet.create({
     contenedor:{
         width:'100%',
         borderRadius:10,
-        padding:20,
+        padding:15,
         shadowOffset:{width: 2, height:3}, // en que lado afecta
         shadowOpacity:0.2, // la opacidad
         shadowRadius:4, // el radio de la sombra
         elevation:4,
+        height:700,
+        display:'flex',
+        justifyContent:'space-between',
+        gap:20
     },
     datos:{
         width:'100%',
@@ -73,6 +90,9 @@ const styles = StyleSheet.create({
         position:'relative'
     },
     contenedorPreguntas:{
+        display:'flex',
+        flexDirection:'column',
+        height:80,
         gap:20
     },
     icono:{
@@ -85,8 +105,6 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        width: 280,
-        height: 150,
         margin:20,
       },
 

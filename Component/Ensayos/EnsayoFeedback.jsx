@@ -60,13 +60,16 @@ const EnsayoFeedback = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
                 {/* visualizaremos el ensayo completo.*/}
-                    <FlatList
+                <View style={{width:'95%'}}>
+                     <FlatList
                         contentContainerStyle={{paddingBottom:30}} // para que el ultimo item se visualice mejor.
                         data={ensayo}
                         renderItem={({ item, index }) => (EnsayoRenderizado({item, index,respuestas, theme}))}
                         keyExtractor={(item) => item.id}
                         ItemSeparatorComponent={() => <View style={styles.separator}></View>} // para separar cada item.
                     /> 
+                </View>
+                   
             </View>
         </View>
   );
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         maxWidth:'100%',
         height:'97%',
-        padding:20,
+        padding:10,
         alignItems:'center', 
         gap:20,
     },
