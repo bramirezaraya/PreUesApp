@@ -60,13 +60,12 @@ const SesionInvitado = ({navigation}) => {
                         <View style={styles.datos}>
                             <Image style={styles.icono} source={require('../../assets/time.png')} />
                             <Text>30 Minutos</Text>
-                        </View>
-                        <View style={styles.contenedorBoton}>
-                          <TouchableOpacity style={[styles.botonInicio, {backgroundColor:theme.bground.bgBoton,}]} onPress={() => EnsayoGeneral()}>
-                              <Text>Iniciar</Text>
-                          </TouchableOpacity>
-                        </View>
-                        
+                        </View>                      
+                  </View>
+                  <View style={styles.contenedorBoton}>
+                      <TouchableOpacity style={[styles.botonInicio, {backgroundColor:theme.bground.bgBoton,}]} onPress={() => EnsayoGeneral()}>
+                          <Text>Iniciar</Text>
+                      </TouchableOpacity>
                   </View>
             </View>
 
@@ -127,14 +126,15 @@ const styles = StyleSheet.create({
 
   containerEnsayo:{
     width:'60%',
-    height:'60%',
+    height:'70%',
     borderRadius:10,
   },
 
   imagen:{
     top:0,
     position:'absolute',
-    width:'100%'
+    width:'100%',
+    height:'50%'
   },
   datosEnsayo:{
     display:'flex',
@@ -156,7 +156,9 @@ const styles = StyleSheet.create({
     height:20
   },
   contenedorBoton:{
-    alignItems:'flex-end'
+    position:'absolute',
+    bottom:5,
+    right:5
   },
 
   botonInicio:{

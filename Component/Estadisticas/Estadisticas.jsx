@@ -31,7 +31,8 @@ const Estadisticas = () => {
   // numeros, algebra, probabilidades, geometria
   useFocusEffect(
     React.useCallback(() =>{
-
+    
+    // funcion para recibir todas las respuestas correctas que ha tenido el usuario por tema.
     const getEssayData = async () =>{    
       try{
         const token = await AsyncStorage.getItem('token')
@@ -44,6 +45,7 @@ const Estadisticas = () => {
       }catch(error){console.log(error)}
     }
 
+    // funcion para recibir el promedio de cada  temas.
     const getAverage = async () =>{
       const token = await AsyncStorage.getItem('token')
       try{
@@ -57,6 +59,7 @@ const Estadisticas = () => {
       }
     }
 
+    // funcion para recibir los punrajes de cada ensayo predeterminado
     const getScore = async() =>{
       const token = await AsyncStorage.getItem('token')
       axios.get('http://192.168.1.96:3000/scores/', {headers:{
@@ -73,7 +76,7 @@ const Estadisticas = () => {
     getScore()
   },[]))
 
-
+  /// cada vez que se entre a este componente se llamaran estas funciones.
   useFocusEffect(
     React.useCallback(() =>{
 
@@ -140,39 +143,41 @@ const Estadisticas = () => {
               onSelect={(item)=> setTema(item)}
             />
           </View>
-          <BarChart 
-           style={{ flex: 1 }}
-            data = {datosScore ? datosScore : []} 
-            maxValue={1000} 
-            stepValue={100} 
-            height={350}
-            width={350}
-            rulesType='solid'
-            barWidth={25}
-            barBorderTopLeftRadius={20}
-            barBorderTopRightRadius={20}
-            isAnimated={true}
-            yAxisOffset={0}
-            showScrollIndicator={true}
-            shiftX={200}
-            xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x
-            spacing={100} // espaciado entre cada bar
-            initialSpacing={30}
-            yAxisColor={'black'} // color de la linea y
-            xAxisColor={'black'} // color linea x
-            rulesColor={'#000'} // lineas pequeñas
-            xAxisLabelTextStyle={{color:'black'}} /// color del texto X
-            yAxisTextStyle={{color:'black'}} // color del texto Y
-            renderTooltip={(item, index) => {
-              return(
-                <View style={[styles.infoEnsayo, {backgroundColor:theme.bground[item.color], right: datosScore.length - 1 === index ? '0%'  : null}]}>
-                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Tema : {item.name}</Text>
-                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Puntaje : {item.value}</Text>
-                  <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Fecha : {item.createdAt}</Text>
-                </View>
-              )
-            }}
-          />           
+          <View style={{flex:1}}>
+            <BarChart 
+              data = {datosScore ? datosScore : []} 
+              maxValue={1000} 
+              stepValue={100} 
+              height={350}
+              width={260}
+              rulesType='solid'
+              barWidth={25}
+              barBorderTopLeftRadius={20}
+              barBorderTopRightRadius={20}
+              isAnimated={true}
+              yAxisOffset={0}
+              showScrollIndicator={true}
+              shiftX={200}
+              xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x
+              spacing={100} // espaciado entre cada bar
+              initialSpacing={30}
+              yAxisColor={'black'} // color de la linea y
+              xAxisColor={'black'} // color linea x
+              rulesColor={'#000'} // lineas pequeñas
+              xAxisLabelTextStyle={{color:'black'}} /// color del texto X
+              yAxisTextStyle={{color:'black'}} // color del texto Y
+              renderTooltip={(item, index) => {
+                return(
+                  <View style={[styles.infoEnsayo, {backgroundColor:theme.bground[item.color], right: datosScore.length - 1 === index ? '0%'  : null}]}>
+                    <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Tema : {item.name}</Text>
+                    <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Puntaje : {item.value}</Text>
+                    <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Fecha : {item.createdAt}</Text>
+                  </View>
+                )
+              }}
+            /> 
+          </View>
+                    
       </View>
       
       {/* El pie chart que muestra el promedio de cada tema. */}

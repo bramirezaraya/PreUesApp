@@ -1,10 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-// import PieChart from 'react-native-pie-chart'
 import { PieChart } from 'react-native-gifted-charts'
 
 const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, labels }) => {
-  const data = [{value:100, color:'red'},{value:200,},{value:300},{value:400}]
   const [indexEnsayo, setIndexEnsayo] = useState(null)
   // los ordenamos para que queden con sus id en orden ascendente.
   avegare.sort((a,b) => a.id - b.id)
@@ -16,20 +14,12 @@ const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, label
     }
     setIndexEnsayo(null)
   }
-  //exp://192.168.1.96:19000
+
   return (
     <View style={styles.pieChart}>
 
-                  {/* PieChart anterior otra biblioteca*/}
-                  {/* <PieChart
-                    widthAndHeight={widthAndHeight}
-                    series={series}
-                    sliceColor={sliceColor.map(colorKey => theme.bground[colorKey])} /// para usar el color de theme.
-                    coverRadius={0.55} // tamaño del vacio de la dona.
-                    coverFill={'#FFF'} // el color del vacio.  
-                  /> */}
-
                   {/* PieChart que muestra la distribucion de los temas.*/}
+                <View style={{flex:1}}>
                   <PieChart 
                     data = {series}  
                     focusOnPress={true} 
@@ -38,9 +28,11 @@ const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, label
                     strokeColor={'#000'}
                     showText={true} 
                     showValuesAsLabels={true} 
-                    radius={100}
+                    radius={90}
                     onPress={(item) => ScaleEssay(item.id)}
                    />
+                </View>
+                  
 
                 {/* datos de los temas*/}
                 <View style={styles.infoPromedio}>
@@ -86,12 +78,12 @@ const styles = StyleSheet.create({
     infoPromedio:{
       flexDirection: 'column', 
       justifyContent: 'center', 
-      gap:10
+      gap:5,
+      flex:1
     },
     colorTemas:{
       flexDirection: 'row', 
       alignItems: 'center', 
-      marginRight: 10,
       padding:8,
       borderRadius:15
     }
