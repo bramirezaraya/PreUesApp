@@ -5,6 +5,7 @@ import {ImageBackground } from 'react-native-web'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios, { isCancel } from 'axios'
+import {LOCAL_HOST} from '@env'
 // props == nombre, cantidadPreguntas, tiempo en minutos, navigation, [id], isCustom. 
 
 const Essay = (props) => {
@@ -26,7 +27,7 @@ const Essay = (props) => {
 
     const token = await AsyncStorage.getItem('token')
 
-    axios.delete(`http://192.168.1.96:3000/logicalDelEssay?essayId=${id_ensayo}`, {headers:{
+    axios.delete(`${LOCAL_HOST}:3000/logicalDelEssay?essayId=${id_ensayo}`, {headers:{
       Authorization: `Bearer ${token}`
     }})
     .then((response) => { props.setCantidadCustom(props.cantidadCustom -1)}) // actualizamos el setcantidadcustom, para que se renderice el componente.

@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import RenderAvatar from './RenderAvatar';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Header } from '@react-navigation/stack';
+import {LOCAL_HOST} from '@env'
 const ChangeAvatar = ({theme, AvatarImages, avatar, setAvatar, setCambiarAvatar}) => {
 
   // paso los valores del objecto a un array.
@@ -19,13 +19,14 @@ const ChangeAvatar = ({theme, AvatarImages, avatar, setAvatar, setCambiarAvatar}
     if(nameAvatar !== avatar.name){
       try{
           const token = await AsyncStorage.getItem('token')
-          axios.patch(`http://192.168.1.96:3000/changeAvatar/`,{dirAvatar:nameAvatar}, 
+          axios.patch(`${LOCAL_HOST}:3000/changeAvatar/`,{dirAvatar:nameAvatar}, 
           {headers:{
             Authorization:`Bearer ${token}`
           }})
           .then(async(response) => {
             alert('Se ha cambiado correctamente')
             await AsyncStorage.setItem('avatar', nameAvatar)
+            setCambiarAvatar(false)
           })
       }catch(error){
         console.log(error)

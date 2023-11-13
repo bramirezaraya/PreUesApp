@@ -12,7 +12,7 @@ import PureChart from 'react-native-pure-chart';
 import { BarChart, LineChart, PieChart } from 'react-native-gifted-charts';
 import { color } from 'react-native-reanimated';
 import SelectDropdown from 'react-native-select-dropdown';
-
+import {LOCAL_HOST} from '@env'
 const Estadisticas = () => {
 
   const [historial, setHistorial] = useState([])
@@ -36,7 +36,7 @@ const Estadisticas = () => {
     const getEssayData = async () =>{    
       try{
         const token = await AsyncStorage.getItem('token')
-        axios.get('http://192.168.1.96:3000/groupTopicCorrectAnswers?materia=matematica', {
+        axios.get(`${LOCAL_HOST}:3000/groupTopicCorrectAnswers?materia=matematica`, {
           headers:{
             authorization: `Bearer ${token}`
         }})
@@ -49,7 +49,7 @@ const Estadisticas = () => {
     const getAverage = async () =>{
       const token = await AsyncStorage.getItem('token')
       try{
-        axios.get('http://192.168.1.96:3000/allAverageScore/',{headers:{
+        axios.get(`${LOCAL_HOST}:3000/allAverageScore/`,{headers:{
           Authorization:`Bearer ${token}`
         }})
         .then((response) => {setAverage(response.data)} )
@@ -62,7 +62,7 @@ const Estadisticas = () => {
     // funcion para recibir los punrajes de cada ensayo predeterminado
     const getScore = async() =>{
       const token = await AsyncStorage.getItem('token')
-      axios.get('http://192.168.1.96:3000/scores/', {headers:{
+      axios.get(`${LOCAL_HOST}:3000/scores/`, {headers:{
         Authorization:`Bearer ${token}`
       }}).then((response) => {
         
@@ -83,13 +83,13 @@ const Estadisticas = () => {
       const getScore = async() =>{
         const token = await AsyncStorage.getItem('token')
         if(tema === 'Todos'){
-          axios.get('http://192.168.1.96:3000/scores/', {headers:{
+          axios.get(`${LOCAL_HOST}:3000/scores/`, {headers:{
             Authorization:`Bearer ${token}`
           }}).then((response) => {
             const historialFiltrado = response.data.filter(item => item.value > 0)
             setHistorial(historialFiltrado)})
         }else{
-          axios.get(`http://192.168.1.96:3000/scores?name=${tema}`, {headers:{
+          axios.get(`${LOCAL_HOST}:3000/scores?name=${tema}`, {headers:{
             Authorization:`Bearer ${token}`
           }}).then((response) => {
             const historialFiltrado = response.data.filter(item => item.value > 0)

@@ -7,12 +7,11 @@ import MenuContext from '../../MenuContext'
 import Katex from 'react-native-katex'
 // import theme from '../../theme/theme'
 import RenderAnswers from './RenderAnswers'
-const submit_answers = "http://192.168.1.96:3000/submitAnswers/"; 
-
 import left from '../../assets/ArrowLeft.png'
 import right from '../../assets/ArrowRight.png'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import modoDark from '../../ModoDark'
+import {LOCAL_HOST} from '@env'
 
 const EnsayoPrueba = ({navigation}) => {
 
@@ -68,7 +67,7 @@ const EnsayoPrueba = ({navigation}) => {
         const llamadaEnsayos = async() =>{
             try{
                 setMenuEnsayo(false)
-                const respuesta = await axios.get(`http://192.168.1.96:3000/essayQuestions/?name=${nombre}`)
+                const respuesta = await axios.get(`${LOCAL_HOST}:3000/essayQuestions/?name=${nombre}`)
                 setEnsayos(respuesta.data.questions)
                 setTiempo(respuesta.data.questions.length * 60 * 2)
                 postEnsayo(respuesta.data.questions.length, respuesta.data.questions.length * 60 * 2)
@@ -92,7 +91,7 @@ const EnsayoPrueba = ({navigation}) => {
         const ensayoGeneral = async() =>{
             try{
                 setMenuEnsayo(false)
-                axios.get('http://192.168.1.96:3000/allQuestions/')
+                axios.get(`${LOCAL_HOST}:3000/allQuestions/`)
                 .then((response) => {
                     const array1 = response.data[0].questions;
                     const array2 = response.data[1].questions;
@@ -138,7 +137,7 @@ const EnsayoPrueba = ({navigation}) => {
                     durationTime:tiempo,
                 }
 
-                axios.post('http://192.168.1.96:3000/newEssay/', ensayo, {headers:{
+                axios.post(`${LOCAL_HOST}:3000/newEssay/`, ensayo, {headers:{
                     Authorization:`Bearer ${token}`
                 }})
                 .then((response) => {setIdEnsayo(response.data.newEssay.id), setIdEssay(response.data.newEssay.id)}) /// response.data.id
@@ -152,7 +151,7 @@ const EnsayoPrueba = ({navigation}) => {
         const customEssay = async() =>{
                 const token = await AsyncStorage.getItem('token')
                 setMenuEnsayo(false)
-                axios.get(`http://192.168.1.96:3000/customEssay/?essayId=${id_ensayo}`, {headers:{
+                axios.get(`${LOCAL_HOST}:3000/customEssay/?essayId=${id_ensayo}`, {headers:{
                     Authorization:`Bearer ${token}`
                 }})
                 .then((response) => {
@@ -203,8 +202,7 @@ const EnsayoPrueba = ({navigation}) => {
            const tiempoTotal = tiempoTotalEnsayo.toString()
              try{
                 const token = await AsyncStorage.getItem('token')
-                const idusuario = await AsyncStorage.getItem('id_usuario')
-                const respuesta = await axios.post(submit_answers, {
+                const respuesta = await axios.post(`${LOCAL_HOST}:3000/submitAnswers/`, {
                     answersIDS: selected,
                     essayId:idEnsayo,
                     essayTime:tiempoTotal,

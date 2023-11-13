@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import TokenContext from "../../TokenContext";
-
+import {LOCAL_HOST} from '@env'
 //importamos asyncStorage para poder guardar en el localstorage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import modoDark from "../../ModoDark";
@@ -19,7 +19,7 @@ import modoDark from "../../ModoDark";
 // import theme from "../../theme/theme";
 const Log = ({ navigation }) => {
 
-  const url = 'http://192.168.1.96:3000/login/'
+  const url = `${LOCAL_HOST}:3000/login/`
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
 

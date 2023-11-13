@@ -6,6 +6,7 @@ import EnsayoRenderizado from './EnsayoRenderizado';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import modoDark from '../../ModoDark';
+import {LOCAL_HOST} from '@env'
 
 const EnsayoFeedback = ({navigation}) => {
     
@@ -18,7 +19,7 @@ const EnsayoFeedback = ({navigation}) => {
     const {theme} = useContext(modoDark)
 
     const id = route.params.id;
-    const urlEnsayos = `http://192.168.1.96:3000/submittedEssay?id=${id}`
+    const urlEnsayos = `${LOCAL_HOST}:3000/submittedEssay?id=${id}`
 
     useEffect(() =>{
         const llamadaEnsayo = async() =>{

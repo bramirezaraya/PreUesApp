@@ -8,7 +8,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 import RenderizadoHistorial from './RenderizadoHistorial.jsx'
 import { useFocusEffect } from '@react-navigation/native'
 import modoDark from '../../ModoDark.js'
-
+import {LOCAL_HOST} from '@env'
 const Historial = ({navigation}) => {
 
   // mandar el theme por props. a los render.
@@ -28,7 +28,7 @@ const Historial = ({navigation}) => {
           const id_usuario = await AsyncStorage.getItem('id_usuario')
           const token = await AsyncStorage.getItem('token')
 
-          const respuesta = await fetch(`http://192.168.1.96:3000/history`, {
+          const respuesta = await fetch(`${LOCAL_HOST}:3000/history`, {
             method:'GET',
             headers:{
               authorization: `Bearer ${token}`

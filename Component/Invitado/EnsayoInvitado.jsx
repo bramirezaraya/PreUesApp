@@ -65,16 +65,13 @@ const EnsayoInvitado = ({navigation}) => {
                 <Image style={{width:25,height:25}} source={require('../../assets/time.png')} />
                 <Text style={[styles.time, {color:theme.colors.textSecondary}]}>{minutos < 10 ? '0'+minutos : minutos}:{segundos < 10 ? '0'+segundos : segundos}</Text>
             </View>
-            <FlatList 
+            {ensayo ? <FlatList 
                 data={ensayo}
                 renderItem={({item, index}) => (RenderEssayInvitado({item, index, selected, setSelected, largo, theme}))}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={{padding:20}}
                 ItemSeparatorComponent={() => <View style={styles.separator}></View>}
-            />
-            
-
-
+            /> : <Text>Cargando..</Text>}
 
             <View style={styles.contenedorBoton}>
                 <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgBoton,}]} onPress={() => EnviarEnsayo()}>

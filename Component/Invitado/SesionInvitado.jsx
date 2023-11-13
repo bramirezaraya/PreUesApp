@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native'
 import { Image } from 'react-native'
 import axios from 'axios'
 import modoDark from '../../ModoDark'
+import {LOCAL_HOST} from '@env'
 
 const SesionInvitado = ({navigation}) => {
 
@@ -13,7 +14,7 @@ const SesionInvitado = ({navigation}) => {
   const EnsayoGeneral = async() =>{
 
     try{
-        axios.get('http://192.168.1.96:3000/allQuestions/')
+        axios.get(`${LOCAL_HOST}:3000/allQuestions/`)
         .then((response) => {
           
           const arrayNumeros = response.data[0].questions.slice(0,1) // llamo solamente 1 pregunta de cada tema.

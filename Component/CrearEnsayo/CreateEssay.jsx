@@ -6,6 +6,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import modoDark from '../../ModoDark';
+import {LOCAL_HOST} from '@env'
 
 const CreateEssay = ({navigation}) => {
 
@@ -73,7 +74,7 @@ const CreateEssay = ({navigation}) => {
             durationTime:minutos,
         }
 
-        axios.post('http://192.168.1.96:3000/newEssay/', ensayoPersonalizado, {headers:{
+        axios.post(`${LOCAL_HOST}:3000/newEssay/`, ensayoPersonalizado, {headers:{
           Authorization:`Bearer ${token}`
         }}).then((response) => { setMinutos(), setNombre(''),setPreguntas(),setTema([]), dropdownRefPreguntas.current.reset(), dropdownRefMinutos.current.reset(), navigation.navigate('MenuLogin')})
 

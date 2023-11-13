@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MenuContext from './MenuContext'
 import axios from 'axios';
 import { Alert } from 'react-native';
+import {LOCAL_HOST} from '@env'
 const Stack = createStackNavigator()
 
 const Drawer = createDrawerNavigator();
@@ -29,7 +30,7 @@ const MenuLogin = () =>{
   const {theme, darkMode} = useContext(modoDark)
 
   const EliminarEnsayo = (navigation, token) =>{
-    axios.delete(`http://192.168.1.96:3000/physicalDelEssay?essayId=${idEssay}&started=${1}`, {headers:{
+    axios.delete(`${LOCAL_HOST}:3000/physicalDelEssay?essayId=${idEssay}&started=${1}`, {headers:{
       Authorization: `Bearer ${token}`
     }})
     setMenuEnsayo(true)

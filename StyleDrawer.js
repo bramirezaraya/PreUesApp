@@ -66,7 +66,6 @@ import modoDark from './ModoDark'
 
     useFocusEffect(
         React.useCallback(() =>{
-            console.log('entre')
             const cambiarAvatar = async() =>{
                 try{
                     const imagen = await AsyncStorage.getItem('avatar')

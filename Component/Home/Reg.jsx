@@ -8,10 +8,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import modoDark from "../../ModoDark";
-
+import {LOCAL_HOST} from '@env'
 const Reg = ({ navigation }) => {
 
-  const url = 'http://192.168.1.96:3000/signup/'
+  const url = `${LOCAL_HOST}:3000/signup/`
   const {theme} = useContext(modoDark)
 
   const [email, setEmail] = React.useState("");

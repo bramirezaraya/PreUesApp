@@ -1,14 +1,11 @@
 import { StyleSheet,View, SafeAreaView, FlatList, Text, Image, TouchableOpacity} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import Header from '../Header/Header'
 import Essay from './Essay'
-import EnsayoFeedback from './EnsayoFeedback'
-// import theme from '../../theme/theme'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useFocusEffect } from '@react-navigation/native'
 import modoDark from '../../ModoDark'
-import { StatusBar } from 'react-native-web'
+import {LOCAL_HOST} from '@env'
 const Menu = ({navigation}) => {
 
   const {theme} = useContext(modoDark)
@@ -66,7 +63,7 @@ useFocusEffect(
         try{
           const token = await AsyncStorage.getItem('token')
         
-        axios.get('http://192.168.1.96:3000/coins/', {headers:{
+        axios.get(`${LOCAL_HOST}:3000/coins/`, {headers:{
           Authorization: `Bearer ${token}`
         }})
         .then(response => {setMonedas(response.data.coins)})
@@ -83,7 +80,7 @@ useFocusEffect(
       // setMonedas(monedas)
       setUsuario(JSON.parse(user))
 
-      axios.get('http://192.168.1.96:3000/showCustomEssays',{ headers:{
+      axios.get(`${LOCAL_HOST}:3000/showCustomEssays`,{ headers:{
         Authorization: `Bearer ${token}`
       }})
       .then((response) => {setDatosCustom(response.data.customEssays), setCantidadCustom(response.data.customEssays.length)})
@@ -97,15 +94,7 @@ useFocusEffect(
 
   return (
     <SafeAreaView style={[styles.contenedor2, {backgroundColor:theme.bground.bgPrimary,}]}> 
-            <View style={styles.contenedor}> 
-
-                  {/* <View style={[styles.datosUser, {backgroundColor:theme.bground.bgInicioDatos,}]}> 
-                      <Text style={styles.texto}>Bienvenido {usuario}</Text>
-                      <View style={styles.datosMonedas}>
-                        <Text style={styles.texto}>Sus monedas acumuladas son: {monedas}</Text>
-                        <Image source={require("../../assets/dollar.png")} />
-                      </View>
-                  </View> */}
+            <View style={styles.contenedor}>
 
                   <View style={styles.userData}>
                        <Text style={[styles.textoUser, {fontWeight:100, color:theme.colors.textSecondary}]}>Hola! {usuario}</Text>

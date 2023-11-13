@@ -10,7 +10,7 @@ import modoDark from '../../ModoDark'
 import { useFocusEffect } from '@react-navigation/native'
 import ChangePassword from './ChangePassword'
 import ChangeAvatar from './ChangeAvatar'
-import { set } from 'react-native-reanimated'
+import {LOCAL_HOST} from '@env'
 const Account = () => {
 
   const {theme} = useContext(modoDark)
@@ -54,7 +54,7 @@ const Account = () => {
           if(validarPassword()){
               try{
                 const token = await AsyncStorage.getItem('token')
-                axios.patch('http://192.168.1.96:3000/changePassword',{
+                axios.patch(`${LOCAL_HOST}:3000/changePassword`,{
                   oldPassword:password,
                   newPassword:newPassword
                 },{headers:{
@@ -112,7 +112,7 @@ const Account = () => {
       try{
         const token = await AsyncStorage.getItem('token')
       
-      axios.get('http://192.168.1.96:3000/coins/', {headers:{
+      axios.get(`${LOCAL_HOST}:3000/coins/`, {headers:{
         Authorization: `Bearer ${token}`
       }})
       .then(response => {setMonedas(response.data.coins)})

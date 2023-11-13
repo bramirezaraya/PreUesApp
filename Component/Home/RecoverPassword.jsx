@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 // import theme from '../../theme/theme'
 import axios from 'axios'
 import modoDark from '../../ModoDark'
+import {LOCAL_HOST} from '@env'
 const RecoverPassword = ({navigation}) => {
 
     const [email, setEmail] = useState('')
@@ -12,7 +13,7 @@ const RecoverPassword = ({navigation}) => {
     // Funcion para recuperar contraseña.
     const EnviarPassword = () =>{
         // se consulta al end-point con el email ingresado por el usuario.
-        axios.post("http://192.168.1.96:3000/recoverPassword", {
+        axios.post(`${LOCAL_HOST}:3000/recoverPasswor`, {
             email:email
         })
         .then((response)=> {
