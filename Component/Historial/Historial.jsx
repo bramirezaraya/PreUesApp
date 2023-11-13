@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity,Image } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
-import Header  from '../Header/Header.jsx'
-// import theme from '../../theme/theme.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import SelectDropdown from 'react-native-select-dropdown'
 import RenderizadoHistorial from './RenderizadoHistorial.jsx'

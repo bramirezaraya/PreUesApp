@@ -10,7 +10,6 @@ import Reg from "./Component/Home/Reg";
 import theme from "./theme/theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TokenContext from "./TokenContext";
-import NavegacionTab from "./NavegacionTab";
 import NavegacionDrawer from "./NavegacionDrawer";
 import RecoverPassword from "./Component/Home/RecoverPassword";
 import SesionInvitado from "./Component/Invitado/SesionInvitado";

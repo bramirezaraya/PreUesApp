@@ -52,6 +52,7 @@ const EnsayoPrueba = ({navigation}) => {
     html, body {
         background-color: ${theme.bground.bgSecondary};     
         margin: 0;
+        color:${theme.colors.textSecondary}
     }
     .katex {
         font-size: 2.5em;
@@ -306,11 +307,7 @@ const EnsayoPrueba = ({navigation}) => {
                             />
                         </View>
                     </View>
-                        
-                    
-
-
-
+                               
                     <View style={styles.contenedorBoton}>
                         {indexPregunta +1 === ensayos.length && (
                             <TouchableOpacity style={[styles.botonfinalizar, {backgroundColor:theme.bground.bgBotonNavegacion}]} onPress={() => mostrarDatos()}>

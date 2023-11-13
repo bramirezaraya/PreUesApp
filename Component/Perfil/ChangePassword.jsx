@@ -1,11 +1,6 @@
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-
-
-
-
-
 const ChangePassword = ({Cancelar,setPassword,setNewPassword, setNewPasswordConfirm,cambiarPassword, theme, password, newPassword, newPasswordConfirm}) => {
   return (
     <View style={[styles.contenedorCambiarPassword, {backgroundColor:theme.bground.bgChange,}]}>

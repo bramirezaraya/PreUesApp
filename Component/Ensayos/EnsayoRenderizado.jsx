@@ -12,6 +12,7 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
     html, body {
         background-color: ${theme.bground.bgSecondary};     
         margin: 0;
+        color: ${theme.colors.textSecondary};
     }
     .katex {
         font-size: 2.5em;
@@ -43,9 +44,6 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
             </View>
                                 
             {/* mostramos la pregunta del ensayo*/}
-            {/* <Text style={[styles.textoPregunta, {color: theme.colors.textSecondary}]}>
-                ¿{item.question}?
-            </Text> */}
             <Katex 
                 expression={item.question}
                 inlineStyle={inlineStyle} 
@@ -62,7 +60,7 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
                  <FlatList
                     data={item.answers}
                     renderItem={({item: respuestaItem, index:indexRespuesta}) => RespuestasRenderizadas({respuestaItem, index, respuestas, theme,indexRespuesta})}
-                    keyExtractor={(item) => item.id}
+                    
                 />
             </View>
            
