@@ -8,6 +8,9 @@ import { TextInput } from 'react-native-gesture-handler'
 import validator from 'validator'
 import modoDark from '../../ModoDark'
 import { useFocusEffect } from '@react-navigation/native'
+import ChangePassword from './ChangePassword'
+import ChangeAvatar from './ChangeAvatar'
+import { set } from 'react-native-reanimated'
 const Account = () => {
 
   const {theme} = useContext(modoDark)
@@ -21,6 +24,17 @@ const Account = () => {
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('')
   const [validadorPassword, setValidadorPassword] = useState(false)
   const [monedas, setMonedas] = useState(0)
+  const [cambiarAvatar, setCambiarAvatar] = useState(false)
+  const [avatar, setAvatar] = useState()
+
+  // imagenes de perfil.
+  const AvatarImages = {
+    avatar1: {img:require('../../assets/avatar1.png'), name:'avatar1'},
+    avatar2: {img:require('../../assets/avatar2.png'), name:'avatar2'},
+    avatar3: {img:require('../../assets/avatar3.png'), name:'avatar3'},
+    avatar4: {img:require('../../assets/avatar4.png'), name:'avatar4'},
+  }
+
 
   // función para validar que las dos contraseñas sean iguales.
   const validarPassword = () =>{
@@ -75,12 +89,21 @@ const Account = () => {
       
   }
 
+  const Cancelar = () =>{
+    setCambiarContraseña(false), 
+    setPassword(''),
+    setNewPassword(''),
+    setNewPasswordConfirm('')
+  }
+
   useFocusEffect(
     React.useCallback(() =>{
 
     llamarDatos = async() =>{
       const mail = await AsyncStorage.getItem('email')
       const user = await AsyncStorage.getItem('usuario')
+      const imagen = await AsyncStorage.getItem('avatar')
+      setAvatar(AvatarImages[imagen]) // la seteamos con el avatar que tiene, buscamos el nombre en el objecto de imagen.
       setEmail(JSON.parse(mail))
       setUsuario(JSON.parse(user))
     }
@@ -101,7 +124,7 @@ const Account = () => {
     llamarDatos()
     getScore()
 
-  },[]))
+  },[avatar]))
 
 
   return (
@@ -117,78 +140,47 @@ const Account = () => {
                   </View>
             </View>
             <View style={styles.perfil}>
-                  <Image style={styles.imagen} source={require('../../assets/imagenPerfil.png')} />
+                  {avatar && <Image style={styles.imagen} source={avatar.img} />}
             </View> 
       </View>
 
       <View style={[styles.contenedorBotones, {backgroundColor:theme.bground.bgPerfil,}]}>
               <Text style={[styles.texto , {color:theme.colors.textBlanco,}]}>Configuraciones</Text>
               <View style={styles.containerBoton}>
-                <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgBlanco,}]}>
+                <TouchableOpacity onPress={() => {setCambiarAvatar(!cambiarAvatar), Cancelar()}} style={[styles.boton, {backgroundColor:theme.bground.bgBlanco,}]}>
                     <Text style={[styles.textoBoton, {color:theme.colors.textNegro,}]}>Cambiar avatar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.boton, {backgroundColor:theme.bground.bgBlanco,}]}>
                     <Text style={[styles.textoBoton, {color:theme.colors.textNegro,}]}>Cambiar tema</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setCambiarContraseña(!cambiarContraseña)} style={[styles.boton, {backgroundColor:theme.bground.bgBlanco,}]}>
+                <TouchableOpacity onPress={() => {setCambiarContraseña(!cambiarContraseña), setCambiarAvatar(false)}} style={[styles.boton, {backgroundColor:theme.bground.bgBlanco,}]}>
                     <Text style={[styles.textoBoton, {color:theme.colors.textNegro,}]}>Cambiar contraseña</Text>
                 </TouchableOpacity>
               </View>
       </View>
 
-      { cambiarContraseña && (
-                <View style={[styles.contenedorCambiarPassword, {backgroundColor:theme.bground.bgChange,}]}>
-                    <Text style={[styles.textoBoton, {textAlign:'center', color:theme.colors.textNegro,}]}>Cambiar Contraseña</Text>
-                    
-                    <View style={styles.contenedorInput}>
-                        <View style={styles.botonesInput}>
-                          <Image style={styles.icono} source={require('../../assets/password.png')} />
-                          <TextInput 
-                            onChangeText={(value) => setPassword(value)}
-                            style={[styles.input, {backgroundColor:theme.bground.bgInputChangePassword,}]}
-                            placeholder='Ingresa tu contraseña actual'
-                            value={password}
-                            secureTextEntry={true}
-                            maxLength={16}
-                          />        
-                        </View>
-                        <View style={styles.botonesInput}>
-                          <Image style={styles.icono} source={require('../../assets/password.png')} />
-                          <TextInput 
-                            onChangeText={(value) => setNewPassword(value)}
-                            style={[styles.input, {backgroundColor:theme.bground.bgInputChangePassword,}]}
-                            placeholder='Ingresa tu nueva contraseña'
-                            value={newPassword}
-                            secureTextEntry={true}
-                            maxLength={16}
-                          />        
-                        </View>
-                        <View style={styles.botonesInput}>
-                          <Image style={styles.icono} source={require('../../assets/password.png')} />
-                          <TextInput 
-                            onChangeText={(value) => setNewPasswordConfirm(value)}
-                            style={[styles.input, {backgroundColor:theme.bground.bgInputChangePassword,}]}
-                            placeholder='Confirma tu nueva contraseña'
-                            value={newPasswordConfirm}
-                            secureTextEntry={true}
-                            maxLength={16}
-                          />        
-                        </View>
-                    </View>
-
-                    <View style={styles.botonCambiarPassword}>
-                      <TouchableOpacity style={[styles.botonPassword, {backgroundColor:theme.bground.bgBotonCrearEnsayo,}]} onPress={() => setCambiarContraseña(false)} >
-                        <Text>Salir</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={[styles.botonPassword, {backgroundColor:theme.bground.bgBotonCrearEnsayo,}]} onPress={() => cambiarPassword()} >
-                        <Text>Cambiar contraseña</Text>
-                      </TouchableOpacity>
-                    </View>
-                    
-                </View>
-              )}
-
-
+        {/* Componente cambiar Avatar */}
+        {cambiarAvatar && ( 
+        <ChangeAvatar 
+          theme={theme}
+          AvatarImages ={AvatarImages}
+          avatar ={avatar}
+          setAvatar ={setAvatar}
+          setCambiarAvatar={setCambiarAvatar}
+        />)}
+        {/* componente cambiar contraseña. */}
+        { cambiarContraseña && ( 
+        <ChangePassword
+          setPassword = {setPassword}
+          setNewPassword ={setNewPassword}
+          setNewPasswordConfirm={setNewPasswordConfirm}
+          cambiarPassword ={cambiarPassword}
+          Cancelar = {Cancelar}
+          theme = {theme}
+          password ={ password}
+          newPassword = {newPassword}
+          newPasswordConfirm = {newPasswordConfirm}
+        />)}
     </View>
   )
 }
@@ -258,53 +250,5 @@ const styles = StyleSheet.create({
     borderRadius:10,
     height:40,
     justifyContent:'center',
-  },
-  contenedorCambiarPassword:{
-    position:'absolute',
-    top:80,   
-    left:70, 
-    height:300,
-    width:340,
-    borderRadius:10,
-    padding:20,
-    display:'flex',
-    flexDirection:'column',
-    justifyContent:'space-between',
-    zIndex:2
-  },
-  contenedorInput:{
-    width:'100%',
-    display:'flex',
-    flexDirection:'column',
-    gap:15,
-  },
-  botonCambiarPassword:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    width:'100%'
-  },
-  botonPassword:{
-    padding:8,
-    borderRadius:15
-  },
-  input:{
-    width:'90%',
-    borderRadius:10,
-    paddingLeft:30,
-    height:35
-  },
-  botonesInput:{
-    display:'flex',
-    flexDirection:'row',
-    position:'relative'
-  }, 
-  icono:{
-    width:20,
-    height:20,
-    position:'absolute',
-    top:7,
-    left:5,
-    zIndex:2,
   },
 })

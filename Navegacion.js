@@ -25,9 +25,9 @@ const Stack = createNativeStackNavigator();
 const Navegacion = () => {
 
   const [tokenAuthentication, setTokenAuthentication] = React.useState(false);
-  const [darkMode, setDarkMode] = React.useState(false)
-  const [menuEnsayo, setMenuEnsayo] = useState(true)
-  const [idEssay, setIdEssay] = useState(null)
+  const [darkMode, setDarkMode] = React.useState(false) /// modo oscuro
+  const [menuEnsayo, setMenuEnsayo] = useState(true) // para ver si se mostrara el headerShown o no en el menu de ensayos.
+  const [idEssay, setIdEssay] = useState(null) // para eliminar un ensayo en especifico antes de terminarlo.
   React.useEffect(() =>{
 
     const checkToken = async () =>{

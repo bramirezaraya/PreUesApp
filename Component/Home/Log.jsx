@@ -50,6 +50,7 @@ const Log = ({ navigation }) => {
         await AsyncStorage.setItem('email', JSON.stringify(response.data.email))
         await AsyncStorage.setItem('usuario', JSON.stringify(response.data.name))
         await AsyncStorage.setItem('monedas', JSON.stringify(response.data.coins) )
+        await AsyncStorage.setItem('avatar', response.data.avatar)
         //guardamos el token en el header a si poder actualizar sin problema.
         //cada ves que hagamos una solicitud utilizara el header que estamos configurando.
         // asi poder identificar al usuario.

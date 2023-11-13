@@ -2,7 +2,7 @@ import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native'
 import React, { Component, useContext, useEffect, useState } from 'react'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
 import BotonesDrawer from './BotonesDrawer'
-import { useRoute } from '@react-navigation/native'
+import { useFocusEffect, useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import tokenContext from './TokenContext'
 import { JumpingTransition } from 'react-native-reanimated'
@@ -17,6 +17,13 @@ import modoDark from './ModoDark'
     const {setTokenAuthentication} = React.useContext(tokenContext);
     const {theme} = useContext(modoDark)
     const {setDarkMode, darkMode} = React.useContext(modoDark)
+
+    const AvatarImages = {
+        avatar1: require('./assets/avatar1.png'),
+        avatar2: require('./assets/avatar2.png'),
+        avatar3: require('./assets/avatar3.png'),
+        avatar4: require('./assets/avatar4.png'),
+    }
     
     const logOut = async() =>{
         try{
@@ -28,26 +35,25 @@ import modoDark from './ModoDark'
              console.log(error)
         }
     }
-    // const email = await AsyncStorage.getItem('email')
-    // console.log(email)
-    // var usuario
 
     const [usuario, setUsuario] = useState('')
     const [email, setEmail] = useState('')
-
+    const [avatar, setAvatar] = useState()
     useEffect( () =>{
         
         const pedidoDatosUsuarios = async() =>{
             try{
                 const usuario = await AsyncStorage.getItem('usuario')
                 const email = await AsyncStorage.getItem('email')
+                const imagen = await AsyncStorage.getItem('avatar')
                 if(email !== null){
                     const emailobject = JSON.parse(email)
                      setEmail(emailobject)
                 }
-                if(usuario !== null){
+                if(usuario !== null && imagen !== null){
                     const usuarioObject = JSON.parse(usuario)
-                     setUsuario(usuarioObject)
+                    setUsuario(usuarioObject)
+                    setAvatar(AvatarImages[imagen])
                 }
                
                 // setUsuario(usuario)
@@ -56,12 +62,29 @@ import modoDark from './ModoDark'
             }   
         }
         pedidoDatosUsuarios()
-    },[])
+    },[avatar])
+
+    useFocusEffect(
+        React.useCallback(() =>{
+            console.log('entre')
+            const cambiarAvatar = async() =>{
+                try{
+                    const imagen = await AsyncStorage.getItem('avatar')
+                    if(imagen !== null){
+                        setAvatar(AvatarImages[imagen])
+                    }     
+                }  catch(error){
+                    console.log(error)
+                }   
+            }
+            cambiarAvatar()
+        },[])
+    )
 
     return (
       <DrawerContentScrollView contentContainerStyle={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary}]}>
         <View style={[styles.usuario, {backgroundColor:theme.bground.bgDrawerUser,}]}>
-            <Image source={require('./assets/imagenPerfil.png')} />
+            { avatar && (<Image style={{width:64, height:64}} source={avatar} />)}
             <Text style={[styles.text, {color:theme.colors.textBlanco}]}>{email}</Text>
         </View>
 

@@ -60,9 +60,9 @@ const EnsayoFeedback = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
                 {/* visualizaremos el ensayo completo.*/}
-                <View style={{width:'95%'}}>
+                <View style={{width:'95%', height:'100%'}}>
                      <FlatList
-                        contentContainerStyle={{paddingBottom:30}} // para que el ultimo item se visualice mejor.
+                        contentContainerStyle={{paddingBottom:250}} // para que el ultimo item se visualice mejor.
                         data={ensayo}
                         renderItem={({ item, index }) => (EnsayoRenderizado({item, index,respuestas, theme}))}
                         keyExtractor={(item) => item.id}
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         height:'100%',
     },
     contenedor:{
+        flex:1,
         display:'flex',
         flexDirection:'column',
         maxWidth:'100%',

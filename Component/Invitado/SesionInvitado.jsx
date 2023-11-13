@@ -27,9 +27,6 @@ const SesionInvitado = ({navigation}) => {
     }catch(error){
       console.log(error)
     }
-    
-
-
   }
 
   return (
@@ -38,7 +35,7 @@ const SesionInvitado = ({navigation}) => {
         <View style={styles.contenedorDatos}>
           <View style={[styles.contenedorTexto, {backgroundColor: theme.bground.bgInicio,}]}>
               <Text style={styles.texto}>Estas como usuario <Text style={{fontWeight:700}}>Invitado</Text></Text>
-              <Text style={styles.texto}>Solo tendras acceso a realizar un ensayo general de 10 preguntas</Text>
+              <Text style={styles.texto}>Solo tendras acceso a realizar un ensayo general de 10 preguntas</Text>       
           </View>
         </View>
 
@@ -52,7 +49,7 @@ const SesionInvitado = ({navigation}) => {
             <View style={[styles.containerEnsayo, {backgroundColor:theme.bground.bgInicio,}]}>
                   <Image style={styles.imagen} source={require('../../assets/imagenesEnsayo.png')} />
                   <View style={styles.datosEnsayo}>
-                        <Text style={{fontWeight:600, textAlign:'center'}}>Ensayo General</Text>
+                        <Text style={{fontWeight:600, textAlign:'center', fontSize:16}}>Ensayo General</Text>
                         <View style={styles.datos}>
                             <Image style={styles.icono} source={require('../../assets/math.png')} />
                             <Text>20 Preguntas</Text>
@@ -141,7 +138,7 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     gap:10,
     position:'absolute',
-    top:'45%',
+    top:'50%',
     padding:10,
     width:'100%'
   },
