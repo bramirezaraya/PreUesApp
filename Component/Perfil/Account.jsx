@@ -11,6 +11,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import ChangePassword from './ChangePassword'
 import ChangeAvatar from './ChangeAvatar'
 import {LOCAL_HOST} from '@env'
+import MenuContext from '../../MenuContext'
 const Account = () => {
 
   const {theme} = useContext(modoDark)
@@ -25,8 +26,8 @@ const Account = () => {
   const [validadorPassword, setValidadorPassword] = useState(false)
   const [monedas, setMonedas] = useState(0)
   const [cambiarAvatar, setCambiarAvatar] = useState(false)
-  const [avatar, setAvatar] = useState()
 
+  const {avatar, setAvatar} = React.useContext(MenuContext) // context con el name del avatar
   // imagenes de perfil.
   const AvatarImages = {
     avatar1: {img:require('../../assets/avatar1.png'), name:'avatar1'},
@@ -102,8 +103,6 @@ const Account = () => {
     llamarDatos = async() =>{
       const mail = await AsyncStorage.getItem('email')
       const user = await AsyncStorage.getItem('usuario')
-      const imagen = await AsyncStorage.getItem('avatar')
-      setAvatar(AvatarImages[imagen]) // la seteamos con el avatar que tiene, buscamos el nombre en el objecto de imagen.
       setEmail(JSON.parse(mail))
       setUsuario(JSON.parse(user))
     }
@@ -124,7 +123,7 @@ const Account = () => {
     llamarDatos()
     getScore()
 
-  },[avatar]))
+  },[]))
 
 
   return (
@@ -140,7 +139,7 @@ const Account = () => {
                   </View>
             </View>
             <View style={styles.perfil}>
-                  {avatar && <Image style={styles.imagen} source={avatar.img} />}
+                  {avatar && <Image style={styles.imagen} source={AvatarImages[avatar].img} />}
             </View> 
       </View>
 

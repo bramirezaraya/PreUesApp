@@ -9,7 +9,6 @@ import Historial from './Component/Historial/Historial';
 import Estadisticas from './Component/Estadisticas/Estadisticas';
 import EnsayoPrueba from './Component/Ensayos/EnsayoPrueba';
 import EnsayoFeedback from './Component/Ensayos/EnsayoFeedback';
-// import theme from './theme/theme';
 import StyleDrawer from './StyleDrawer';
 import { useNavigationState, useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
 import Account from './Component/Perfil/Account';
@@ -105,7 +104,6 @@ const MenuLogin = () =>{
 
   ///contenedores del drawer.
 const NavegacionDrawer = () => {
-
   /// uses context para ir modificando el header del drawer.
   const {menuEnsayo, setMenuEnsayo} = React.useContext(MenuContext)
 
@@ -118,7 +116,6 @@ const NavegacionDrawer = () => {
                     <Drawer.Screen
                       name="MenuLogin"
                       component={MenuLogin}
-                        
                       options={ ({ navigation, route}) => ({
                         headerTitle:'PreUesApp',
                         headerTintColor:theme.colors.textSecondary, /// color del menu hamburguesa y titulo.

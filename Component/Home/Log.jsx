@@ -15,8 +15,7 @@ import {LOCAL_HOST} from '@env'
 //importamos asyncStorage para poder guardar en el localstorage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import modoDark from "../../ModoDark";
-//importo los estilos de la aplicacion.
-// import theme from "../../theme/theme";
+import MenuContex from "../../MenuContext"
 const Log = ({ navigation }) => {
 
   const url = `${LOCAL_HOST}:3000/login/`
@@ -25,6 +24,7 @@ const Log = ({ navigation }) => {
 
   // llamamos al usecontext para poder utilizar el token authentication y poder modificarlo al momento de iniciar sesion.
   const {setTokenAuthentication} = React.useContext(TokenContext)
+  const {setAvatar} = React.useContext(MenuContex)
 
   const {theme} = React.useContext(modoDark)
 
@@ -51,6 +51,7 @@ const Log = ({ navigation }) => {
         await AsyncStorage.setItem('usuario', JSON.stringify(response.data.name))
         await AsyncStorage.setItem('monedas', JSON.stringify(response.data.coins) )
         await AsyncStorage.setItem('avatar', response.data.avatar)
+        setAvatar(response.data.avatar)
         //guardamos el token en el header a si poder actualizar sin problema.
         //cada ves que hagamos una solicitud utilizara el header que estamos configurando.
         // asi poder identificar al usuario.

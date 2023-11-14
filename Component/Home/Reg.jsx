@@ -35,9 +35,11 @@ const Reg = ({ navigation }) => {
   const validarUser = (usuario) =>{
     const user = usuario
     const validador = /^[A-Za-z-0-9 ]+$/; // solo letras minusculas y mayusculas.
-    const spaceCount = (usuario.match(/ /g) || []).length; // para contar los espacios.
-    const numbersInText = user.replace(/[^0-9]/g, '').length;
+    const spaceCount = (usuario.match(/ /g) || []).length; // puede conterner 2 espacios.
+    const numbersInText = user.replace(/[^0-9]/g, '').length; // puede contener 3 numeros
 
+    // SI EL USUARIO INGRESA VALORES NO PERMITIDOS, O ES MENOR A 3 CARACTERES, O TIENE MAS DE DOS ESPACIOS O 3 NUMEROS, 
+    //SE INDICARA INCORRECTO.
     if(!validador.test(usuario) || usuario.length < 3 || spaceCount > 2 || numbersInText > 3){
       return false
     }

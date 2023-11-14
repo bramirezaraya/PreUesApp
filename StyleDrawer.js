@@ -1,22 +1,18 @@
 import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native'
-import React, { Component, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
 import BotonesDrawer from './BotonesDrawer'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import tokenContext from './TokenContext'
-import { JumpingTransition } from 'react-native-reanimated'
-import axios from 'axios'
-// import theme from './theme/theme'
-import { LinearGradient } from 'react-native-svg'
 import modoDark from './ModoDark'
-
+import MenuContext from './MenuContext'
  const StyleDrawer = ({navigation, state}) => {
 
-    // para compartir datos entre componentes.. debo separarlo a otro componente para que quede mas claro.
     const {setTokenAuthentication} = React.useContext(tokenContext);
     const {theme} = useContext(modoDark)
     const {setDarkMode, darkMode} = React.useContext(modoDark)
+    const {avatar} = React.useContext(MenuContext)
 
     const AvatarImages = {
         avatar1: require('./assets/avatar1.png'),
@@ -38,22 +34,22 @@ import modoDark from './ModoDark'
 
     const [usuario, setUsuario] = useState('')
     const [email, setEmail] = useState('')
-    const [avatar, setAvatar] = useState()
+    // const [avatar, setAvatar] = useState()
     useEffect( () =>{
         
         const pedidoDatosUsuarios = async() =>{
             try{
                 const usuario = await AsyncStorage.getItem('usuario')
                 const email = await AsyncStorage.getItem('email')
-                const imagen = await AsyncStorage.getItem('avatar')
+                // const imagen = await AsyncStorage.getItem('avatar')
                 if(email !== null){
                     const emailobject = JSON.parse(email)
                      setEmail(emailobject)
                 }
-                if(usuario !== null && imagen !== null){
+                if(usuario !== null){
                     const usuarioObject = JSON.parse(usuario)
                     setUsuario(usuarioObject)
-                    setAvatar(AvatarImages[imagen])
+                    // setAvatar(AvatarImages[imagen])
                 }
                
                 // setUsuario(usuario)
@@ -62,28 +58,28 @@ import modoDark from './ModoDark'
             }   
         }
         pedidoDatosUsuarios()
-    },[avatar])
+    },[])
 
-    useFocusEffect(
-        React.useCallback(() =>{
-            const cambiarAvatar = async() =>{
-                try{
-                    const imagen = await AsyncStorage.getItem('avatar')
-                    if(imagen !== null){
-                        setAvatar(AvatarImages[imagen])
-                    }     
-                }  catch(error){
-                    console.log(error)
-                }   
-            }
-            cambiarAvatar()
-        },[])
-    )
+    // useFocusEffect(
+    //     React.useCallback(() =>{
+    //         const cambiarAvatar = async() =>{
+    //             try{
+    //                 const imagen = await AsyncStorage.getItem('avatar')
+    //                 if(imagen !== null){
+    //                     setAvatar(AvatarImages[imagen])
+    //                 }     
+    //             }  catch(error){
+    //                 console.log(error)
+    //             }   
+    //         }
+    //         cambiarAvatar()
+    //     },[])
+    // )
 
     return (
       <DrawerContentScrollView contentContainerStyle={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary}]}>
         <View style={[styles.usuario, {backgroundColor:theme.bground.bgDrawerUser,}]}>
-            { avatar && (<Image style={{width:64, height:64}} source={avatar} />)}
+            { avatar && (<Image style={{width:64, height:64}} source={AvatarImages[avatar]} />)}
             <Text style={[styles.text, {color:theme.colors.textBlanco}]}>{email}</Text>
         </View>
 

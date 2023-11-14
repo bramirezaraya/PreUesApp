@@ -17,12 +17,12 @@ const SesionInvitado = ({navigation}) => {
         axios.get(`${LOCAL_HOST}:3000/allQuestions/`)
         .then((response) => {
           
-          const arrayNumeros = response.data[0].questions.slice(0,1) // llamo solamente 1 pregunta de cada tema.
-          const arrayAlgebra = response.data[1].questions.slice(0,1)
-          const arrayProbabilidad = response.data[2].questions.slice(0,1)
-          const arrayGeometria = response.data[3].questions.slice(0,1)
+          const arrayNumeros = response.data[0].questions.slice(0,2) // llamo solamente 1 pregunta de cada tema.
+          const arrayAlgebra = response.data[1].questions.slice(0,2)
+          const arrayProbabilidad = response.data[2].questions.slice(0,2)
+          const arrayGeometria = response.data[3].questions.slice(0,2)
           const ensayoGeneral = arrayNumeros.concat(arrayAlgebra,arrayProbabilidad,arrayGeometria)
-          navigation.navigate('EnsayoInvitado', {ensayo: ensayoGeneral, tiempo:25, largo:ensayoGeneral.length})
+          navigation.navigate('EnsayoInvitado', {ensayo: ensayoGeneral, tiempo:16, largo:ensayoGeneral.length})
       })
       .catch((error) => console.log(error))
     }catch(error){
@@ -36,7 +36,7 @@ const SesionInvitado = ({navigation}) => {
         <View style={styles.contenedorDatos}>
           <View style={[styles.contenedorTexto, {backgroundColor: theme.bground.bgInicio,}]}>
               <Text style={styles.texto}>Estas como usuario <Text style={{fontWeight:700}}>Invitado</Text></Text>
-              <Text style={styles.texto}>Solo tendras acceso a realizar un ensayo general de 10 preguntas</Text>       
+              <Text style={styles.texto}>Solo tendras acceso a realizar un ensayo general de 8 preguntas</Text>       
           </View>
         </View>
 
@@ -53,11 +53,11 @@ const SesionInvitado = ({navigation}) => {
                         <Text style={{fontWeight:600, textAlign:'center', fontSize:16}}>Ensayo General</Text>
                         <View style={styles.datos}>
                             <Image style={styles.icono} source={require('../../assets/math.png')} />
-                            <Text>20 Preguntas</Text>
+                            <Text style={{fontSize:15}}>8 Preguntas</Text>
                         </View>
                         <View style={styles.datos}>
                             <Image style={styles.icono} source={require('../../assets/time.png')} />
-                            <Text>30 Minutos</Text>
+                            <Text style={{fontSize:15}}>16 Minutos</Text>
                         </View>                      
                   </View>
                   <View style={styles.contenedorBoton}>
@@ -150,8 +150,8 @@ const styles = StyleSheet.create({
   },
 
   icono:{
-    width:20,
-    height:20
+    width:25,
+    height:25
   },
   contenedorBoton:{
     position:'absolute',
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
 
   botonInicio:{
-    width:80,
+    width:100,
     borderRadius:10,
     justifyContent:'center',
     alignItems:'center',

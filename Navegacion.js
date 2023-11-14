@@ -27,6 +27,7 @@ const Navegacion = () => {
   const [darkMode, setDarkMode] = React.useState(false) /// modo oscuro
   const [menuEnsayo, setMenuEnsayo] = useState(true) // para ver si se mostrara el headerShown o no en el menu de ensayos.
   const [idEssay, setIdEssay] = useState(null) // para eliminar un ensayo en especifico antes de terminarlo.
+  const [avatar, setAvatar] = useState(null)
   React.useEffect(() =>{
 
     const checkToken = async () =>{
@@ -51,17 +52,10 @@ const Navegacion = () => {
     // si tenemos el token entonces mostramos el menu principal.
     <TokenContext.Provider value={{tokenAuthentication, setTokenAuthentication}}>
       <ModoDark.Provider value={{darkMode, setDarkMode, theme: darkMode ? theme.dark : theme.ligth}}>
-        <MenuContext.Provider value={{menuEnsayo, setMenuEnsayo, idEssay, setIdEssay}}>
+        <MenuContext.Provider value={{menuEnsayo, setMenuEnsayo, idEssay, setIdEssay, avatar, setAvatar}}>
 
           {tokenAuthentication ? (  
               <>
-                {/* <Stack.Navigator>
-                    <Stack.Screen 
-                        name='menuPrincipal'
-                        component={NavegacionTab}
-                        options={{headerTitle:'' , headerShown:false}}
-                    />
-                </Stack.Navigator> */}
 
                 <Stack.Navigator>
                   <Stack.Screen 

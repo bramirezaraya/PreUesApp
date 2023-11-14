@@ -25,7 +25,7 @@ const ChangeAvatar = ({theme, AvatarImages, avatar, setAvatar, setCambiarAvatar}
           }})
           .then(async(response) => {
             alert('Se ha cambiado correctamente')
-            await AsyncStorage.setItem('avatar', nameAvatar)
+            setAvatar(nameAvatar)
             setCambiarAvatar(false)
           })
       }catch(error){
@@ -44,7 +44,7 @@ const ChangeAvatar = ({theme, AvatarImages, avatar, setAvatar, setCambiarAvatar}
             data={data}
             horizontal={true}
             renderItem={({item, index}) => 
-            (RenderAvatar({item, index, setAvatarElegido, avatarElegido, theme, setAvatar}))} 
+            (RenderAvatar({item, index, setAvatarElegido, avatarElegido, theme}))} 
           />      
           <View style={styles.botonCambiarAvatar}>
             <TouchableOpacity onPress={() => setCambiarAvatar(false) } style={[styles.botonAvatar, {backgroundColor:theme.bground.bgBotonCrearEnsayo,}]}>
