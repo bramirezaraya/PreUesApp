@@ -60,7 +60,7 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
                  <FlatList
                     data={item.answers}
                     renderItem={({item: respuestaItem, index:indexRespuesta}) => RespuestasRenderizadas({respuestaItem, index, respuestas, theme,indexRespuesta})}
-                    
+                    keyExtractor={(respuestaItem) => respuestaItem.id}
                 />
             </View>
            

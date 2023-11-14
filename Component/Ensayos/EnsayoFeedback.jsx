@@ -14,7 +14,6 @@ const EnsayoFeedback = ({navigation}) => {
     const [ensayo, setEnsayo] = useState([])
     const [datosEnsayo, setDatoEnsayo] = useState()
     const [respuestas, setRespuestas] = useState([])
-    const [indexEnsayo, setIndexEnsayo] = useState(0);
 
     const {theme} = useContext(modoDark)
 
@@ -29,11 +28,7 @@ const EnsayoFeedback = ({navigation}) => {
                     const response = await axios.get(urlEnsayos, {headers:{
                         Authorization:`Bearer ${token}`
                     }});
-                   
-
-                // const ensayos = await axios.get(urlEnsayos)
-                // const dataEnsayo = await ensayos.json()
-                    
+                     
                     setEnsayo(response.data.questions) /// preguntas.
                     setDatoEnsayo(response.data) // score, preguntas y respuestas, fecha.
                     setRespuestas(response.data.chosenAnswers) /// respuestas marcadas por el usuario.

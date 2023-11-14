@@ -26,7 +26,7 @@ const PieChartData = ({theme, sliceColor, series, widthAndHeight, avegare, label
                     toggleFocusOnPress={true} 
                     strokeWidth={0.1} 
                     strokeColor={'#000'}
-                    showText={true} 
+                    showText={false} 
                     showValuesAsLabels={true} 
                     radius={90}
                     onPress={(item) => ScaleEssay(item.id)}

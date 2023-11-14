@@ -149,7 +149,7 @@ const Estadisticas = () => {
               maxValue={1000} 
               stepValue={100} 
               height={350}
-              width={260}
+              width={280}
               rulesType='solid'
               barWidth={25}
               barBorderTopLeftRadius={20}
@@ -158,8 +158,8 @@ const Estadisticas = () => {
               yAxisOffset={0}
               showScrollIndicator={true}
               shiftX={200}
-              xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x
-              spacing={100} // espaciado entre cada bar
+              xAxisLabelTexts={datosScore ? datosScore.map((item, index) => item.createdAt) : []} // label del x (fechas)
+              spacing={140} // espaciado entre cada bar
               initialSpacing={30}
               yAxisColor={'black'} // color de la linea y
               xAxisColor={'black'} // color linea x
@@ -168,7 +168,7 @@ const Estadisticas = () => {
               yAxisTextStyle={{color:'black'}} // color del texto Y
               renderTooltip={(item, index) => {
                 return(
-                  <View style={[styles.infoEnsayo, {backgroundColor:theme.bground[item.color], right: datosScore.length - 1 === index ? '0%'  : null}]}>
+                  <View style={[styles.infoEnsayo, {backgroundColor:theme.bground[item.color],right: datosScore.length - 1 === index && datosScore.length > 1 ? '0%'  : null }]}>
                     <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Tema : {item.name}</Text>
                     <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Puntaje : {item.value}</Text>
                     <Text style={{color:theme.colors.textBlanco, fontWeight:700}}>Fecha : {item.createdAt}</Text>

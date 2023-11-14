@@ -2,16 +2,14 @@ import { View, Text, StyleSheet, Image, FlatList} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
 import axios from 'axios'
-import { ScrollView, TouchableOpacity } from 'react-native'
+import {TouchableOpacity } from 'react-native'
 import MenuContext from '../../MenuContext'
 import Katex from 'react-native-katex'
-// import theme from '../../theme/theme'
 import RenderAnswers from './RenderAnswers'
-import left from '../../assets/ArrowLeft.png'
-import right from '../../assets/ArrowRight.png'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import modoDark from '../../ModoDark'
 import {LOCAL_HOST} from '@env'
+import NavegacionEssay from './NavegacionEssay'
 
 const EnsayoPrueba = ({navigation}) => {
 
@@ -26,23 +24,11 @@ const EnsayoPrueba = ({navigation}) => {
     const [segundos, setSegundos] = useState()
     const [cantidadPaginas, setCantidadPaginas] = useState(0)
     const [modulo, setModulo] = useState(0)
-    const[indexPagination, setIndexPagination] = useState(0)
-    const array= new Array(4).fill('')
+    const [indexPagination, setIndexPagination] = useState(0)
+    const arrayPreguntas= new Array(4).fill('')
     const [arrayModulo, setArrayModulo] = useState([])
 
     const {setMenuEnsayo, setIdEssay} = useContext(MenuContext)
-    // avanzar pregunta
-    const AvanzarPregunta = () =>{
-        if(indexPregunta < ensayos.length - 1){
-            setIndexPregunta(indexPregunta + 1)
-        }
-    }
-    //retroceder pregunta
-    const RetrocederPregunta = () =>{
-        if(indexPregunta > 0){
-            setIndexPregunta(indexPregunta - 1)
-        }
-    }
 
     const route = useRoute();
     const {nombre, id_ensayo, isCustom} = route.params
@@ -282,7 +268,7 @@ const EnsayoPrueba = ({navigation}) => {
         return (
            <View style={[styles.contenedorPrincipal, {backgroundColor:theme.bground.bgPrimary,}]}>
                 <View style={[styles.contenedorEnsayo, {backgroundColor: theme.bground.bgSecondary}]}>
-
+                    {/* numero de pregunta y el tiempo respectivo. */}
                     <View style={[styles.contenedorTitulo]} >
                         <Text style={[styles.cantidadPregunta, {color:theme.colors.textSecondary}]}>Pregunta {indexPregunta + 1} de {ensayos.length}</Text>
                         <View style={styles.contenedorTime}>
@@ -290,24 +276,27 @@ const EnsayoPrueba = ({navigation}) => {
                             <Text style={[styles.timer, {color:theme.colors.textSecondary}]}>{minutos < 10 ? '0'+minutos : minutos}:{segundos < 10 ? '0'+segundos : segundos}</Text>
                         </View>                      
                     </View>
+
                     <View style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly', height:'70%'}}>
                         <View style={styles.preguntas}>
-                            {/* <Text style={[styles.pregunta, {color:theme.colors.textSecondary} ]}>{essay.question.replace(/Â/g, '')}</Text> */}
+                            {/* Pregunta */}
                             <Katex 
                                 expression={essay.question}
                                 inlineStyle={inlineStyle} 
                             />
-                        </View>           
+                        </View>  
 
+                        {/* Respuestas en un flatList */}
                         <View>
                             <FlatList  
                                 data={essay.answers}
                                 renderItem={({item, index}) => (RenderAnswers({item, index, selected, setSelected, theme, indexPregunta}))}
-                                key={essay.answers.id}
+                                key={(essay) => essay.id}
                             />
                         </View>
                     </View>
-                               
+
+                    {/*Boton finalización  */}
                     <View style={styles.contenedorBoton}>
                         {indexPregunta +1 === ensayos.length && (
                             <TouchableOpacity style={[styles.botonfinalizar, {backgroundColor:theme.bground.bgBotonNavegacion}]} onPress={() => mostrarDatos()}>
@@ -317,64 +306,19 @@ const EnsayoPrueba = ({navigation}) => {
                         }
                     </View>
 
-                <View style={{width:'100%', alignItems:'center'}}>
-                      {cantidadPaginas -1 === indexPagination ? 
-                      (
-                        <View style={[styles.navegacion, {backgroundColor:theme.bground.bgNavegacion,}]}>
-                            
-                            <TouchableOpacity  onPress={() => retrocederPagination()}>
-                                <Image style={styles.icono} source={left} />
-                            </TouchableOpacity>
-
-                            {modulo === 0 ? (
-                                <View style={{flex:1, flexDirection:'row', gap:30}}>
-                                    {array.map((item, index) =>(
-                                        <TouchableOpacity style={[styles.botonNavegacion, {borderColor:theme.bground.bgBotonNavegacion}, selected[indexPagination * 4 + index] !== undefined && {backgroundColor:theme.bground.bgBotonNavegacion}]} 
-                                        onPress={() => setIndexPregunta(indexPagination * 4 + index) } 
-                                        key={index}
-                                        >
-                                            <Text>{indexPagination * 4 + index+1}</Text>
-                                        </TouchableOpacity>
-                                    )) }
-                                </View>
-                                ) : (
-                                    <View style={{flex:1, flexDirection:'row', gap:30}}>
-                                        {arrayModulo.map((item,index) =>(
-                                             <TouchableOpacity 
-                                             style={[styles.botonNavegacion, {borderColor:theme.bground.bgBotonNavegacion}, selected[indexPagination * 4 + index] !== undefined && {backgroundColor:theme.bground.bgBotonNavegacion}]} 
-                                             onPress={() => setIndexPregunta(indexPagination * 4 + index) } 
-                                             key={index}
-                                             >
-                                                <Text>{indexPagination * 4 + index+1}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </View>
-                                )
-                                }
-                            <TouchableOpacity  onPress={() => avanzarPagination()}>
-                                <Image style={styles.icono} source={right} />
-                            </TouchableOpacity>
-                        </View>
-                      ) : (
-                        <View style={[styles.navegacion, {backgroundColor:theme.bground.bgNavegacion,}]}>
-                            <TouchableOpacity  onPress={() => retrocederPagination()}>
-                                <Image style={styles.icono} source={left} />
-                            </TouchableOpacity>
-                            {array.map((item, index) =>(
-                                        <TouchableOpacity style={[styles.botonNavegacion, {borderColor:theme.bground.bgBotonNavegacion}, selected[indexPagination * 4 + index] !== undefined && {backgroundColor:theme.bground.bgBotonNavegacion}]} 
-                                        onPress={() => setIndexPregunta(indexPagination * 4 + index) } 
-                                        key={index}
-                                        >
-                                            <Text>{indexPagination * 4 + index+1}</Text>
-                                        </TouchableOpacity>
-                                    )) }
-                            <TouchableOpacity  onPress={() => avanzarPagination()}>
-                                <Image style={styles.icono} source={right} />
-                            </TouchableOpacity>
-                        </View>
-                      )
-                    }                      
-                </View>
+                {/* Navegacion */}
+                <NavegacionEssay 
+                    cantidadPaginas = {cantidadPaginas} 
+                    indexPagination = {indexPagination}
+                    theme ={theme}
+                    retrocederPagination ={retrocederPagination}
+                    modulo = {modulo}
+                    arrayPreguntas ={arrayPreguntas}
+                    setIndexPregunta = {setIndexPregunta}
+                    arrayModulo = {arrayModulo}
+                    avanzarPagination ={avanzarPagination}
+                    selected ={selected}
+                />
 
                 </View>
             </View>
@@ -394,7 +338,6 @@ const styles = StyleSheet.create({
         width:'100%',
         display:'flex',
         height:'100%',
-        // alignItems:'center',
         justifyContent:'space-evenly',
         flex:1,
         borderRadius:10, 
@@ -413,8 +356,6 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         borderBottomColor:'#13B2E4',
-        // borderBottomWidth:'2px',
-        // paddingBottom: '15px',
         alignItems:'center',
         justifyContent:'space-between'
     },
@@ -473,27 +414,4 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
     },
-    navegacion:{
-        display:'flex',
-        flexDirection:'row',
-        gap:30,
-        padding:10,
-        borderRadius:10,
-        width:'90%',
-        justifyContent:'space-between',
-        height:50
-    },
-    botonNavegacion:{
-        borderWidth:2,
-        padding:5,
-        width:30,
-        height:30,
-        textAlign:'center',
-        alignItems:'center',
-        borderRadius:15
-    },
-    icono:{
-        width:30,
-        height:30
-    }
 })
