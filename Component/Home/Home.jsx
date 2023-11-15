@@ -81,7 +81,6 @@ const Home = ({ navigation }) => {
             Seguir como invitado!
           </Text>
         </TouchableOpacity>
-        
       </View>
     </View>
   );
