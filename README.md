@@ -5,6 +5,7 @@
 Una vez clonado este repositorio abrir el proyecto en visual studio code o el de tu preferencia.
 Antes de iniciar el fronted, es necesario correr el servidor en el backend.
 Además, se debe instalar el emulador "NOX" y la aplicación "Expo Go" en dicho emulador.
+
 -------------------------------------------------------------------------------------------------------------------------------------
 
 Para poder instalar el emulador se debe seguir el siguiente video.
@@ -13,6 +14,7 @@ https://www.youtube.com/watch?v=vKiRH1jSxI4&ab_channel=DigitalStoreMarkets
 Una vez instalador el emulador, se debe instalar la aplicacion "EXPO GO".
 
 Se debe dirigir a playstore ingresar un Gmail y buscar la aplicación por su nombre "Expo Go".
+
 -------------------------------------------------------------------------------------------------------------------------------------
 
 Antes de iniciar el proyecto, se debe crear un archivo blog de notas llamado `.env`
