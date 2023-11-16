@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useContext, useRef, useState } from 'react'
+import { Alert, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useContext, useRef, useState } from 'react'
 // import theme from '../../theme/theme';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import modoDark from '../../ModoDark';
 import {LOCAL_HOST} from '@env'
+import { useFocusEffect } from '@react-navigation/native';
 
 const CreateEssay = ({navigation}) => {
 
@@ -21,9 +22,22 @@ const CreateEssay = ({navigation}) => {
   const dropdownRefMinutos = useRef({})
 
 
+  useFocusEffect(
+    useCallback(() =>{
+      setMinutos(), 
+      setNombre(''),
+      setPreguntas(),
+      setTema([]), 
+      dropdownRefPreguntas.current.reset(), 
+      dropdownRefMinutos.current.reset()
+    },[])
+  )
+
+
   // funcion que agrega o elimina el ensayo que ha marcado el usuario.
  const seleccionarTema = (Idensayo) =>{
     dropdownRefPreguntas.current.reset() // reseteamos el numero de preguntas si es que elige mas temas o quita temas.
+    setPreguntas()
     // en caso que el ensayo ya este, lo quitamos. esto quiere decir que el usuario lo desmarco.
     if(tema.includes(Idensayo)){
       setTema(tema.filter((t) => t !== Idensayo ))
@@ -55,10 +69,10 @@ const CreateEssay = ({navigation}) => {
       return alert('Debe marcar todas las opciones')
     }else{
       if(tema.length < 2){
-        return alert('Debe elegir dos temas como minimo')
+        return alert('Debe elegir dos temas como mínimo')
       }
       if(ValidarEspacios(nombre) || ValidarNombre(nombre)){
-        return alert('Por favor, verifique el formato del campo nombre')
+        return alert('Por favor, ingrese un nombre valido')
       }
       
       try{
@@ -78,11 +92,10 @@ const CreateEssay = ({navigation}) => {
         axios.post(`${LOCAL_HOST}:3000/newEssay/`, ensayoPersonalizado, {headers:{
           Authorization:`Bearer ${token}`
         }}).then((response) => { setMinutos(), setNombre(''),setPreguntas(),setTema([]), dropdownRefPreguntas.current.reset(), dropdownRefMinutos.current.reset(), navigation.navigate('MenuLogin')})
-
+            .catch((error) => { alert(error.response.data.msg)})
       }catch(error){
-        console.log(error)
+        alert('Ha habido un error al crear el ensayo.')
       }
-      //post para guardar el ensayo creado. 
     }
 
   }

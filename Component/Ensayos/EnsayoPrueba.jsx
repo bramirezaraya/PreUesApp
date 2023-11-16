@@ -27,6 +27,7 @@ const EnsayoPrueba = ({navigation}) => {
     const [indexPagination, setIndexPagination] = useState(0)
     const arrayPreguntas= new Array(4).fill('')
     const [arrayModulo, setArrayModulo] = useState([])
+    const [tiempoPersonalizado, setTiempoPersonalizado] = useState(0)
 
     const {setMenuEnsayo, setIdEssay} = useContext(MenuContext)
 
@@ -143,7 +144,8 @@ const EnsayoPrueba = ({navigation}) => {
                 }})
                 .then((response) => {
                     setEnsayos(response.data.customEssay.questions), 
-                    setTiempo(response.data.customEssay.selectedTime * 60), 
+                    setTiempo(response.data.customEssay.selectedTime * 60),
+                    setTiempoPersonalizado(response.data.customEssay.selectedTime * 60)
                     setIdEnsayo(response.data.customEssay.id)
                     setIdEssay(response.data.customEssay.id)
                     setModulo(response.data.customEssay.questions.length % 4)
@@ -183,8 +185,15 @@ const EnsayoPrueba = ({navigation}) => {
                 contador++;
             }
         })
-
-        const tiempoTotalEnsayo = (ensayos.length * 60 * 2 ) - (tiempo)
+        
+        let tiempoTotalEnsayo = 0
+        if(isCustom === 0){
+             tiempoTotalEnsayo = (ensayos.length * 60 * 2 ) - (tiempo)
+        }else{
+             tiempoTotalEnsayo = (tiempoPersonalizado) - tiempo
+        }
+        
+        
         if(contador === ensayos.length){
            const tiempoTotal = tiempoTotalEnsayo.toString()
              try{
@@ -255,7 +264,14 @@ const EnsayoPrueba = ({navigation}) => {
         }
     }
 
-
+    const DesordenarRespuestas = (array)=> {
+        const newArray = [...array];  // Para evitar modificar el array original, creamos una copia.
+        for (let i = newArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+      }
     // si tenemos datos del ensayo, mostramos los datos.
     if(ensayos && ensayos.length > 0){
         //constante para mostrar los datos depenediendo el index.
@@ -289,7 +305,7 @@ const EnsayoPrueba = ({navigation}) => {
                         {/* Respuestas en un flatList */}
                         <View>
                             <FlatList  
-                                data={essay.answers}
+                                data={essay.answers} 
                                 renderItem={({item, index}) => (RenderAnswers({item, index, selected, setSelected, theme, indexPregunta}))}
                                 key={(essay) => essay.id}
                             />
