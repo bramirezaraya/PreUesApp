@@ -48,7 +48,7 @@ const Log = ({ navigation }) => {
         await AsyncStorage.setItem('token', response.data.token);
         await AsyncStorage.setItem('id_usuario', JSON.stringify(response.data.id));
         await AsyncStorage.setItem('email', JSON.stringify(response.data.email))
-        await AsyncStorage.setItem('usuario', JSON.stringify(response.data.name))
+        await AsyncStorage.setItem('usuario', JSON.stringify(response.data.name[0].toUpperCase() + response.data.name.slice(1)))
         await AsyncStorage.setItem('monedas', JSON.stringify(response.data.coins) )
         await AsyncStorage.setItem('avatar', response.data.avatar)
         setAvatar(response.data.avatar)
@@ -61,8 +61,8 @@ const Log = ({ navigation }) => {
       }
       )
       .catch((error) =>{
-        console.log(error)
-        alert('Datos incorrectos')
+        console.log(error.response.data.msg)
+        alert(error.response.data.msg)
       })
     }
     else{

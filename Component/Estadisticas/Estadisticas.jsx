@@ -3,14 +3,11 @@ import React, { useContext, useEffect, useState, useRef } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import modoDark from '../../ModoDark';
 import { useFocusEffect } from '@react-navigation/native';
-import ProgressCircle from 'react-native-progress-circle'
 import axios from 'axios';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import RenderizadoEstadistica from './RenderizadoEstadistica';
 import PieChartData from './PieChartData'; // componenente
-import PureChart from 'react-native-pure-chart';
 import { BarChart, LineChart, PieChart } from 'react-native-gifted-charts';
-import { color } from 'react-native-reanimated';
 import SelectDropdown from 'react-native-select-dropdown';
 import {LOCAL_HOST} from '@env'
 const Estadisticas = () => {
@@ -115,7 +112,9 @@ const Estadisticas = () => {
   if(historial.length > 0){
       datosScore = historial.map( historial => ({
         ...historial,
-        frontColor: theme.bground[historial.color]
+        frontColor: theme.bground[historial.color],
+        sideColor:theme.bground[historial.color],
+        topColor:theme.bground[historial.color],
       }))
   }
 
@@ -146,10 +145,12 @@ const Estadisticas = () => {
           <View style={{flex:1}}>
             <BarChart 
               data = {datosScore ? datosScore : []} 
+              isThreeD
               maxValue={1000} 
               stepValue={100} 
               height={350}
-              width={280}
+              width={260}
+              scrollToIndex={datosScore ? datosScore[0] : 0}
               rulesType='solid'
               barWidth={25}
               barBorderTopLeftRadius={20}

@@ -40,13 +40,13 @@ const EnsayoFeedback = ({navigation}) => {
     },[])
 
     if (ensayo && ensayo.length > 0 && datosEnsayo && respuestas.length > 0) {
-        const Fecha = new Date(datosEnsayo.createdAt).toLocaleString()
+        // const Fecha = new Date(datosEnsayo.createdAt).toLocaleString()
         return (
         <View style={[styles.contenedorFeedback, {backgroundColor:theme.bground.bgPrimary,}]}>
             <View style={styles.contenedor}>
                 <View style={[styles.datos, {backgroundColor:theme.bground.bgSecondary,}]}>
                     <Text style={[styles.titulo, {color: theme.colors.textSecondary}]} >Obtuviste: {datosEnsayo.score} puntos</Text>
-                    <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>Realizado el {Fecha}</Text>
+                    <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>Realizado el {datosEnsayo.createdAt}</Text>
                     <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>{datosEnsayo.numberOfQuestions} Ejercicios en total</Text>
                     <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>{datosEnsayo.numCorrectAnswers} Preguntas correctas</Text>
                     <Text style={[styles.datosEnsayo, {color: theme.colors.textSecondary}]}>{datosEnsayo.coins} Monedas obtenidas</Text>

@@ -226,7 +226,7 @@ const EnsayoPrueba = ({navigation}) => {
        
     }
 
-    /// para actualizar el tiempo del ensayo.
+    // / para actualizar el tiempo del ensayo.
     useEffect(() => {
 
         let timer
@@ -264,14 +264,7 @@ const EnsayoPrueba = ({navigation}) => {
         }
     }
 
-    const DesordenarRespuestas = (array)=> {
-        const newArray = [...array];  // Para evitar modificar el array original, creamos una copia.
-        for (let i = newArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        return newArray;
-      }
+
     // si tenemos datos del ensayo, mostramos los datos.
     if(ensayos && ensayos.length > 0){
         //constante para mostrar los datos depenediendo el index.
@@ -281,6 +274,7 @@ const EnsayoPrueba = ({navigation}) => {
         }else {
              essay = ensayos[indexPregunta].selectedQuestion
         }
+
         return (
            <View style={[styles.contenedorPrincipal, {backgroundColor:theme.bground.bgPrimary,}]}>
                 <View style={[styles.contenedorEnsayo, {backgroundColor: theme.bground.bgSecondary}]}>

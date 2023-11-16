@@ -18,12 +18,12 @@ const RecoverPassword = ({navigation}) => {
         })
         .then((response)=> {
             // EN CASO QUE TODO ESTE BIEN, LE LLEGARA UN EMAIL AL USUARIO CON SU NUEVA CONTRASEÑA.
-            alert('Se ha enviado la nueva contraseña a su correo, por favor, verifique.')
+            alert(response.data.msg)
             setEmail("")
+            navigation.navigate('Log')
         })
         .catch((error) => {
-            console.log(error)
-            alert('Por favor, escriba un correo que este registrado con nosotros.')
+            alert(error.response.data.msg)
         })
     }
 
