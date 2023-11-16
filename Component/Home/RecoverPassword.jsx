@@ -13,7 +13,7 @@ const RecoverPassword = ({navigation}) => {
     // Funcion para recuperar contraseña.
     const EnviarPassword = () =>{
         // se consulta al end-point con el email ingresado por el usuario.
-        axios.post(`${LOCAL_HOST}:3000/recoverPasswor`, {
+        axios.post(`${LOCAL_HOST}:3000/recoverPassword`, {
             email:email
         })
         .then((response)=> {

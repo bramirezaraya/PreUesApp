@@ -13,7 +13,7 @@ const ChangeAvatar = ({theme, AvatarImages, avatar, setAvatar, setCambiarAvatar}
     ...value,
   }));
 
-  const [avatarElegido, setAvatarElegido] = useState(avatar.name)
+  const [avatarElegido, setAvatarElegido] = useState(AvatarImages[avatar].name)
 
   const CambiarAvatar = async(nameAvatar) =>{
     if(nameAvatar !== avatar.name){

@@ -40,7 +40,7 @@ const FeedbackInvitado = () => {
               <View>
                     <Text style={styles.texto}>Realizado el {fecha}</Text>
                     <Text style={styles.texto}>{totalCorrectas} Respuestas correctas</Text>
-                    <Text style={styles.texto}>Tardaste {minutos < 10 ? '0'+ minutos : minutos }:{segundos < 10 ? '0'+segundos : segundos} en terminar el ensayo</Text>
+                    {/* <Text style={styles.texto}>Tardaste {minutos < 10 ? '0'+ minutos : minutos }:{segundos < 10 ? '0'+segundos : segundos} en terminar el ensayo</Text> */}
               </View>
         </View>
 

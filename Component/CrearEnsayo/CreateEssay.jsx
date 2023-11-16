@@ -23,6 +23,7 @@ const CreateEssay = ({navigation}) => {
 
   // funcion que agrega o elimina el ensayo que ha marcado el usuario.
  const seleccionarTema = (Idensayo) =>{
+    dropdownRefPreguntas.current.reset() // reseteamos el numero de preguntas si es que elige mas temas o quita temas.
     // en caso que el ensayo ya este, lo quitamos. esto quiere decir que el usuario lo desmarco.
     if(tema.includes(Idensayo)){
       setTema(tema.filter((t) => t !== Idensayo ))

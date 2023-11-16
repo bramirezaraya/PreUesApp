@@ -117,11 +117,11 @@ const Reg = ({ navigation }) => {
               onFocus={() =>{
                 setEmailFocus(true) // se pondra en true al momento que el usuario interactue con el textInput.
               }}
-              maxLength={30} // el maximo de caracteres.
+              maxLength={50} // el maximo de caracteres.
             />
               {/* En caso que no este cumpliendo la validación, se mostrara el siguiente mensaje.  */}
               {emailValidator || !emailFocus ? null: 
-              <Text style={{color:'red', fontWeight:600, fontSize:9}}>Escriba un mail Valido!</Text>
+              <Text style={{color:'red', fontWeight:600, fontSize:9}}>Escriba un email Valido!</Text>
               }
             </View>
         </View>
@@ -193,7 +193,7 @@ const Reg = ({ navigation }) => {
         />
         {/* En caso que no este cumpliendo la validación, se mostrara el siguiente mensaje.  */}
         {passwordValidator || !passwordFocus2 ? null : 
-        <Text style={{color:'red', fontWeight:600, fontSize:9}}>Las contraseñas deben coincidir y tener mas de 4 caracteres</Text>
+        <Text style={{color:'red', fontWeight:600, fontSize:9}}>Las contraseñas deben coincidir y tener mas de 3 caracteres</Text>
         }
           </View>
 

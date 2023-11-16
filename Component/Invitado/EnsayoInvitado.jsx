@@ -16,6 +16,7 @@ const EnsayoInvitado = ({navigation}) => {
     const [minutos, setMinutos] = useState()
     const [segundos, setSegundos] = useState()
     const [tiempoEnsayo, setTiempoEnsayo] = useState(tiempo * 60)
+    const [tiempoTotal, setTiempoTotal] = useState(tiempo * 60)
     useEffect(() => {
 
         let timer
@@ -45,10 +46,10 @@ const EnsayoInvitado = ({navigation}) => {
         if(selected.length === ensayo.length){
             // const tiempoTotal = 30 * 60 - tiempoEnsayo 
             var min = 0
-            if(minutos === 25){
-                min = 25
+            if(minutos === 16){
+                min = 16
             }else{
-                min = 24-minutos
+                min = 16-minutos
             }
             const seg = 60 - segundos
             navigation.navigate('feedbackInvitado', {ensayo:ensayo, selected:selected, minutos:min, segundos:seg, largo:largo})
@@ -60,7 +61,6 @@ const EnsayoInvitado = ({navigation}) => {
 
   return (
     <View style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary,}]}>
-
             <View style={styles.tiempo}>
                 <Image style={{width:25,height:25}} source={require('../../assets/time.png')} />
                 <Text style={[styles.time, {color:theme.colors.textSecondary}]}>{minutos < 10 ? '0'+minutos : minutos}:{segundos < 10 ? '0'+segundos : segundos}</Text>
