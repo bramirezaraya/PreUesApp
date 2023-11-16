@@ -13,36 +13,36 @@ const Menu = ({navigation}) => {
   const datosEnsayos = [
     {
       name:"Ensayo General",
-      numberOfQuestions:68,
-      selectedTime:120,
+      numberOfQuestions:40,
+      selectedTime:80,
       id:5,
       isCustom:0
     },
     {
       name:"Ensayo Números",
-      numberOfQuestions:18,
-      selectedTime:36,
+      numberOfQuestions:10,
+      selectedTime:20,
       id:1,
       isCustom:0
     },
     {
       name:"Ensayo Álgebra",
-      numberOfQuestions:18,
-      selectedTime:36,
+      numberOfQuestions:10,
+      selectedTime:20,
       id:2,
       isCustom:0
     },
     {
       name:"Ensayo Probabilidades",
-      numberOfQuestions:17,
-      selectedTime:34,
+      numberOfQuestions:10,
+      selectedTime:20,
       id:3,
       isCustom:0
     },
     {
       name:"ensayo Geometría",
-      numberOfQuestions:15,
-      selectedTime:30,
+      numberOfQuestions:10,
+      selectedTime:20,
       id:4,
       isCustom:0
     },

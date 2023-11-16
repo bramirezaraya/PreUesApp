@@ -85,7 +85,14 @@ const CreateEssay = ({navigation}) => {
     }
 
   }
-
+  // cantidad de preguntas
+  const data = {
+    0: [6, 12, 16, 20],
+    1: [6, 12, 16, 20],
+    2: [6, 12, 16, 20],
+    3: [9, 18, 24, 30],
+    4: [12, 24, 32, 40]
+  };
   return (
     <View style={[styles.contenedor, {backgroundColor:theme.bground.bgPrimary,}]}>
           <View style={styles.infoTitulos}>
@@ -142,7 +149,7 @@ const CreateEssay = ({navigation}) => {
                       <Text style={[styles.tituloDatos, {color:theme.colors.textSecondary}]}>Preguntas</Text>
                       <View style={styles.preguntas}>
                           <SelectDropdown 
-                            data={[12,20,32,40]}
+                            data={data[tema.length]}
                             buttonStyle={[styles.dropdown, {backgroundColor:theme.bground.bgBlanco}]} // estilo del boton
                             buttonTextStyle={styles.colorDropdown} // estilo del texto
                             dropdownStyle={[styles.drop, {backgroundColor:theme.bground.bgPrimary}]} // estilo del dropdown al desplegarze
