@@ -143,20 +143,20 @@ const EnsayoPrueba = ({navigation}) => {
                     Authorization:`Bearer ${token}`
                 }})
                 .then((response) => {
-                    setEnsayos(response.data.customEssay.questions), 
-                    setTiempo(response.data.customEssay.selectedTime * 60),
-                    setTiempoPersonalizado(response.data.customEssay.selectedTime * 60)
-                    setIdEnsayo(response.data.customEssay.id)
-                    setIdEssay(response.data.customEssay.id)
-                    setModulo(response.data.customEssay.questions.length % 4)
-                    if(response.data.customEssay.questions.length % 4 === 0){
-                        setCantidadPaginas(Math.trunc(response.data.customEssay.questions.length / 4))
+                    setEnsayos(response.data.questions), 
+                    setTiempo(response.data.selectedTime * 60),
+                    setTiempoPersonalizado(response.data.selectedTime * 60)
+                    setIdEnsayo(response.data.id)
+                    setIdEssay(response.data.id)
+                    setModulo(response.data.questions.length % 4)
+                    if(response.data.questions.length % 4 === 0){
+                        setCantidadPaginas(Math.trunc(response.data.questions.length / 4))
                     }else{
-                        setCantidadPaginas(Math.trunc(response.data.customEssay.questions.length / 4) + 1)
+                        setCantidadPaginas(Math.trunc(response.data.questions.length / 4) + 1)
                     }
                     
                    
-                    setArrayModulo(new Array(response.data.customEssay.questions.length % 4).fill(''))
+                    setArrayModulo(new Array(response.data.questions.length % 4).fill(''))
 
                     }
                 )
@@ -268,12 +268,12 @@ const EnsayoPrueba = ({navigation}) => {
     // si tenemos datos del ensayo, mostramos los datos.
     if(ensayos && ensayos.length > 0){
         //constante para mostrar los datos depenediendo el index.
-        let essay
-        if(isCustom === 0 ){
-              essay = ensayos[indexPregunta];
-        }else {
-             essay = ensayos[indexPregunta].selectedQuestion
-        }
+        let essay = ensayos[indexPregunta];
+        // if(isCustom === 0 ){
+        //       essay = ensayos[indexPregunta];
+        // }else {
+        //      essay = ensayos[indexPregunta].selectedQuestion
+        // }
 
         return (
            <View style={[styles.contenedorPrincipal, {backgroundColor:theme.bground.bgPrimary,}]}>
