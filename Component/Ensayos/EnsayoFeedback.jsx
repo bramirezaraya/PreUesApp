@@ -14,7 +14,6 @@ const EnsayoFeedback = ({navigation}) => {
     const [ensayo, setEnsayo] = useState([])
     const [datosEnsayo, setDatoEnsayo] = useState()
     const [respuestas, setRespuestas] = useState([])
-
     const {theme} = useContext(modoDark)
 
     const id = route.params.id;
@@ -60,7 +59,7 @@ const EnsayoFeedback = ({navigation}) => {
                      <FlatList
                         contentContainerStyle={{paddingBottom:250}} // para que el ultimo item se visualice mejor.
                         data={ensayo}
-                        renderItem={({ item, index }) => (EnsayoRenderizado({item, index,respuestas, theme}))}
+                        renderItem={({ item, index }) => (EnsayoRenderizado({item, index,respuestas, theme, }))}
                         keyExtractor={(item) => item.id}
                         ItemSeparatorComponent={() => <View style={styles.separator}></View>} // para separar cada item.
                     /> 

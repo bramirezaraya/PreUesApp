@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, Image, FlatList} from 'react-native'
 import WebView from 'react-native-webview'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import RespuestasRenderizadas from './RespuestasRenderizadas'
 import modoDark from '../../ModoDark'
 import Katex from 'react-native-katex'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 // import theme from '../../theme/theme'
 
 const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
-
+    // const [showVideo, setShowVideo] = useState(false)
     const inlineStyle =`
     html, body {
         background-color: ${theme.bground.bgSecondary};     
@@ -50,9 +51,14 @@ const EnsayoRenderizado = ({item, index, respuestas, theme}) => {
             />
                                 
             {/*Video de la respuesta del ensayo*/}
+            
+             
             <View style={{height:'35%', width:'100%'}}>
-                 <WebView source={{ uri: item.videoLink }} style={styles.videoPlayer} />
-            </View>
+                <WebView source={{ uri: item.videoLink }} style={styles.videoPlayer} />
+            </View> 
+               
+                
+            
            
                                 
             {/*renderizamo las respuestas del ensayo, con una constante que llamaremos.*/}
