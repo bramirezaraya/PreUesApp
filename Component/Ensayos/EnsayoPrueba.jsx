@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
     },
     preguntas:{
         display:'flex',
-        height:'10%',
+        height:'19%',
         maxWidth:'95%',
     },
     contenedorRespuestas:{

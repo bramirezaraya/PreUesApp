@@ -28,9 +28,9 @@ const EnsayoFeedback = ({navigation}) => {
                         Authorization:`Bearer ${token}`
                     }});
                      
-                    setEnsayo(response.data.questions) /// preguntas.
+                    setEnsayo(response.data.questions.sort((a,b) => a.id - b.id)) /// preguntas.
                     setDatoEnsayo(response.data) // score, preguntas y respuestas, fecha.
-                    setRespuestas(response.data.chosenAnswers) /// respuestas marcadas por el usuario.
+                    setRespuestas(response.data.chosenAnswers.sort((a,b) => a.id - b.id)) /// respuestas marcadas por el usuario.
             }catch(error){
                 console.log(error)
             }
