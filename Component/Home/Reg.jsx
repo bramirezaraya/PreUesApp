@@ -79,7 +79,7 @@ const Reg = ({ navigation }) => {
         }, 1000);         
       })
       .catch((error) =>{
-        console.log(error)
+        alert(error.response.data.msg)
       })
     }
   }
