@@ -1,7 +1,5 @@
 # FrontedPreUes
 
-## Luis Romero - Bryan Ramírez
-
 Una vez clonado este repositorio abrir el proyecto en visual studio code o el de tu preferencia.
 Antes de iniciar el fronted, es necesario correr el servidor en el backend.
 Además, se debe instalar el emulador "NOX" y la aplicación "Expo Go" en dicho emulador.
